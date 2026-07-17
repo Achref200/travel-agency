@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   DESIGN SYSTEM — "Bosphorus Luxe"
+   Elegant · luxurious · minimal. Warm ivory canvas, deep charcoal ink,
+   a restrained brass-gold accent and a deep teal for immersive sections.
+   ========================================================================== */
+
+@theme {
+  /* Neutrals */
+  --color-canvas: #f7f4ef; /* page background — warm porcelain */
+  --color-surface: #ffffff; /* cards / raised surfaces */
+  --color-ink: #1a1a17; /* primary text — near black */
+  --color-muted: #6b6862; /* secondary text */
+  --color-faint: #9a968e; /* tertiary text / captions */
+  --color-line: #e7e1d8; /* hairline borders */
+
+  /* Brand accent — muted brass gold */
+  --color-gold: #b08d57;
+  --color-gold-deep: #8c6d3f;
+  --color-gold-soft: #d9c7a8;
+
+  /* Earthy editorial accents (blended from the Scapia palette) */
+  --color-terracotta: #a2603a;
+  --color-terracotta-soft: #c98a63;
+  --color-slate: #43678f;
+  --color-sand: #d8ccbe;
+  --color-shell: #efe8dd; /* warm panel background */
+
+  /* Immersive dark — deep teal / Bosphorus night */
+  --color-sea: #10302e;
+  --color-sea-deep: #0b201f;
+
+  /* Feedback */
+  --color-success: #3f7d5c;
+  --color-danger: #b3543f;
+
+  /* Radii */
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 2rem;
+
+  /* Typographic scale helpers */
+  --tracking-luxe: 0.18em;
+
+  /* Motion */
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Content width */
+  --spacing-shell: 80rem;
+}
+
+@theme inline {
+  /* Fonts wired to next/font variables set on <html>. */
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), Georgia, "Times New Roman", serif;
+  /* Aliases kept for Tailwind's default color names used by components. */
+  --color-background: var(--color-canvas);
+  --color-foreground: var(--color-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-gold-soft);
+    color: var(--color-ink);
+  }
+
+  /* Refined focus ring for keyboard users only. */
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* RTL: mirror any explicitly LTR-only helpers if needed. */
+  [dir="rtl"] .flip-rtl {
+    transform: scaleX(-1);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reusable primitives
+   -------------------------------------------------------------------------- */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--spacing-shell);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  /* Small uppercase label used above section headings. */
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: var(--tracking-luxe);
+    text-transform: uppercase;
+    color: var(--color-gold-deep);
+    font-weight: 500;
+  }
+
+  /* Thin decorative rule. */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-line),
+      transparent
+    );
+  }
+
+  /* Bare input used inside the booking widget field shells. */
+  .field-input {
+    width: 100%;
+    min-width: 0;
+    background: transparent;
+    border: 0;
+    outline: none;
+    font-size: 0.9rem;
+    color: var(--color-ink);
+    appearance: none;
+  }
+  .field-input::placeholder {
+    color: var(--color-faint);
+  }
+  .field-input option {
+    color: var(--color-ink);
+  }
+
+  /* Standalone form control (contact / partner forms). */
+  .input {
+    width: 100%;
+    height: 2.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-line);
+    background-color: color-mix(in oklab, var(--color-canvas) 60%, transparent);
+    padding-inline: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--color-ink);
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .input:focus {
+    border-color: var(--color-ink);
+  }
+  .input::placeholder {
+    color: var(--color-faint);
+  }
+  textarea.input {
+    height: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Utilities
+   -------------------------------------------------------------------------- */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  /* Subtle top-to-bottom scrim for legible text over imagery. */
+  .scrim {
+    background: linear-gradient(
+      to top,
+      rgba(11, 32, 31, 0.72) 0%,
+      rgba(11, 32, 31, 0.28) 42%,
+      rgba(11, 32, 31, 0) 100%
+    );
+  }
+}

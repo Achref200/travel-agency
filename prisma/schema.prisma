@@ -1,0 +1,171 @@
+// Prisma schema — content, bookings, contact & admin persistence.
+// Dev uses SQLite; swap `provider` to "postgresql" for production.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ── Admin ──────────────────────────────────────────────────────────────────
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+// ── Editable content ───────────────────────────────────────────────────────
+// Localized fields are stored as JSON: { "en": "...", "tr": "...", "ar": "..." }
+
+model Tour {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         Json
+  summary       Json
+  description   Json
+  category      Json
+  highlights    Json // Localized[]
+  price         Float
+  priceType     String   @default("person") // "group" | "person"
+  durationHours Int      @default(1)
+  image         String
+  bestSeller    Boolean  @default(false)
+  published     Boolean  @default(true)
+  order         Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([published, order])
+}
+
+model Route {
+  id        String   @id @default(cuid())
+  fromLabel String
+  toLabel   String
+  price     Float
+  category  String   @default("airport") // airport|hotel|hospital|district|mall
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, order])
+}
+
+model Vehicle {
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  name       String
+  className  Json
+  passengers Int      @default(1)
+  luggage    Int      @default(0)
+  image      String
+  features   Json // Localized[]
+  published  Boolean  @default(true)
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([published, order])
+}
+
+model FaqItem {
+  id        String   @id @default(cuid())
+  question  Json
+  answer    Json
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, order])
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  src       String
+  alt       Json
+  wide      Boolean  @default(false)
+  tall      Boolean  @default(false)
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, order])
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      Json
+  image     String
+  published Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([published, order])
+}
+
+model Milestone {
+  id        String   @id @default(cuid())
+  year      String
+  title     Json
+  text      Json
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+// ── Leads / operations ─────────────────────────────────────────────────────
+
+model Booking {
+  id             String    @id @default(cuid())
+  reference      String    @unique
+  serviceType    String // "transfer" | "hourly" | "tour"
+  fromLocation   String
+  toLocation     String?
+  pickupAt       DateTime
+  returnAt       DateTime?
+  hours          Int?
+  passengers     Int       @default(1)
+  luggage        Int       @default(0)
+  flightNumber   String?
+  roundTrip      Boolean   @default(false)
+  fullName       String
+  email          String
+  phone          String
+  notes          String?
+  locale         String    @default("en")
+  estimatedPrice Float?
+  status         String    @default("pending") // pending | confirmed | cancelled
+  createdAt      DateTime  @default(now())
+
+  @@index([email])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String?
+  message   String
+  locale    String   @default("en")
+  handled   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([handled])
+  @@index([createdAt])
+}

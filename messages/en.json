@@ -1,0 +1,415 @@
+{
+  "Nav": {
+    "home": "Home",
+    "tours": "Tours",
+    "about": "About",
+    "business": "For Business",
+    "vehicles": "Our Fleet",
+    "meetingPoints": "Meeting Points",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "bookNow": "Book a Transfer",
+    "menu": "Menu",
+    "close": "Close"
+  },
+  "Common": {
+    "readMore": "Read more",
+    "viewAll": "View all",
+    "learnMore": "Learn more",
+    "getQuote": "Get a quote",
+    "bookNow": "Book now",
+    "from": "from",
+    "perPerson": "per person",
+    "perGroup": "per group (1–7)",
+    "loading": "Loading…",
+    "submit": "Submit",
+    "sending": "Sending…",
+    "callUs": "Call us",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "viewOnMap": "View on map",
+    "backHome": "Back to home",
+    "skipToContent": "Skip to content",
+    "currency": "EUR"
+  },
+  "Hero": {
+    "eyebrow": "Istanbul · Private Airport Transfers & Tours",
+    "title": "Arrive in effortless comfort",
+    "subtitle": "Private airport transfers, chauffeured travel and curated tours across Türkiye — a fixed price, a warm welcome and a driver waiting the moment you land.",
+    "ratingLabel": "rated by travellers",
+    "stats": {
+      "transfers": "Transfers completed",
+      "rating": "Average guest rating",
+      "airports": "Airports covered",
+      "support": "Concierge support"
+    }
+  },
+  "Booking": {
+    "tabTransfer": "Transfer",
+    "tabHourly": "By the hour",
+    "tabTours": "Tours",
+    "from": "From",
+    "fromPlaceholder": "Airport, hotel, address…",
+    "to": "To",
+    "toPlaceholder": "Airport, hotel, address…",
+    "when": "Date & time",
+    "passengers": "Passengers",
+    "passenger": "{count, plural, one {# passenger} other {# passengers}}",
+    "roundTrip": "Round trip",
+    "roundTripHint": "Save 10%",
+    "hours": "Duration",
+    "hoursValue": "{count, plural, one {# hour} other {# hours}}",
+    "search": "Search availability",
+    "hourlyNote": "Keep your chauffeur and vehicle for as long as you need.",
+    "toursNote": "Discover our most-loved experiences with a private guide.",
+    "swap": "Swap locations",
+    "priceGuarantee": "Fixed price · no hidden fees"
+  },
+  "Trust": {
+    "eyebrow": "Why travellers choose {siteName}",
+    "title": "Travel that takes care of the details",
+    "subtitle": "From the tarmac to your door, every journey is private, punctual and priced up-front.",
+    "items": {
+      "fixedPrice": {
+        "title": "Fixed-price guarantee",
+        "desc": "The fare you see is the fare you pay — no surge pricing, no detours, no surprises."
+      },
+      "meetGreet": {
+        "title": "Meet & greet",
+        "desc": "Your driver waits in arrivals with a name sign and tracks your flight for delays."
+      },
+      "freeCancellation": {
+        "title": "Free cancellation",
+        "desc": "Plans change. Cancel up to 6 hours before pick-up for a full refund."
+      },
+      "support": {
+        "title": "24/7 concierge",
+        "desc": "Real people on WhatsApp, day or night, in your language."
+      }
+    }
+  },
+  "Tours": {
+    "eyebrow": "Curated experiences",
+    "title": "How about a beautiful tour?",
+    "subtitle": "Unforgettable itineraries and tailor-made adventures, guided by locals who love this city.",
+    "viewAll": "Explore all tours",
+    "duration": "Duration",
+    "guide": "Private guide",
+    "bestSeller": "Best seller",
+    "book": "View tour"
+  },
+  "Locations": {
+    "eyebrow": "Popular routes",
+    "title": "Popular destinations",
+    "subtitle": "The routes our guests book most across Istanbul and Türkiye. Tap a category to see indicative fares.",
+    "tabs": {
+      "airport": "Airport",
+      "hotel": "Hotel",
+      "hospital": "Hospital",
+      "district": "District",
+      "mall": "Shopping mall"
+    },
+    "transfer": "Transfer",
+    "note": "Prices are indicative one-way fares for a standard sedan and may vary by date and vehicle class."
+  },
+  "Vip": {
+    "eyebrow": "Signature service",
+    "title": "Privileged moments, warm hospitality",
+    "subtitle": "Beyond the transfer — a suite of VIP services designed around how you like to travel.",
+    "items": {
+      "meetGreet": {
+        "title": "VIP meet & assist",
+        "desc": "Fast-track welcome, porter assistance and a seamless walk to your vehicle."
+      },
+      "fleet": {
+        "title": "Luxury fleet",
+        "desc": "Mercedes E-Class, V-Class and Sprinter vehicles, immaculately maintained."
+      },
+      "chauffeur": {
+        "title": "Private chauffeur",
+        "desc": "Discreet, professional English-speaking drivers at your disposal."
+      },
+      "security": {
+        "title": "Helicopter, jet & security",
+        "desc": "Helicopter and private-jet transfers plus close-protection on request."
+      }
+    }
+  },
+  "Gallery": {
+    "eyebrow": "Moments",
+    "title": "Privileged moments, beautiful company",
+    "subtitle": "A glimpse of the journeys we design for guests from around the world."
+  },
+  "Testimonials": {
+    "eyebrow": "Guest stories",
+    "title": "Loved by travellers worldwide",
+    "subtitle": "Thousands of five-star journeys and counting.",
+    "items": {
+      "one": {
+        "quote": "Our driver was waiting the second we landed, the car was spotless and the price was exactly as quoted. Flawless from start to finish.",
+        "author": "Sofia M.",
+        "origin": "London, UK"
+      },
+      "two": {
+        "quote": "Booked a full-day Bosphorus tour — our guide was warm, knowledgeable and completely tailored the day to us. Unforgettable.",
+        "author": "Ahmed R.",
+        "origin": "Dubai, UAE"
+      },
+      "three": {
+        "quote": "24/7 WhatsApp support answered in minutes when our flight changed. This is how airport transfers should feel.",
+        "author": "Elif & Deniz",
+        "origin": "Berlin, DE"
+      }
+    }
+  },
+  "Faq": {
+    "eyebrow": "Good to know",
+    "title": "Frequently asked questions",
+    "subtitle": "Everything you need for a smooth journey. Still curious? Our team is one message away.",
+    "more": "Still have a question?",
+    "contactCta": "Talk to our team"
+  },
+  "Cta": {
+    "title": "Ready when you land",
+    "subtitle": "Reserve your private transfer in under two minutes — fixed price, free cancellation and a driver who is always on time.",
+    "primary": "Book a transfer",
+    "secondary": "Message us on WhatsApp"
+  },
+  "Footer": {
+    "tagline": "Private airport transfers, chauffeured travel and curated tours across Türkiye.",
+    "company": "Company",
+    "discover": "Discover",
+    "legal": "Legal",
+    "contact": "Contact",
+    "followUs": "Follow us",
+    "rights": "All rights reserved.",
+    "madeWith": "Crafted in Istanbul.",
+    "securePayment": "Secure payment",
+    "links": {
+      "privacy": "Privacy & Security",
+      "passengerContract": "Passenger Transport Agreement",
+      "purchaseContract": "Purchase Agreement",
+      "terms": "Terms of Use",
+      "dataProtection": "Data Protection"
+    },
+    "discoverLinks": {
+      "istTransfer": "Istanbul Airport Transfer",
+      "sawTransfer": "Sabiha Gökçen Transfer",
+      "antalya": "Antalya Airport Transfer",
+      "bodrum": "Bodrum Airport Transfer",
+      "izmir": "Izmir Airport Transfer",
+      "dalaman": "Dalaman Airport Transfer"
+    }
+  },
+  "About": {
+    "eyebrow": "Our story",
+    "title": "Hospitality is our native language",
+    "subtitle": "We turn the most stressful part of any trip — arrivals and transfers — into the calmest.",
+    "lead": "{siteName} was founded on a simple belief: that travel should begin the moment you land, not after a long queue for a taxi.",
+    "body": "From a single airport pick-up to multi-day chauffeured itineraries, our licensed drivers and local guides share one obsession — looking after you. Every vehicle is privately owned, every price is fixed in advance, and every journey is tracked by a team that never sleeps.",
+    "values": {
+      "title": "What we stand for",
+      "care": {
+        "title": "Guest-first care",
+        "desc": "We treat every arrival like a guest in our own home."
+      },
+      "trust": {
+        "title": "Transparent pricing",
+        "desc": "One fair price, agreed before you travel. Always."
+      },
+      "local": {
+        "title": "Local expertise",
+        "desc": "Licensed guides and drivers who know Türkiye by heart."
+      },
+      "safety": {
+        "title": "Safety first",
+        "desc": "Insured vehicles, vetted chauffeurs, real-time tracking."
+      }
+    },
+    "stats": {
+      "years": "Years of service",
+      "guests": "Happy guests",
+      "fleet": "Vehicles in our fleet",
+      "guides": "Licensed guides"
+    },
+    "collective": {
+      "title": "A collective of passionate minds driven by purpose",
+      "body": "Travel is more than visiting new places — it's about creating stories that stay with you forever. From the very beginning, our mission has been to craft journeys that celebrate culture, comfort and connection."
+    },
+    "story": {
+      "eyebrow": "Our story",
+      "title": "A journey of dreams and challenges",
+      "subtitle": "A decade of turning arrivals into welcomes and routes into memories."
+    },
+    "partners": "Trusted by discerning travellers and partners worldwide",
+    "team": {
+      "eyebrow": "The people",
+      "title": "Meet the experts behind your adventures",
+      "subtitle": "A team united by a love for travel and a commitment to excellence."
+    }
+  },
+  "Business": {
+    "eyebrow": "For business",
+    "title": "Corporate & partner travel, simplified",
+    "subtitle": "Reliable ground transport for teams, events and agencies — with consolidated billing and a dedicated account manager.",
+    "benefits": {
+      "billing": {
+        "title": "Consolidated billing",
+        "desc": "One monthly invoice for every journey, with per-trip cost centres."
+      },
+      "manager": {
+        "title": "Dedicated manager",
+        "desc": "A single point of contact for bookings, changes and reporting."
+      },
+      "priority": {
+        "title": "Priority dispatch",
+        "desc": "Guaranteed vehicles for events, roadshows and VIP delegations."
+      },
+      "api": {
+        "title": "Agency rates & API",
+        "desc": "Net rates for travel agencies and an API for seamless integration."
+      }
+    },
+    "formTitle": "Become a partner",
+    "formSubtitle": "Tell us about your travel needs and we'll be in touch within one business day."
+  },
+  "Vehicles": {
+    "eyebrow": "Our fleet",
+    "title": "The right vehicle for every journey",
+    "subtitle": "Privately owned, immaculately kept and chosen to match your party size and style.",
+    "specs": {
+      "passengers": "Passengers",
+      "luggage": "Luggage",
+      "class": "Class"
+    },
+    "bookThis": "Book this class"
+  },
+  "MeetingPoints": {
+    "eyebrow": "Meeting points",
+    "title": "Where we'll meet you",
+    "subtitle": "Clear, stress-free meeting instructions for every major airport we serve.",
+    "steps": {
+      "title": "How the meet & greet works",
+      "land": {
+        "title": "You land",
+        "desc": "We track your flight in real time — early or delayed, your driver adjusts."
+      },
+      "meet": {
+        "title": "We meet you",
+        "desc": "Your driver waits at arrivals holding a sign with your name."
+      },
+      "relax": {
+        "title": "You relax",
+        "desc": "We carry your bags and walk you to a waiting, climate-controlled vehicle."
+      }
+    }
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "title": "We're here around the clock",
+    "subtitle": "Questions, custom itineraries or last-minute changes — reach us however suits you best.",
+    "form": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "subject": "Subject",
+      "message": "How can we help?",
+      "send": "Send message",
+      "success": "Thank you — your message is on its way. We'll reply shortly.",
+      "error": "Something went wrong. Please try again or message us on WhatsApp.",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "you@example.com",
+      "messagePlaceholder": "Tell us about your trip…"
+    },
+    "formTitle": "Let's start your journey",
+    "infoTitle": "Reach us directly",
+    "hoursLabel": "Hours",
+    "hoursValue": "24 / 7, every day"
+  },
+  "BookingPage": {
+    "eyebrow": "Reserve your journey",
+    "title": "Book your transfer",
+    "subtitle": "A few quick details and your private driver is confirmed. Fixed price, free cancellation up to 6 hours before pick-up.",
+    "steps": {
+      "trip": "Trip details",
+      "contact": "Your details",
+      "confirm": "Confirm"
+    },
+    "fields": {
+      "from": "Pick-up location",
+      "to": "Drop-off location",
+      "date": "Pick-up date & time",
+      "return": "Return date & time",
+      "passengers": "Passengers",
+      "luggage": "Luggage",
+      "flight": "Flight number (optional)",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone / WhatsApp",
+      "notes": "Special requests (optional)"
+    },
+    "roundTrip": "Add a return trip (save 10%)",
+    "summaryTitle": "Trip summary",
+    "estTotal": "Estimated total",
+    "estNote": "Final price is confirmed by email before any payment is taken.",
+    "submit": "Request booking",
+    "submitting": "Requesting…",
+    "success": {
+      "title": "Request received",
+      "body": "Thank you, {name}. We've received your transfer request and will confirm by email within minutes.",
+      "reference": "Your reference"
+    },
+    "error": "We couldn't submit your request. Please try again or contact us on WhatsApp."
+  },
+  "Meta": {
+    "defaultTitle": "{siteName} · Private Istanbul Airport Transfers & Tours",
+    "titleTemplate": "%s · {siteName}",
+    "description": "Private airport transfers, chauffeured travel and curated tours across Istanbul and Türkiye. Fixed prices, meet & greet, free cancellation and 24/7 support.",
+    "home": {
+      "title": "Private Istanbul Airport Transfers & Tours",
+      "description": "Book a private airport transfer in Istanbul with a fixed price, meet & greet and free cancellation. Chauffeured travel and curated tours across Türkiye, 24/7."
+    },
+    "tours": {
+      "title": "Istanbul Tours & Experiences",
+      "description": "Private guided tours across Istanbul and Türkiye — Bosphorus cruises, historic peninsula walks, Princes' Islands and more, with licensed local guides."
+    },
+    "about": {
+      "title": "About Us",
+      "description": "Learn how {siteName} makes airport arrivals and transfers across Türkiye effortless — privately owned fleet, fixed prices and 24/7 care."
+    },
+    "business": {
+      "title": "Corporate & Agency Travel",
+      "description": "Reliable corporate ground transport with consolidated billing, priority dispatch, agency net rates and a dedicated account manager."
+    },
+    "vehicles": {
+      "title": "Our Fleet",
+      "description": "Mercedes E-Class, V-Class and Sprinter vehicles for every party size — privately owned and immaculately maintained."
+    },
+    "meetingPoints": {
+      "title": "Airport Meeting Points",
+      "description": "Clear meet & greet instructions for Istanbul (IST), Sabiha Gökçen (SAW), Antalya, Bodrum, Izmir and Dalaman airports."
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "description": "Answers about pricing, cancellations, meet & greet, luggage, child seats and payments for your private transfer or tour."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Reach our 24/7 concierge by phone, email or WhatsApp for bookings, custom itineraries and support."
+    },
+    "booking": {
+      "title": "Book a Transfer",
+      "description": "Reserve your private airport transfer in minutes — fixed price, free cancellation and a driver who is always on time."
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Last updated",
+    "intro": "This page summarises our {title}. The full, legally binding version is available on request and governs your use of our services.",
+    "contact": "Questions about this document? Contact us at {email}."
+  },
+  "NotFound": {
+    "title": "This page has wandered off",
+    "subtitle": "The page you're looking for doesn't exist or has moved. Let's get you back on the road.",
+    "cta": "Back to home"
+  }
+}

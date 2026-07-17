@@ -1,0 +1,151 @@
+import { PrismaClient } from "@prisma/client";
+import { randomBytes, scryptSync } from "node:crypto";
+import { tours } from "../src/data/tours";
+import { routes } from "../src/data/locations";
+import { vehicles } from "../src/data/vehicles";
+import { faqItems } from "../src/data/faq";
+import { galleryImages } from "../src/data/gallery";
+import { team, milestones } from "../src/data/about";
+
+const prisma = new PrismaClient();
+
+function hashPassword(password: string): string {
+  const salt = randomBytes(16).toString("hex");
+  const hash = scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
+
+async function main() {
+  // ── Admin user ──
+  const email = (process.env.ADMIN_EMAIL ?? "admin@example.com")
+    .trim()
+    .toLowerCase();
+  const password = process.env.ADMIN_PASSWORD ?? "achref-me";
+  await prisma.adminUser.upsert({
+    where: { email },
+    update: {
+      name: "Administrator",
+      passwordHash: hashPassword(password),
+    },
+    create: {
+      email,
+      name: "Administrator",
+      passwordHash: hashPassword(password),
+    },
+  });
+  console.log(`✓ admin user ready: ${email}`);
+
+  // ── Tours ──
+  if ((await prisma.tour.count()) === 0) {
+    await prisma.tour.createMany({
+      data: tours.map((t, i) => ({
+        slug: t.slug,
+        title: t.title,
+        summary: t.summary,
+        description: t.description,
+        category: t.category,
+        highlights: t.highlights,
+        price: t.price,
+        priceType: t.priceType,
+        durationHours: t.durationHours,
+        image: t.image,
+        bestSeller: t.bestSeller ?? false,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${tours.length} tours`);
+  }
+
+  // ── Routes ──
+  if ((await prisma.route.count()) === 0) {
+    await prisma.route.createMany({
+      data: routes.map((r, i) => ({
+        fromLabel: r.from,
+        toLabel: r.to,
+        price: r.price,
+        category: r.category,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${routes.length} routes`);
+  }
+
+  // ── Vehicles ──
+  if ((await prisma.vehicle.count()) === 0) {
+    await prisma.vehicle.createMany({
+      data: vehicles.map((v, i) => ({
+        slug: v.slug,
+        name: v.name,
+        className: v.className,
+        passengers: v.passengers,
+        luggage: v.luggage,
+        image: v.image,
+        features: v.features,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${vehicles.length} vehicles`);
+  }
+
+  // ── FAQ ──
+  if ((await prisma.faqItem.count()) === 0) {
+    await prisma.faqItem.createMany({
+      data: faqItems.map((f, i) => ({
+        question: f.question,
+        answer: f.answer,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${faqItems.length} FAQ items`);
+  }
+
+  // ── Gallery ──
+  if ((await prisma.galleryImage.count()) === 0) {
+    await prisma.galleryImage.createMany({
+      data: galleryImages.map((g, i) => ({
+        src: g.src,
+        alt: g.alt,
+        wide: g.wide ?? false,
+        tall: g.tall ?? false,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${galleryImages.length} gallery images`);
+  }
+
+  // ── Team ──
+  if ((await prisma.teamMember.count()) === 0) {
+    await prisma.teamMember.createMany({
+      data: team.map((m, i) => ({
+        name: m.name,
+        role: m.role,
+        image: m.image,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${team.length} team members`);
+  }
+
+  // ── Milestones ──
+  if ((await prisma.milestone.count()) === 0) {
+    await prisma.milestone.createMany({
+      data: milestones.map((m, i) => ({
+        year: m.year,
+        title: m.title,
+        text: m.text,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${milestones.length} milestones`);
+  }
+}
+
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

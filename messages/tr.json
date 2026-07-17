@@ -1,0 +1,415 @@
+{
+  "Nav": {
+    "home": "Ana Sayfa",
+    "tours": "Turlar",
+    "about": "Hakkımızda",
+    "business": "Kurumsal",
+    "vehicles": "Araç Filomuz",
+    "meetingPoints": "Buluşma Noktaları",
+    "faq": "S.S.S.",
+    "contact": "İletişim",
+    "bookNow": "Transfer Rezervasyonu",
+    "menu": "Menü",
+    "close": "Kapat"
+  },
+  "Common": {
+    "readMore": "Devamını oku",
+    "viewAll": "Tümünü gör",
+    "learnMore": "Daha fazla",
+    "getQuote": "Fiyat al",
+    "bookNow": "Hemen rezerve et",
+    "from": "başlayan",
+    "perPerson": "kişi başı",
+    "perGroup": "grup başına (1–7)",
+    "loading": "Yükleniyor…",
+    "submit": "Gönder",
+    "sending": "Gönderiliyor…",
+    "callUs": "Bizi arayın",
+    "whatsapp": "WhatsApp",
+    "email": "E-posta",
+    "viewOnMap": "Haritada gör",
+    "backHome": "Ana sayfaya dön",
+    "skipToContent": "İçeriğe geç",
+    "currency": "EUR"
+  },
+  "Hero": {
+    "eyebrow": "İstanbul · Özel Havalimanı Transferleri ve Turlar",
+    "title": "Zahmetsiz bir konforla varın",
+    "subtitle": "İstanbul ve Türkiye genelinde özel havalimanı transferleri, şoförlü seyahat ve özenle hazırlanmış turlar — sabit fiyat, sıcak bir karşılama ve indiğiniz an sizi bekleyen bir şoför.",
+    "ratingLabel": "gezgin puanı",
+    "stats": {
+      "transfers": "Tamamlanan transfer",
+      "rating": "Ortalama misafir puanı",
+      "airports": "Hizmet verilen havalimanı",
+      "support": "Concierge desteği"
+    }
+  },
+  "Booking": {
+    "tabTransfer": "Transfer",
+    "tabHourly": "Saatlik",
+    "tabTours": "Turlar",
+    "from": "Nereden",
+    "fromPlaceholder": "Havalimanı, otel, adres…",
+    "to": "Nereye",
+    "toPlaceholder": "Havalimanı, otel, adres…",
+    "when": "Tarih ve saat",
+    "passengers": "Yolcu",
+    "passenger": "{count, plural, one {# yolcu} other {# yolcu}}",
+    "roundTrip": "Gidiş-dönüş",
+    "roundTripHint": "%10 indirim",
+    "hours": "Süre",
+    "hoursValue": "{count, plural, one {# saat} other {# saat}}",
+    "search": "Uygunluk ara",
+    "hourlyNote": "Şoförünüzü ve aracınızı istediğiniz süre boyunca yanınızda tutun.",
+    "toursNote": "En sevilen deneyimlerimizi özel bir rehberle keşfedin.",
+    "swap": "Konumları değiştir",
+    "priceGuarantee": "Sabit fiyat · gizli ücret yok"
+  },
+  "Trust": {
+    "eyebrow": "Neden {siteName}",
+    "title": "Ayrıntıları düşünen bir seyahat",
+    "subtitle": "Pistten kapınıza kadar her yolculuk özel, dakik ve fiyatı önceden bellidir.",
+    "items": {
+      "fixedPrice": {
+        "title": "Sabit fiyat garantisi",
+        "desc": "Gördüğünüz ücret ödediğiniz ücrettir — zam yok, sapma yok, sürpriz yok."
+      },
+      "meetGreet": {
+        "title": "Karşılama hizmeti",
+        "desc": "Şoförünüz isim tabelasıyla gelişte bekler ve uçuşunuzu gecikmelere karşı takip eder."
+      },
+      "freeCancellation": {
+        "title": "Ücretsiz iptal",
+        "desc": "Planlar değişir. Alıştan 6 saat öncesine kadar iptal edin, tam iade alın."
+      },
+      "support": {
+        "title": "7/24 concierge",
+        "desc": "Gece gündüz, kendi dilinizde WhatsApp'ta gerçek insanlar."
+      }
+    }
+  },
+  "Tours": {
+    "eyebrow": "Özenle seçilmiş deneyimler",
+    "title": "Güzel bir tura ne dersiniz?",
+    "subtitle": "Unutulmaz rotalar ve size özel maceralar; bu şehri seven yerel rehberler eşliğinde.",
+    "viewAll": "Tüm turları keşfet",
+    "duration": "Süre",
+    "guide": "Özel rehber",
+    "bestSeller": "En çok tercih edilen",
+    "book": "Turu incele"
+  },
+  "Locations": {
+    "eyebrow": "Popüler rotalar",
+    "title": "Popüler destinasyonlar",
+    "subtitle": "Misafirlerimizin İstanbul ve Türkiye genelinde en çok rezerve ettiği rotalar. Örnek ücretleri görmek için bir kategori seçin.",
+    "tabs": {
+      "airport": "Havalimanı",
+      "hotel": "Otel",
+      "hospital": "Hastane",
+      "district": "Semt",
+      "mall": "AVM"
+    },
+    "transfer": "Transfer",
+    "note": "Fiyatlar standart bir sedan için örnek tek yön ücretleridir ve tarihe ile araç sınıfına göre değişebilir."
+  },
+  "Vip": {
+    "eyebrow": "İmza hizmet",
+    "title": "Ayrıcalıklı anlar, sıcak misafirperverlik",
+    "subtitle": "Transferin ötesinde — seyahat tarzınıza göre tasarlanmış bir VIP hizmetler dizisi.",
+    "items": {
+      "meetGreet": {
+        "title": "VIP karşılama ve asistanlık",
+        "desc": "Hızlı geçiş karşılaması, valiz yardımı ve aracınıza sorunsuz bir eşlik."
+      },
+      "fleet": {
+        "title": "Lüks filo",
+        "desc": "Kusursuz bakımlı Mercedes E-Serisi, V-Serisi ve Sprinter araçlar."
+      },
+      "chauffeur": {
+        "title": "Özel şoför",
+        "desc": "Emrinizde, ölçülü ve profesyonel İngilizce konuşan şoförler."
+      },
+      "security": {
+        "title": "Helikopter, jet ve güvenlik",
+        "desc": "Talebe bağlı helikopter ve özel jet transferleri ile koruma hizmeti."
+      }
+    }
+  },
+  "Gallery": {
+    "eyebrow": "Anlar",
+    "title": "Ayrıcalıklı anlar, güzel bir eşlik",
+    "subtitle": "Dünyanın dört bir yanından misafirler için tasarladığımız yolculuklardan bir kesit."
+  },
+  "Testimonials": {
+    "eyebrow": "Misafir hikâyeleri",
+    "title": "Dünyanın her yerinden gezginlerin tercihi",
+    "subtitle": "Binlerce beş yıldızlı yolculuk ve artmaya devam ediyor.",
+    "items": {
+      "one": {
+        "quote": "İner inmez şoförümüz bizi bekliyordu, araç tertemizdi ve fiyat tam da belirtildiği gibiydi. Baştan sona kusursuz.",
+        "author": "Sofia M.",
+        "origin": "Londra, İngiltere"
+      },
+      "two": {
+        "quote": "Tam günlük bir Boğaz turu aldık — rehberimiz sıcak, bilgili ve günü tamamen bize göre şekillendirdi. Unutulmaz.",
+        "author": "Ahmed R.",
+        "origin": "Dubai, BAE"
+      },
+      "three": {
+        "quote": "Uçuşumuz değiştiğinde 7/24 WhatsApp desteği dakikalar içinde yanıt verdi. Havalimanı transferi böyle hissettirmeli.",
+        "author": "Elif & Deniz",
+        "origin": "Berlin, Almanya"
+      }
+    }
+  },
+  "Faq": {
+    "eyebrow": "Bilmekte fayda var",
+    "title": "Sıkça sorulan sorular",
+    "subtitle": "Sorunsuz bir yolculuk için ihtiyacınız olan her şey. Hâlâ merak mı ediyorsunuz? Ekibimiz bir mesaj uzağınızda.",
+    "more": "Hâlâ bir sorunuz mu var?",
+    "contactCta": "Ekibimizle konuşun"
+  },
+  "Cta": {
+    "title": "İndiğinizde hazırız",
+    "subtitle": "Özel transferinizi iki dakikadan kısa sürede ayırtın — sabit fiyat, ücretsiz iptal ve her zaman dakik bir şoför.",
+    "primary": "Transfer rezerve et",
+    "secondary": "WhatsApp'tan yazın"
+  },
+  "Footer": {
+    "tagline": "Türkiye genelinde özel havalimanı transferleri, şoförlü seyahat ve özenle hazırlanmış turlar.",
+    "company": "Kurumsal",
+    "discover": "Keşfet",
+    "legal": "Yasal",
+    "contact": "İletişim",
+    "followUs": "Bizi takip edin",
+    "rights": "Tüm hakları saklıdır.",
+    "madeWith": "İstanbul'da hazırlandı.",
+    "securePayment": "Güvenli ödeme",
+    "links": {
+      "privacy": "Gizlilik ve Güvenlik",
+      "passengerContract": "Yolcu Taşıma Sözleşmesi",
+      "purchaseContract": "Satış Sözleşmesi",
+      "terms": "Kullanım Koşulları",
+      "dataProtection": "Verilerin Korunması"
+    },
+    "discoverLinks": {
+      "istTransfer": "İstanbul Havalimanı Transfer",
+      "sawTransfer": "Sabiha Gökçen Transfer",
+      "antalya": "Antalya Havalimanı Transfer",
+      "bodrum": "Bodrum Havalimanı Transfer",
+      "izmir": "İzmir Havalimanı Transfer",
+      "dalaman": "Dalaman Havalimanı Transfer"
+    }
+  },
+  "About": {
+    "eyebrow": "Hikâyemiz",
+    "title": "Misafirperverlik bizim ana dilimiz",
+    "subtitle": "Her seyahatin en stresli kısmını — varışları ve transferleri — en sakin ana dönüştürüyoruz.",
+    "lead": "{siteName}, basit bir inançla kuruldu: seyahat, taksi kuyruğundan sonra değil, indiğiniz an başlamalı.",
+    "body": "Tek bir havalimanı karşılamasından çok günlü şoförlü rotalara kadar, lisanslı şoförlerimiz ve yerel rehberlerimiz tek bir tutkuyu paylaşır — sizinle ilgilenmek. Her araç özel mülkiyettir, her fiyat önceden sabittir ve her yolculuk hiç uyumayan bir ekip tarafından takip edilir.",
+    "values": {
+      "title": "Değerlerimiz",
+      "care": {
+        "title": "Önce misafir",
+        "desc": "Her varışı kendi evimizdeki bir misafir gibi ağırlarız."
+      },
+      "trust": {
+        "title": "Şeffaf fiyatlandırma",
+        "desc": "Seyahatten önce üzerinde anlaşılan tek ve adil bir fiyat. Her zaman."
+      },
+      "local": {
+        "title": "Yerel uzmanlık",
+        "desc": "Türkiye'yi ezbere bilen lisanslı rehberler ve şoförler."
+      },
+      "safety": {
+        "title": "Önce güvenlik",
+        "desc": "Sigortalı araçlar, kontrol edilmiş şoförler, gerçek zamanlı takip."
+      }
+    },
+    "stats": {
+      "years": "Yıllık hizmet",
+      "guests": "Mutlu misafir",
+      "fleet": "Filomuzdaki araç",
+      "guides": "Lisanslı rehber"
+    },
+    "collective": {
+      "title": "Amaçla hareket eden tutkulu zihinlerden oluşan bir topluluk",
+      "body": "Seyahat, yeni yerler görmekten fazlasıdır — sonsuza dek sizinle kalacak hikâyeler yaratmaktır. En baştan beri misyonumuz; kültürü, konforu ve bağı kutlayan yolculuklar tasarlamak oldu."
+    },
+    "story": {
+      "eyebrow": "Hikâyemiz",
+      "title": "Hayallerin ve zorlukların yolculuğu",
+      "subtitle": "Varışları karşılamaya, rotaları anılara dönüştürdüğümüz on yıl."
+    },
+    "partners": "Seçkin gezginler ve iş ortakları tarafından güveniliyor",
+    "team": {
+      "eyebrow": "Ekip",
+      "title": "Maceralarınızın arkasındaki uzmanlarla tanışın",
+      "subtitle": "Seyahat sevgisi ve mükemmellik tutkusuyla birleşmiş bir ekip."
+    }
+  },
+  "Business": {
+    "eyebrow": "Kurumsal",
+    "title": "Kurumsal ve iş ortağı seyahati, sadeleştirildi",
+    "subtitle": "Ekipler, etkinlikler ve acenteler için güvenilir kara ulaşımı — birleştirilmiş faturalama ve size özel bir hesap yöneticisiyle.",
+    "benefits": {
+      "billing": {
+        "title": "Birleştirilmiş faturalama",
+        "desc": "Her yolculuk için tek aylık fatura ve yolculuk bazlı masraf merkezleri."
+      },
+      "manager": {
+        "title": "Özel hesap yöneticisi",
+        "desc": "Rezervasyon, değişiklik ve raporlama için tek bir iletişim noktası."
+      },
+      "priority": {
+        "title": "Öncelikli sevkiyat",
+        "desc": "Etkinlikler, roadshow'lar ve VIP heyetler için garantili araçlar."
+      },
+      "api": {
+        "title": "Acente fiyatları ve API",
+        "desc": "Seyahat acenteleri için net fiyatlar ve sorunsuz entegrasyon için bir API."
+      }
+    },
+    "formTitle": "İş ortağımız olun",
+    "formSubtitle": "Seyahat ihtiyaçlarınızı bize anlatın, bir iş günü içinde sizinle iletişime geçelim."
+  },
+  "Vehicles": {
+    "eyebrow": "Filomuz",
+    "title": "Her yolculuk için doğru araç",
+    "subtitle": "Özel mülkiyet, kusursuz bakımlı ve grup büyüklüğünüze ile tarzınıza göre seçilmiş.",
+    "specs": {
+      "passengers": "Yolcu",
+      "luggage": "Bagaj",
+      "class": "Sınıf"
+    },
+    "bookThis": "Bu sınıfı rezerve et"
+  },
+  "MeetingPoints": {
+    "eyebrow": "Buluşma noktaları",
+    "title": "Sizi nerede karşılıyoruz",
+    "subtitle": "Hizmet verdiğimiz her büyük havalimanı için net, stressiz buluşma talimatları.",
+    "steps": {
+      "title": "Karşılama nasıl işler",
+      "land": {
+        "title": "İnersiniz",
+        "desc": "Uçuşunuzu gerçek zamanlı takip ederiz — erken ya da gecikmeli, şoförünüz uyum sağlar."
+      },
+      "meet": {
+        "title": "Sizi karşılarız",
+        "desc": "Şoförünüz gelişte adınızın yazılı olduğu bir tabelayla bekler."
+      },
+      "relax": {
+        "title": "Rahatlarsınız",
+        "desc": "Çantalarınızı taşır ve sizi bekleyen klimalı bir araca eşlik ederiz."
+      }
+    }
+  },
+  "Contact": {
+    "eyebrow": "İletişim",
+    "title": "Günün her saati buradayız",
+    "subtitle": "Sorular, size özel rotalar veya son dakika değişiklikleri — size en uygun şekilde bize ulaşın.",
+    "form": {
+      "name": "Ad soyad",
+      "email": "E-posta",
+      "phone": "Telefon (isteğe bağlı)",
+      "subject": "Konu",
+      "message": "Size nasıl yardımcı olabiliriz?",
+      "send": "Mesaj gönder",
+      "success": "Teşekkürler — mesajınız yola çıktı. Kısa süre içinde yanıtlayacağız.",
+      "error": "Bir şeyler ters gitti. Lütfen tekrar deneyin veya WhatsApp'tan yazın.",
+      "namePlaceholder": "Adınız",
+      "emailPlaceholder": "siz@ornek.com",
+      "messagePlaceholder": "Bize seyahatinizden bahsedin…"
+    },
+    "formTitle": "Yolculuğunuza başlayalım",
+    "infoTitle": "Doğrudan bize ulaşın",
+    "hoursLabel": "Çalışma saatleri",
+    "hoursValue": "Her gün 7 / 24"
+  },
+  "BookingPage": {
+    "eyebrow": "Yolculuğunuzu ayırtın",
+    "title": "Transferinizi rezerve edin",
+    "subtitle": "Birkaç hızlı bilgi ve özel şoförünüz onaylanır. Sabit fiyat, alıştan 6 saat öncesine kadar ücretsiz iptal.",
+    "steps": {
+      "trip": "Yolculuk bilgileri",
+      "contact": "Bilgileriniz",
+      "confirm": "Onayla"
+    },
+    "fields": {
+      "from": "Alış noktası",
+      "to": "Bırakış noktası",
+      "date": "Alış tarihi ve saati",
+      "return": "Dönüş tarihi ve saati",
+      "passengers": "Yolcu",
+      "luggage": "Bagaj",
+      "flight": "Uçuş numarası (isteğe bağlı)",
+      "name": "Ad soyad",
+      "email": "E-posta",
+      "phone": "Telefon / WhatsApp",
+      "notes": "Özel istekler (isteğe bağlı)"
+    },
+    "roundTrip": "Dönüş yolculuğu ekle (%10 indirim)",
+    "summaryTitle": "Yolculuk özeti",
+    "estTotal": "Tahmini toplam",
+    "estNote": "Nihai fiyat, herhangi bir ödeme alınmadan önce e-posta ile onaylanır.",
+    "submit": "Rezervasyon iste",
+    "submitting": "İsteniyor…",
+    "success": {
+      "title": "İsteğiniz alındı",
+      "body": "Teşekkürler, {name}. Transfer isteğinizi aldık ve dakikalar içinde e-posta ile onaylayacağız.",
+      "reference": "Referansınız"
+    },
+    "error": "İsteğinizi gönderemedik. Lütfen tekrar deneyin veya WhatsApp'tan bize ulaşın."
+  },
+  "Meta": {
+    "defaultTitle": "{siteName} · Özel İstanbul Havalimanı Transferleri ve Turlar",
+    "titleTemplate": "%s · {siteName}",
+    "description": "İstanbul ve Türkiye genelinde özel havalimanı transferleri, şoförlü seyahat ve özenle hazırlanmış turlar. Sabit fiyatlar, karşılama, ücretsiz iptal ve 7/24 destek.",
+    "home": {
+      "title": "Özel İstanbul Havalimanı Transferleri ve Turlar",
+      "description": "İstanbul'da sabit fiyatlı, karşılamalı ve ücretsiz iptalli özel havalimanı transferi ayırtın. Türkiye genelinde şoförlü seyahat ve turlar, 7/24."
+    },
+    "tours": {
+      "title": "İstanbul Turları ve Deneyimleri",
+      "description": "İstanbul ve Türkiye genelinde özel rehberli turlar — Boğaz turları, tarihi yarımada gezileri, Adalar ve daha fazlası, lisanslı yerel rehberlerle."
+    },
+    "about": {
+      "title": "Hakkımızda",
+      "description": "{siteName} olarak Türkiye genelinde havalimanı varışlarını ve transferlerini nasıl zahmetsiz hâle getirdiğimizi keşfedin — özel filo, sabit fiyatlar ve 7/24 özen."
+    },
+    "business": {
+      "title": "Kurumsal ve Acente Seyahati",
+      "description": "Birleştirilmiş faturalama, öncelikli sevkiyat, acente net fiyatları ve özel hesap yöneticisiyle güvenilir kurumsal kara ulaşımı."
+    },
+    "vehicles": {
+      "title": "Araç Filomuz",
+      "description": "Her grup büyüklüğü için Mercedes E-Serisi, V-Serisi ve Sprinter araçlar — özel mülkiyet ve kusursuz bakımlı."
+    },
+    "meetingPoints": {
+      "title": "Havalimanı Buluşma Noktaları",
+      "description": "İstanbul (IST), Sabiha Gökçen (SAW), Antalya, Bodrum, İzmir ve Dalaman havalimanları için net karşılama talimatları."
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "description": "Özel transferiniz veya turunuz için fiyatlandırma, iptal, karşılama, bagaj, çocuk koltuğu ve ödemeler hakkında yanıtlar."
+    },
+    "contact": {
+      "title": "İletişim",
+      "description": "Rezervasyon, size özel rotalar ve destek için 7/24 concierge ekibimize telefon, e-posta veya WhatsApp ile ulaşın."
+    },
+    "booking": {
+      "title": "Transfer Rezervasyonu",
+      "description": "Özel havalimanı transferinizi dakikalar içinde ayırtın — sabit fiyat, ücretsiz iptal ve her zaman dakik bir şoför."
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Son güncelleme",
+    "intro": "Bu sayfa {title} belgemizi özetler. Tam ve yasal olarak bağlayıcı sürüm talep üzerine sunulur ve hizmetlerimizi kullanımınızı düzenler.",
+    "contact": "Bu belge hakkında sorularınız mı var? {email} adresinden bize ulaşın."
+  },
+  "NotFound": {
+    "title": "Bu sayfa kaybolmuş",
+    "subtitle": "Aradığınız sayfa mevcut değil ya da taşınmış. Sizi tekrar yola çıkaralım.",
+    "cta": "Ana sayfaya dön"
+  }
+}
