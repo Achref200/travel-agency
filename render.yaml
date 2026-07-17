@@ -1,20 +1,22 @@
-# Render deployment — Next.js server + SQLite on a persistent disk.
+# Render deployment — Next.js server + SQLite (free plan, ephemeral storage).
 # Docs: https://render.com/docs/blueprint-spec
 #
-# The disk (mounted at /var/data) is only available at RUNTIME, not during the
-# build. So the build uses a throwaway local SQLite file (/tmp/build.db) to
-# statically generate pages, while the live app reads/writes the persistent
-# database on the mounted disk. The start command provisions + seeds that disk
-# database on first boot (idempotent on later restarts).
+# The build uses a throwaway SQLite file (/tmp/build.db) to statically generate
+# pages. At runtime the app uses /tmp/dev.db, which the start command provisions
+# and seeds on every boot.
 #
-# NOTE: persistent disks require a paid instance (Starter). On the free plan the
-# filesystem is ephemeral and SQLite data is lost on every restart/redeploy.
+# NOTE: the free plan has NO persistent disk — the filesystem is ephemeral, so
+# the database is rebuilt on each restart/redeploy. Seeded content (tours,
+# routes, etc.) always comes back automatically, but runtime data such as
+# bookings, contact messages and admin content edits is NOT retained. For
+# persistent data, upgrade to a paid plan and add a disk (see git history), or
+# move DATABASE_URL to a hosted Postgres.
 
 services:
   - type: web
     name: travel-agency
     runtime: node
-    plan: starter
+    plan: free
     region: frankfurt
     branch: main
     buildCommand: >-
@@ -28,15 +30,11 @@ services:
       npx tsx prisma/seed.ts &&
       npm run start
     healthCheckPath: /en
-    disk:
-      name: sqlite-data
-      mountPath: /var/data
-      sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: "22.20.0"
       - key: DATABASE_URL
-        value: file:/var/data/dev.db
+        value: file:/tmp/dev.db
       # Set these in the Render dashboard (marked sync:false so they aren't
       # stored in the repo). ADMIN_SESSION_SECRET must be a long random string.
       - key: ADMIN_SESSION_SECRET
