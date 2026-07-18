@@ -17,12 +17,12 @@ export default function OpengraphImage() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          background: "linear-gradient(135deg, #10302e 0%, #0b201f 100%)",
+          background: "linear-gradient(135deg, #0b1d3a 0%, #07152a 100%)",
           color: "#f7f4ef",
           fontFamily: "serif",
         }}
       >
-        <div style={{ display: "flex", width: 64, height: 3, background: "#b08d57" }} />
+        <div style={{ display: "flex", width: 64, height: 3, background: "#c8a24c" }} />
         <div
           style={{
             marginTop: 32,
@@ -34,7 +34,7 @@ export default function OpengraphImage() {
           }}
         >
           {siteConfig.name}
-          <span style={{ color: "#b08d57" }}>.</span>
+          <span style={{ color: "#c8a24c" }}>.</span>
         </div>
         <div
           style={{

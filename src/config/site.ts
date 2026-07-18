@@ -14,7 +14,7 @@
  */
 
 /** The one variable to change when the brand name is decided. */
-export const SITE_NAME = "Azura";
+export const SITE_NAME = "Marwen Travel";
 
 /** Production domain (no trailing slash). Used for canonical URLs & sitemaps. */
 export const SITE_DOMAIN = "https://www.azura-travel.com";
@@ -25,7 +25,7 @@ export const siteConfig = {
   /** Short brand name shown in the UI. */
   name: SITE_NAME,
   /** Full legal / registered company name (footer, contracts, invoices). */
-  legalName: `${SITE_NAME} Travel`,
+  legalName: SITE_NAME,
   /** Canonical production URL. */
   url: SITE_DOMAIN,
   /** Default social share / OG image (served from /public or Cloudinary). */
@@ -57,7 +57,7 @@ export const siteConfig = {
 
   /** Public social profiles. Empty string = hidden. */
   social: {
-    instagram: "https://www.instagram.com/",
+    instagram: "https://www.instagram.com/marwen_travel_officiel",
     facebook: "https://www.facebook.com/",
     tripadvisor: "https://www.tripadvisor.com/",
     x: "",

@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 /* ==========================================================================
-   DESIGN SYSTEM — "Bosphorus Luxe"
+   DESIGN SYSTEM — "Marwen — Navy & Gold"
    Elegant · luxurious · minimal. Warm ivory canvas, deep charcoal ink,
-   a restrained brass-gold accent and a deep teal for immersive sections.
+   a restrained brass-gold accent and a deep navy blue for immersive sections.
    ========================================================================== */
 
 @theme {
@@ -15,10 +15,10 @@
   --color-faint: #9a968e; /* tertiary text / captions */
   --color-line: #e7e1d8; /* hairline borders */
 
-  /* Brand accent — muted brass gold */
-  --color-gold: #b08d57;
-  --color-gold-deep: #8c6d3f;
-  --color-gold-soft: #d9c7a8;
+  /* Brand accent — rich metallic gold (from Marwen logo/poster) */
+  --color-gold: #c8a24c;
+  --color-gold-deep: #9a7730;
+  --color-gold-soft: #e6d4a8;
 
   /* Earthy editorial accents (blended from the Scapia palette) */
   --color-terracotta: #a2603a;
@@ -27,9 +27,9 @@
   --color-sand: #d8ccbe;
   --color-shell: #efe8dd; /* warm panel background */
 
-  /* Immersive dark — deep teal / Bosphorus night */
-  --color-sea: #10302e;
-  --color-sea-deep: #0b201f;
+  /* Immersive dark — deep navy blue (Marwen brand background) */
+  --color-sea: #0b1d3a;
+  --color-sea-deep: #07152a;
 
   /* Feedback */
   --color-success: #3f7d5c;
@@ -223,9 +223,9 @@
   .scrim {
     background: linear-gradient(
       to top,
-      rgba(11, 32, 31, 0.72) 0%,
-      rgba(11, 32, 31, 0.28) 42%,
-      rgba(11, 32, 31, 0) 100%
+      rgba(7, 21, 42, 0.72) 0%,
+      rgba(7, 21, 42, 0.28) 42%,
+      rgba(7, 21, 42, 0) 100%
     );
   }
 }

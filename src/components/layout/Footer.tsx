@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { mainNav } from "@/config/nav";
 import { siteConfig, whatsappLink, telLink } from "@/config/site";
+import { Logo } from "./Logo";
 import {
   InstagramIcon,
   FacebookIcon,
@@ -38,12 +39,8 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           {/* Brand + contact */}
           <div>
-            <Link
-              href="/"
-              className="font-display text-3xl text-canvas leading-none"
-            >
-              {siteConfig.name}
-              <span className="text-gold">.</span>
+            <Link href="/" aria-label={siteConfig.name}>
+              <Logo tone="light" className="text-3xl" />
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-canvas/70">
               {t("tagline")}

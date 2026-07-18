@@ -9,6 +9,7 @@ import { siteConfig, whatsappLink } from "@/config/site";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { Logo } from "./Logo";
 
 export function Header() {
   const t = useTranslations("Nav");
@@ -35,23 +36,19 @@ export function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header
-      className={cn(
-        "sticky top-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-canvas/85 backdrop-blur-md border-b border-line shadow-[0_1px_20px_rgba(26,26,23,0.04)]"
-          : "bg-canvas/40 backdrop-blur-sm border-b border-transparent",
-      )}
-    >
+    <>
+      <header
+        className={cn(
+          "sticky top-0 z-50 transition-all duration-300",
+          scrolled || menuOpen
+            ? "bg-canvas/85 backdrop-blur-md border-b border-line shadow-[0_1px_20px_rgba(26,26,23,0.04)]"
+            : "bg-canvas/40 backdrop-blur-sm border-b border-transparent",
+        )}
+      >
       <div className="shell flex h-16 md:h-20 items-center justify-between gap-6">
         {/* Brand */}
-        <Link
-          href="/"
-          className="font-display text-2xl md:text-[1.7rem] leading-none tracking-tight text-ink"
-          aria-label={siteConfig.name}
-        >
-          {siteConfig.name}
-          <span className="text-gold">.</span>
+        <Link href="/" aria-label={siteConfig.name}>
+          <Logo className="text-2xl md:text-[1.7rem]" />
         </Link>
 
         {/* Desktop nav */}
@@ -90,12 +87,16 @@ export function Header() {
         >
           {menuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
         </button>
-      </div>
+        </div>
+      </header>
 
-      {/* Mobile overlay menu */}
+      {/* Mobile overlay menu — rendered as a SIBLING of <header> on purpose:
+          the header's backdrop-blur establishes a containing block for fixed
+          descendants, which would trap this panel inside the ~64px bar and
+          strip its background. Keeping it outside anchors it to the viewport. */}
       <div
         className={cn(
-          "lg:hidden fixed inset-x-0 top-16 bottom-0 z-40 bg-canvas transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "lg:hidden fixed inset-x-0 top-16 md:top-20 bottom-0 z-40 bg-canvas transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
           menuOpen
             ? "opacity-100 translate-y-0"
             : "pointer-events-none opacity-0 -translate-y-2",
@@ -136,6 +137,6 @@ export function Header() {
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }
