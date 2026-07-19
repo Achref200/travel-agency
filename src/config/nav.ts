@@ -1,6 +1,7 @@
 /** Primary navigation. `key` maps to the `Nav` message namespace. */
 export const mainNav = [
   { key: "tours", href: "/tours" },
+  { key: "hotels", href: "/hotels" },
   { key: "about", href: "/about" },
   { key: "vehicles", href: "/vehicles" },
   { key: "meetingPoints", href: "/meeting-points" },

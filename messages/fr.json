@@ -1,0 +1,492 @@
+{
+  "Nav": {
+    "home": "Accueil",
+    "tours": "Excursions",
+    "about": "À propos",
+    "business": "Entreprises",
+    "vehicles": "Notre flotte",
+    "hotels": "Hôtels",
+    "meetingPoints": "Points de rencontre",
+    "faq": "FAQ",
+    "contact": "Contact",
+    "bookNow": "Réserver un transfert",
+    "menu": "Menu",
+    "close": "Fermer"
+  },
+  "Common": {
+    "readMore": "Lire la suite",
+    "viewAll": "Tout voir",
+    "learnMore": "En savoir plus",
+    "getQuote": "Obtenir un devis",
+    "bookNow": "Réserver",
+    "from": "à partir de",
+    "perPerson": "par personne",
+    "perGroup": "par groupe (1–7)",
+    "loading": "Chargement…",
+    "submit": "Envoyer",
+    "sending": "Envoi…",
+    "callUs": "Appelez-nous",
+    "whatsapp": "WhatsApp",
+    "email": "E-mail",
+    "viewOnMap": "Voir sur la carte",
+    "backHome": "Retour à l'accueil",
+    "skipToContent": "Aller au contenu",
+    "currency": "EUR"
+  },
+  "Hero": {
+    "eyebrow": "Istanbul · Transferts aéroport privés & excursions",
+    "title": "Arrivez dans un confort absolu",
+    "subtitle": "Transferts aéroport privés, voyages avec chauffeur et excursions soignées à travers la Türkiye — un prix fixe, un accueil chaleureux et un chauffeur qui vous attend dès l'atterrissage.",
+    "ratingLabel": "noté par les voyageurs",
+    "stats": {
+      "transfers": "Transferts réalisés",
+      "rating": "Note moyenne des clients",
+      "airports": "Aéroports desservis",
+      "support": "Assistance conciergerie"
+    }
+  },
+  "Booking": {
+    "tabTransfer": "Transfert",
+    "tabHourly": "À l'heure",
+    "tabTours": "Excursions",
+    "from": "Départ",
+    "fromPlaceholder": "Aéroport, hôtel, adresse…",
+    "to": "Arrivée",
+    "toPlaceholder": "Aéroport, hôtel, adresse…",
+    "when": "Date et heure",
+    "passengers": "Passagers",
+    "passenger": "{count, plural, one {# passager} other {# passagers}}",
+    "roundTrip": "Aller-retour",
+    "roundTripHint": "Économisez 10 %",
+    "hours": "Durée",
+    "hoursValue": "{count, plural, one {# heure} other {# heures}}",
+    "search": "Rechercher une disponibilité",
+    "hourlyNote": "Gardez votre chauffeur et votre véhicule aussi longtemps que nécessaire.",
+    "toursNote": "Découvrez nos expériences les plus appréciées avec un guide privé.",
+    "swap": "Inverser les lieux",
+    "priceGuarantee": "Prix fixe · sans frais cachés"
+  },
+  "Trust": {
+    "eyebrow": "Pourquoi les voyageurs choisissent {siteName}",
+    "title": "Un voyage qui prend soin des détails",
+    "subtitle": "Du tarmac à votre porte, chaque trajet est privé, ponctuel et au tarif annoncé à l'avance.",
+    "items": {
+      "fixedPrice": {
+        "title": "Garantie de prix fixe",
+        "desc": "Le tarif affiché est le tarif payé — aucune majoration, aucun détour, aucune surprise."
+      },
+      "meetGreet": {
+        "title": "Accueil personnalisé",
+        "desc": "Votre chauffeur vous attend aux arrivées avec une pancarte à votre nom et suit votre vol en cas de retard."
+      },
+      "freeCancellation": {
+        "title": "Annulation gratuite",
+        "desc": "Les plans changent. Annulez jusqu'à 6 heures avant la prise en charge pour un remboursement intégral."
+      },
+      "support": {
+        "title": "Conciergerie 24/7",
+        "desc": "De vraies personnes sur WhatsApp, jour et nuit, dans votre langue."
+      }
+    }
+  },
+  "Tours": {
+    "eyebrow": "Expériences soignées",
+    "title": "Et si vous partiez en excursion ?",
+    "subtitle": "Des itinéraires inoubliables et des aventures sur mesure, guidés par des locaux qui aiment cette ville.",
+    "viewAll": "Explorer toutes les excursions",
+    "duration": "Durée",
+    "guide": "Guide privé",
+    "bestSeller": "Meilleure vente",
+    "book": "Voir l'excursion"
+  },
+  "Locations": {
+    "eyebrow": "Trajets populaires",
+    "title": "Destinations populaires",
+    "subtitle": "Les trajets que nos clients réservent le plus à Istanbul et en Türkiye. Touchez une catégorie pour voir les tarifs indicatifs.",
+    "tabs": {
+      "airport": "Aéroport",
+      "hotel": "Hôtel",
+      "hospital": "Hôpital",
+      "district": "Quartier",
+      "mall": "Centre commercial"
+    },
+    "transfer": "Transfert",
+    "note": "Les prix sont des tarifs indicatifs aller simple pour une berline standard et peuvent varier selon la date et la classe de véhicule."
+  },
+  "Vip": {
+    "eyebrow": "Service signature",
+    "title": "Des moments privilégiés, une hospitalité chaleureuse",
+    "subtitle": "Au-delà du transfert — une gamme de services VIP pensés autour de votre façon de voyager.",
+    "items": {
+      "meetGreet": {
+        "title": "Accueil VIP & assistance",
+        "desc": "Accueil coupe-file, aide au portage et un trajet fluide jusqu'à votre véhicule."
+      },
+      "fleet": {
+        "title": "Flotte de luxe",
+        "desc": "Véhicules Mercedes Classe E, Classe V et Sprinter, impeccablement entretenus."
+      },
+      "chauffeur": {
+        "title": "Chauffeur privé",
+        "desc": "Des chauffeurs discrets, professionnels et anglophones à votre disposition."
+      },
+      "security": {
+        "title": "Hélicoptère, jet & sécurité",
+        "desc": "Transferts en hélicoptère et jet privé, ainsi qu'une protection rapprochée sur demande."
+      }
+    }
+  },
+  "Gallery": {
+    "eyebrow": "Instants",
+    "title": "Des moments privilégiés, une belle compagnie",
+    "subtitle": "Un aperçu des voyages que nous concevons pour des clients du monde entier."
+  },
+  "Testimonials": {
+    "eyebrow": "Récits de clients",
+    "title": "Plébiscité par les voyageurs du monde entier",
+    "subtitle": "Des milliers de voyages cinq étoiles, et ça continue.",
+    "items": {
+      "one": {
+        "quote": "Notre chauffeur nous attendait à la seconde où nous avons atterri, la voiture était impeccable et le prix exactement celui annoncé. Parfait du début à la fin.",
+        "author": "Sofia M.",
+        "origin": "Londres, RU"
+      },
+      "two": {
+        "quote": "Nous avons réservé une excursion d'une journée sur le Bosphore — notre guide était chaleureux, cultivé et a entièrement adapté la journée à nos envies. Inoubliable.",
+        "author": "Ahmed R.",
+        "origin": "Dubaï, EAU"
+      },
+      "three": {
+        "quote": "L'assistance WhatsApp 24/7 a répondu en quelques minutes lorsque notre vol a changé. C'est ainsi que les transferts aéroport devraient être.",
+        "author": "Elif & Deniz",
+        "origin": "Berlin, DE"
+      }
+    }
+  },
+  "Faq": {
+    "eyebrow": "Bon à savoir",
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce qu'il faut pour un voyage serein. Une autre question ? Notre équipe est à un message près.",
+    "more": "Vous avez encore une question ?",
+    "contactCta": "Parler à notre équipe"
+  },
+  "Cta": {
+    "title": "Prêts dès votre atterrissage",
+    "subtitle": "Réservez votre transfert privé en moins de deux minutes — prix fixe, annulation gratuite et un chauffeur toujours à l'heure.",
+    "primary": "Réserver un transfert",
+    "secondary": "Écrivez-nous sur WhatsApp"
+  },
+  "Footer": {
+    "tagline": "Transferts aéroport privés, voyages avec chauffeur et excursions soignées à travers la Türkiye.",
+    "company": "Société",
+    "discover": "Découvrir",
+    "legal": "Mentions légales",
+    "contact": "Contact",
+    "followUs": "Suivez-nous",
+    "rights": "Tous droits réservés.",
+    "madeWith": "Conçu à Istanbul.",
+    "securePayment": "Paiement sécurisé",
+    "links": {
+      "privacy": "Confidentialité & sécurité",
+      "passengerContract": "Contrat de transport de passagers",
+      "purchaseContract": "Contrat d'achat",
+      "terms": "Conditions d'utilisation",
+      "dataProtection": "Protection des données"
+    },
+    "discoverLinks": {
+      "istTransfer": "Transfert aéroport d'Istanbul",
+      "sawTransfer": "Transfert Sabiha Gökçen",
+      "antalya": "Transfert aéroport d'Antalya",
+      "bodrum": "Transfert aéroport de Bodrum",
+      "izmir": "Transfert aéroport d'Izmir",
+      "dalaman": "Transfert aéroport de Dalaman"
+    }
+  },
+  "About": {
+    "eyebrow": "Notre histoire",
+    "title": "L'hospitalité est notre langue maternelle",
+    "subtitle": "Nous transformons la partie la plus stressante d'un voyage — les arrivées et les transferts — en la plus sereine.",
+    "lead": "{siteName} est né d'une conviction simple : le voyage doit commencer dès l'atterrissage, et non après une longue file d'attente pour un taxi.",
+    "body": "D'une simple prise en charge à l'aéroport aux itinéraires avec chauffeur sur plusieurs jours, nos chauffeurs agréés et nos guides locaux partagent une même obsession — prendre soin de vous. Chaque véhicule est privé, chaque prix est fixé à l'avance et chaque trajet est suivi par une équipe qui ne dort jamais.",
+    "values": {
+      "title": "Nos valeurs",
+      "care": {
+        "title": "Le client avant tout",
+        "desc": "Nous traitons chaque arrivée comme un invité chez nous."
+      },
+      "trust": {
+        "title": "Tarifs transparents",
+        "desc": "Un prix juste, convenu avant votre départ. Toujours."
+      },
+      "local": {
+        "title": "Expertise locale",
+        "desc": "Des guides et chauffeurs agréés qui connaissent la Türkiye par cœur."
+      },
+      "safety": {
+        "title": "La sécurité d'abord",
+        "desc": "Véhicules assurés, chauffeurs vérifiés, suivi en temps réel."
+      }
+    },
+    "stats": {
+      "years": "Années de service",
+      "guests": "Clients satisfaits",
+      "fleet": "Véhicules dans notre flotte",
+      "guides": "Guides agréés"
+    },
+    "collective": {
+      "title": "Un collectif d'esprits passionnés animés par un but",
+      "body": "Voyager, c'est bien plus que découvrir de nouveaux lieux — c'est créer des histoires qui vous accompagnent à jamais. Dès le départ, notre mission a été de concevoir des voyages qui célèbrent la culture, le confort et le lien humain."
+    },
+    "story": {
+      "eyebrow": "Notre histoire",
+      "title": "Un parcours de rêves et de défis",
+      "subtitle": "Une décennie à transformer les arrivées en accueils et les trajets en souvenirs."
+    },
+    "partners": "La confiance de voyageurs et partenaires exigeants du monde entier",
+    "team": {
+      "eyebrow": "Les personnes",
+      "title": "Rencontrez les experts derrière vos aventures",
+      "subtitle": "Une équipe unie par l'amour du voyage et l'exigence de l'excellence."
+    }
+  },
+  "Business": {
+    "eyebrow": "Pour les entreprises",
+    "title": "Voyages d'affaires et partenaires, simplifiés",
+    "subtitle": "Un transport terrestre fiable pour les équipes, les événements et les agences — avec une facturation consolidée et un gestionnaire de compte dédié.",
+    "benefits": {
+      "billing": {
+        "title": "Facturation consolidée",
+        "desc": "Une seule facture mensuelle pour chaque trajet, avec des centres de coûts par déplacement."
+      },
+      "manager": {
+        "title": "Gestionnaire dédié",
+        "desc": "Un interlocuteur unique pour les réservations, les modifications et le reporting."
+      },
+      "priority": {
+        "title": "Répartition prioritaire",
+        "desc": "Des véhicules garantis pour les événements, les roadshows et les délégations VIP."
+      },
+      "api": {
+        "title": "Tarifs agences & API",
+        "desc": "Tarifs nets pour les agences de voyages et une API pour une intégration fluide."
+      }
+    },
+    "formTitle": "Devenir partenaire",
+    "formSubtitle": "Parlez-nous de vos besoins de transport et nous vous répondrons sous un jour ouvré."
+  },
+  "Vehicles": {
+    "eyebrow": "Notre flotte",
+    "title": "Le véhicule idéal pour chaque voyage",
+    "subtitle": "Des véhicules privés, impeccablement entretenus et choisis selon la taille de votre groupe et votre style.",
+    "specs": {
+      "passengers": "Passagers",
+      "luggage": "Bagages",
+      "class": "Classe"
+    },
+    "bookThis": "Réserver cette classe"
+  },
+  "MeetingPoints": {
+    "eyebrow": "Points de rencontre",
+    "title": "Là où nous vous accueillons",
+    "subtitle": "Des instructions de rencontre claires et sans stress pour chaque grand aéroport que nous desservons.",
+    "steps": {
+      "title": "Comment se déroule l'accueil",
+      "land": {
+        "title": "Vous atterrissez",
+        "desc": "Nous suivons votre vol en temps réel — en avance ou en retard, votre chauffeur s'adapte."
+      },
+      "meet": {
+        "title": "Nous vous accueillons",
+        "desc": "Votre chauffeur vous attend aux arrivées avec une pancarte à votre nom."
+      },
+      "relax": {
+        "title": "Vous vous détendez",
+        "desc": "Nous portons vos bagages et vous accompagnons jusqu'à un véhicule climatisé qui vous attend."
+      }
+    }
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "title": "Nous sommes là à toute heure",
+    "subtitle": "Questions, itinéraires sur mesure ou changements de dernière minute — joignez-nous comme il vous convient.",
+    "form": {
+      "name": "Nom complet",
+      "email": "E-mail",
+      "phone": "Téléphone (optionnel)",
+      "subject": "Objet",
+      "message": "Comment pouvons-nous vous aider ?",
+      "send": "Envoyer le message",
+      "success": "Merci — votre message est en route. Nous vous répondrons très vite.",
+      "error": "Une erreur s'est produite. Réessayez ou écrivez-nous sur WhatsApp.",
+      "namePlaceholder": "Votre nom",
+      "emailPlaceholder": "vous@exemple.com",
+      "messagePlaceholder": "Parlez-nous de votre voyage…"
+    },
+    "formTitle": "Commençons votre voyage",
+    "infoTitle": "Joignez-nous directement",
+    "hoursLabel": "Horaires",
+    "hoursValue": "24 h/24, 7 j/7"
+  },
+  "BookingPage": {
+    "eyebrow": "Réservez votre voyage",
+    "title": "Réservez votre transfert",
+    "subtitle": "Quelques informations rapides et votre chauffeur privé est confirmé. Prix fixe, annulation gratuite jusqu'à 6 heures avant la prise en charge.",
+    "steps": {
+      "trip": "Détails du trajet",
+      "contact": "Vos coordonnées",
+      "confirm": "Confirmer"
+    },
+    "fields": {
+      "from": "Lieu de prise en charge",
+      "to": "Lieu de dépose",
+      "date": "Date et heure de prise en charge",
+      "return": "Date et heure de retour",
+      "passengers": "Passagers",
+      "luggage": "Bagages",
+      "flight": "Numéro de vol (optionnel)",
+      "name": "Nom complet",
+      "email": "E-mail",
+      "phone": "Téléphone / WhatsApp",
+      "notes": "Demandes particulières (optionnel)"
+    },
+    "roundTrip": "Ajouter un retour (économisez 10 %)",
+    "tourLabel": "Votre excursion",
+    "summaryTitle": "Résumé du trajet",
+    "estTotal": "Total estimé",
+    "estNote": "Le prix final est confirmé par e-mail avant tout paiement.",
+    "submit": "Demander la réservation",
+    "submitting": "Envoi…",
+    "success": {
+      "title": "Demande reçue",
+      "body": "Merci, {name}. Nous avons bien reçu votre demande de transfert et vous confirmerons par e-mail sous quelques minutes.",
+      "reference": "Votre référence"
+    },
+    "error": "Nous n'avons pas pu envoyer votre demande. Réessayez ou contactez-nous sur WhatsApp."
+  },
+  "Meta": {
+    "defaultTitle": "{siteName} · Transferts aéroport privés à Istanbul & excursions",
+    "titleTemplate": "%s · {siteName}",
+    "description": "Transferts aéroport privés, voyages avec chauffeur et excursions soignées à Istanbul et en Türkiye. Prix fixes, accueil personnalisé, annulation gratuite et assistance 24/7.",
+    "home": {
+      "title": "Transferts aéroport privés à Istanbul & excursions",
+      "description": "Réservez un transfert aéroport privé à Istanbul avec prix fixe, accueil personnalisé et annulation gratuite. Voyages avec chauffeur et excursions soignées à travers la Türkiye, 24/7."
+    },
+    "tours": {
+      "title": "Excursions & expériences à Istanbul",
+      "description": "Excursions guidées privées à Istanbul et en Türkiye — croisières sur le Bosphore, balades dans la vieille ville, îles des Princes et bien plus, avec des guides locaux agréés."
+    },
+    "about": {
+      "title": "À propos de nous",
+      "description": "Découvrez comment {siteName} rend les arrivées et les transferts en Türkiye faciles — flotte privée, prix fixes et un service 24/7."
+    },
+    "business": {
+      "title": "Voyages d'affaires & agences",
+      "description": "Transport terrestre professionnel fiable avec facturation consolidée, répartition prioritaire, tarifs nets agences et un gestionnaire de compte dédié."
+    },
+    "vehicles": {
+      "title": "Notre flotte",
+      "description": "Véhicules Mercedes Classe E, Classe V et Sprinter pour tous les groupes — privés et impeccablement entretenus."
+    },
+    "meetingPoints": {
+      "title": "Points de rencontre à l'aéroport",
+      "description": "Instructions d'accueil claires pour les aéroports d'Istanbul (IST), Sabiha Gökçen (SAW), Antalya, Bodrum, Izmir et Dalaman."
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "description": "Réponses sur les prix, les annulations, l'accueil, les bagages, les sièges enfant et les paiements pour votre transfert privé ou votre excursion."
+    },
+    "contact": {
+      "title": "Nous contacter",
+      "description": "Joignez notre conciergerie 24/7 par téléphone, e-mail ou WhatsApp pour vos réservations, itinéraires sur mesure et assistance."
+    },
+    "booking": {
+      "title": "Réserver un transfert",
+      "description": "Réservez votre transfert aéroport privé en quelques minutes — prix fixe, annulation gratuite et un chauffeur toujours à l'heure."
+    }
+  },
+  "Legal": {
+    "lastUpdated": "Dernière mise à jour",
+    "intro": "Cette page résume nos {title}. La version complète et juridiquement contraignante est disponible sur demande et régit votre utilisation de nos services.",
+    "contact": "Des questions sur ce document ? Contactez-nous à {email}."
+  },
+  "NotFound": {
+    "title": "Cette page s'est égarée",
+    "subtitle": "La page que vous cherchez n'existe pas ou a été déplacée. Reprenons la route ensemble.",
+    "cta": "Retour à l'accueil"
+  },
+  "Hotels": {
+    "eyebrow": "Séjours",
+    "title": "Hôtels sélectionnés",
+    "subtitle": "Des séjours confortables et bien situés à Istanbul — choisissez votre type de chambre et vos dates et réservez en quelques minutes.",
+    "from": "à partir de",
+    "perNight": "/ nuit",
+    "viewHotel": "Voir l'hôtel",
+    "amenities": "Équipements",
+    "location": "Emplacement",
+    "book": {
+      "title": "Réservez votre séjour",
+      "roomType": "Type de chambre",
+      "checkIn": "Arrivée",
+      "checkOut": "Départ",
+      "guests": "Voyageurs",
+      "rooms": "Chambres",
+      "nights": "{count, plural, one {# nuit} other {# nuits}}",
+      "total": "Total estimé",
+      "totalNote": "Le prix final est confirmé avant tout paiement.",
+      "name": "Nom complet",
+      "email": "E-mail",
+      "phone": "Téléphone / WhatsApp",
+      "notes": "Demandes particulières (optionnel)",
+      "submit": "Demander la réservation",
+      "submitting": "Envoi…",
+      "selectDates": "Sélectionnez vos dates d'arrivée et de départ.",
+      "perNight": "/ nuit"
+    },
+    "rooms": {
+      "single": "Simple",
+      "couple": "Double",
+      "triple": "Triple",
+      "quadruple": "Quadruple"
+    },
+    "success": {
+      "title": "Réservation demandée",
+      "body": "Merci, {name}. Nous avons reçu votre demande d'hôtel et la confirmerons sous peu."
+    },
+    "error": "Nous n'avons pas pu envoyer votre demande. Réessayez ou contactez-nous sur WhatsApp.",
+    "meta": {
+      "title": "Hôtels & séjours à Istanbul",
+      "description": "Des hôtels confortables et bien situés à Istanbul. Choisissez votre type de chambre et vos dates et réservez en quelques minutes."
+    }
+  },
+  "Voucher": {
+    "title": "Bon de réservation",
+    "thanks": "Merci, {name} !",
+    "received": "Votre demande a été reçue. Voici votre récapitulatif — gardez-le à portée de main.",
+    "reference": "Référence",
+    "service": "Service",
+    "experience": "Excursion",
+    "from": "Départ",
+    "to": "Arrivée",
+    "date": "Date et heure",
+    "return": "Retour",
+    "guests": "Voyageurs",
+    "luggage": "Bagages",
+    "flight": "Vol",
+    "hotel": "Hôtel",
+    "room": "Chambre",
+    "checkIn": "Arrivée",
+    "checkOut": "Départ",
+    "nights": "Nuits",
+    "notes": "Notes",
+    "total": "Total estimé",
+    "totalNote": "Le prix final est confirmé avant tout paiement.",
+    "sendWhatsapp": "Envoyer sur WhatsApp",
+    "services": {
+      "transfer": "Transfert privé",
+      "hourly": "Chauffeur à l'heure",
+      "tour": "Excursion guidée",
+      "hotel": "Réservation d'hôtel"
+    }
+  }
+}
+</content>

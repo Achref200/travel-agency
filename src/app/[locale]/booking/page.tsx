@@ -49,6 +49,9 @@ export default async function BookingPageRoute({
     mode: str(sp.mode),
     hours: str(sp.hours),
     return: str(sp.return),
+    title: str(sp.title),
+    price: str(sp.price),
+    slug: str(sp.slug),
   };
 
   return (

@@ -11,6 +11,8 @@ export type Localized = {
   en: string;
   tr: string;
   ar: string;
+  /** Optional so existing {en,tr,ar} seed data stays valid; falls back to en. */
+  fr?: string;
 };
 
 /** Pick the correct translation for `locale`, falling back to English. */

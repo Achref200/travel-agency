@@ -31,7 +31,7 @@ export function organizationSchema() {
     legalName: siteConfig.legalName,
     url: siteConfig.url,
     image: absoluteUrl("/opengraph-image"),
-    logo: absoluteUrl("/opengraph-image"),
+    logo: absoluteUrl("/logo.jpg"),
     email: siteConfig.contact.email,
     telephone: siteConfig.contact.phone,
     priceRange: "€€",

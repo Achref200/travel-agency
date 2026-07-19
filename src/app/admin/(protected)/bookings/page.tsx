@@ -1,8 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappLinkTo } from "@/config/site";
 import { formatPrice, cn } from "@/lib/utils";
+import { buildVoucherText } from "@/lib/voucher";
 import { setBookingStatus, deleteBooking } from "./actions";
-import { Check, X, RotateCcw, Trash2 } from "lucide-react";
+import { Check, X, RotateCcw, Trash2, MessageCircle } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -58,11 +59,22 @@ export default async function BookingsPage() {
                 <div className="mt-1 text-sm text-muted">
                   {b.fullName} · {b.email} · {b.phone}
                 </div>
-                <div className="mt-1 text-sm text-muted">
-                  {new Date(b.pickupAt).toLocaleString()} · {b.passengers} pax
-                  {b.roundTrip ? " · round trip" : ""}
-                  {b.flightNumber ? ` · flight ${b.flightNumber}` : ""}
-                </div>
+                {b.serviceType === "hotel" ? (
+                  <div className="mt-1 text-sm text-muted">
+                    {b.roomType ? `${b.roomType} room` : ""}
+                    {b.checkIn ? ` · ${new Date(b.checkIn).toLocaleDateString()}` : ""}
+                    {b.checkOut ? ` → ${new Date(b.checkOut).toLocaleDateString()}` : ""}
+                    {b.nights ? ` · ${b.nights} night(s)` : ""}
+                    {b.rooms && b.rooms > 1 ? ` · ${b.rooms} rooms` : ""}
+                    {` · ${b.passengers} guest(s)`}
+                  </div>
+                ) : (
+                  <div className="mt-1 text-sm text-muted">
+                    {new Date(b.pickupAt).toLocaleString()} · {b.passengers} pax
+                    {b.roundTrip ? " · round trip" : ""}
+                    {b.flightNumber ? ` · flight ${b.flightNumber}` : ""}
+                  </div>
+                )}
                 {b.notes && (
                   <p className="mt-2 text-sm text-ink/80">“{b.notes}”</p>
                 )}
@@ -75,6 +87,42 @@ export default async function BookingsPage() {
                   </div>
                 )}
                 <div className="mt-3 flex items-center justify-end gap-1">
+                  <a
+                    href={whatsappLinkTo(
+                      b.phone,
+                      buildVoucherText({
+                        reference: b.reference,
+                        serviceType: b.serviceType,
+                        fullName: b.fullName,
+                        phone: b.phone,
+                        email: b.email,
+                        fromLocation: b.fromLocation,
+                        toLocation: b.toLocation,
+                        pickupAt: b.pickupAt,
+                        returnAt: b.returnAt,
+                        passengers: b.passengers,
+                        luggage: b.luggage,
+                        flightNumber: b.flightNumber,
+                        roundTrip: b.roundTrip,
+                        notes: b.notes,
+                        estimatedPrice: b.estimatedPrice,
+                        locale: b.locale,
+                        hotelName: b.hotelName,
+                        roomType: b.roomType,
+                        checkIn: b.checkIn,
+                        checkOut: b.checkOut,
+                        nights: b.nights,
+                        rooms: b.rooms,
+                      }),
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="Send voucher on WhatsApp"
+                    aria-label="Send voucher on WhatsApp"
+                    className="inline-flex size-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-success/10 hover:text-success"
+                  >
+                    <MessageCircle className="size-4" />
+                  </a>
                   <form action={setBookingStatus.bind(null, b.id, "confirmed")}>
                     <IconBtn label="Confirm" tone="success">
                       <Check className="size-4" />

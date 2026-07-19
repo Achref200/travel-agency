@@ -4,7 +4,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
-import { getResource, type AdminResource } from "@/lib/admin/resources";
+import { slugify } from "@/lib/utils";
+import { getResource, LOCALES, type AdminResource } from "@/lib/admin/resources";
 
 type FormState = { error?: string } | undefined;
 
@@ -27,9 +28,12 @@ function parseForm(resource: AdminResource, formData: FormData) {
       case "text":
       case "textarea":
       case "image":
-      case "select":
-        data[f.name] = String(formData.get(f.name) ?? "");
+      case "select": {
+        const raw = String(formData.get(f.name) ?? "");
+        // Slugs must be URL-safe (lowercase, hyphenated) so detail pages resolve.
+        data[f.name] = f.name === "slug" ? slugify(raw) : raw;
         break;
+      }
       case "number":
         data[f.name] = Number(formData.get(f.name) ?? 0) || 0;
         break;
@@ -37,20 +41,18 @@ function parseForm(resource: AdminResource, formData: FormData) {
         data[f.name] = formData.get(f.name) === "on";
         break;
       case "localized":
-        data[f.name] = {
-          en: String(formData.get(`${f.name}.en`) ?? ""),
-          tr: String(formData.get(`${f.name}.tr`) ?? ""),
-          ar: String(formData.get(`${f.name}.ar`) ?? ""),
-        };
+        data[f.name] = Object.fromEntries(
+          LOCALES.map((loc) => [loc, String(formData.get(`${f.name}.${loc}`) ?? "")]),
+        );
         break;
       case "localizedList": {
-        const en = lines(formData, `${f.name}.en`);
-        const tr = lines(formData, `${f.name}.tr`);
-        const ar = lines(formData, `${f.name}.ar`);
-        const n = Math.max(en.length, tr.length, ar.length);
+        const cols = LOCALES.map((loc) => lines(formData, `${f.name}.${loc}`));
+        const n = Math.max(0, ...cols.map((c) => c.length));
         const arr = [];
         for (let i = 0; i < n; i++) {
-          arr.push({ en: en[i] ?? "", tr: tr[i] ?? "", ar: ar[i] ?? "" });
+          arr.push(
+            Object.fromEntries(LOCALES.map((loc, ci) => [loc, cols[ci][i] ?? ""])),
+          );
         }
         data[f.name] = arr;
         break;

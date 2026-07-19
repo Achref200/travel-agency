@@ -188,13 +188,41 @@ export const resources: AdminResource[] = [
       order,
     ],
   },
+  {
+    key: "hotels",
+    model: "hotel",
+    label: "Hotels",
+    singular: "Hotel",
+    tag: "content:hotels",
+    columns: [
+      { name: "name", label: "Name" },
+      { name: "location", label: "Location" },
+      { name: "priceCouple", label: "Couple / night" },
+      { name: "published", label: "Published" },
+    ],
+    fields: [
+      { name: "slug", label: "Slug", type: "text", required: true, help: "URL id, e.g. bosphorus-palace-hotel" },
+      { name: "name", label: "Name", type: "localized", required: true },
+      { name: "location", label: "Location", type: "text", required: true, help: "City / district, e.g. Sultanahmet, Istanbul" },
+      { name: "description", label: "Description", type: "localized" },
+      { name: "image", label: "Image", type: "image" },
+      { name: "amenities", label: "Amenities (one per line)", type: "localizedList" },
+      { name: "priceSingle", label: "Single room / night", type: "number" },
+      { name: "priceCouple", label: "Couple room / night", type: "number" },
+      { name: "priceTriple", label: "Triple room / night", type: "number" },
+      { name: "priceQuadruple", label: "Quadruple room / night", type: "number" },
+      { name: "stars", label: "Stars (0–5)", type: "number" },
+      published,
+      order,
+    ],
+  },
 ];
 
 export function getResource(key: string): AdminResource | undefined {
   return resources.find((r) => r.key === key);
 }
 
-export const LOCALES = ["en", "tr", "ar"] as const;
+export const LOCALES = ["en", "tr", "ar", "fr"] as const;
 
 /** Sensible default field values for the "new record" form. */
 export function defaultsFor(resource: AdminResource): Record<string, unknown> {
@@ -211,7 +239,7 @@ export function defaultsFor(resource: AdminResource): Record<string, unknown> {
         rec[f.name] = f.options?.[0] ?? "";
         break;
       case "localized":
-        rec[f.name] = { en: "", tr: "", ar: "" };
+        rec[f.name] = Object.fromEntries(LOCALES.map((l) => [l, ""]));
         break;
       case "localizedList":
         rec[f.name] = [];

@@ -1,19 +1,43 @@
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
 /**
- * Marwen Travel emblem — a vector recreation of the brand badge:
- * a deep-navy disc, a gold ring and a gold airplane.
+ * Marwen Travel emblem.
  *
- * Uses the brand design tokens (`--color-sea` / `--color-gold`) so it stays
- * in sync with the palette. The navy disc reads as a solid badge on light
- * surfaces (header) and dissolves into navy backgrounds (footer), where the
- * gold ring + plane still define the mark.
- *
- * To use the real raster/vector artwork instead, drop it in `/public`
- * (e.g. `logo.svg`) and swap this component for a `next/image`.
+ * Prefers the raster brand mark at `/public/logo.jpg` (the real circular
+ * badge). If the file is missing it falls back to a vector recreation using
+ * the brand tokens (`--color-sea` / `--color-gold`), so the site never renders
+ * a broken image while the asset is being uploaded.
  */
 export function LogoMark({ className }: { className?: string }) {
+  const [rasterOk, setRasterOk] = useState(true);
+
+  if (rasterOk) {
+    return (
+      <span
+        className={cn(
+          "relative inline-block overflow-hidden rounded-full bg-sea",
+          className,
+        )}
+      >
+        <Image
+          src="/logo.jpg"
+          alt={siteConfig.name}
+          fill
+          sizes="(min-width: 768px) 40px, 36px"
+          className="object-cover"
+          onError={() => setRasterOk(false)}
+          priority
+          unoptimized
+        />
+      </span>
+    );
+  }
+
   return (
     <svg
       viewBox="0 0 64 64"

@@ -5,6 +5,7 @@
     "about": "About",
     "business": "For Business",
     "vehicles": "Our Fleet",
+    "hotels": "Hotels",
     "meetingPoints": "Meeting Points",
     "faq": "FAQ",
     "contact": "Contact",
@@ -349,6 +350,7 @@
       "notes": "Special requests (optional)"
     },
     "roundTrip": "Add a return trip (save 10%)",
+    "tourLabel": "Your experience",
     "summaryTitle": "Trip summary",
     "estTotal": "Estimated total",
     "estNote": "Final price is confirmed by email before any payment is taken.",
@@ -411,5 +413,79 @@
     "title": "This page has wandered off",
     "subtitle": "The page you're looking for doesn't exist or has moved. Let's get you back on the road.",
     "cta": "Back to home"
+  },
+  "Hotels": {
+    "eyebrow": "Stays",
+    "title": "Handpicked hotels",
+    "subtitle": "Comfortable, well-located stays across Istanbul — choose your room type and dates and reserve in minutes.",
+    "from": "from",
+    "perNight": "/ night",
+    "viewHotel": "View hotel",
+    "amenities": "Amenities",
+    "location": "Location",
+    "book": {
+      "title": "Book your stay",
+      "roomType": "Room type",
+      "checkIn": "Check-in",
+      "checkOut": "Check-out",
+      "guests": "Guests",
+      "rooms": "Rooms",
+      "nights": "{count, plural, one {# night} other {# nights}}",
+      "total": "Estimated total",
+      "totalNote": "Final price is confirmed before any payment.",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone / WhatsApp",
+      "notes": "Special requests (optional)",
+      "submit": "Request reservation",
+      "submitting": "Requesting…",
+      "selectDates": "Select your check-in and check-out dates.",
+      "perNight": "/ night"
+    },
+    "rooms": {
+      "single": "Single",
+      "couple": "Couple",
+      "triple": "Triple",
+      "quadruple": "Quadruple"
+    },
+    "success": {
+      "title": "Reservation requested",
+      "body": "Thank you, {name}. We've received your hotel request and will confirm shortly."
+    },
+    "error": "We couldn't submit your request. Please try again or contact us on WhatsApp.",
+    "meta": {
+      "title": "Hotels & stays in Istanbul",
+      "description": "Comfortable, well-located hotels across Istanbul. Choose your room type and dates and reserve in minutes."
+    }
+  },
+  "Voucher": {
+    "title": "Booking voucher",
+    "thanks": "Thank you, {name}!",
+    "received": "Your request has been received. Here is your summary — keep it handy.",
+    "reference": "Reference",
+    "service": "Service",
+    "experience": "Experience",
+    "from": "From",
+    "to": "To",
+    "date": "Date & time",
+    "return": "Return",
+    "guests": "Guests",
+    "luggage": "Luggage",
+    "flight": "Flight",
+    "hotel": "Hotel",
+    "room": "Room",
+    "checkIn": "Check-in",
+    "checkOut": "Check-out",
+    "nights": "Nights",
+    "notes": "Notes",
+    "total": "Estimated total",
+    "totalNote": "Final price is confirmed before any payment.",
+    "sendWhatsapp": "Send to WhatsApp",
+    "services": {
+      "transfer": "Private transfer",
+      "hourly": "Chauffeur by the hour",
+      "tour": "Guided tour",
+      "hotel": "Hotel reservation"
+    }
   }
 }

@@ -126,6 +126,27 @@ model Milestone {
   @@index([order])
 }
 
+model Hotel {
+  id             String   @id @default(cuid())
+  slug           String   @unique
+  name           Json // Localized
+  location       String // city / district (plain text)
+  description    Json // Localized
+  image          String
+  amenities      Json // Localized[]
+  priceSingle    Float    @default(0)
+  priceCouple    Float    @default(0)
+  priceTriple    Float    @default(0)
+  priceQuadruple Float    @default(0)
+  stars          Int      @default(0)
+  published      Boolean  @default(true)
+  order          Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([published, order])
+}
+
 // ── Leads / operations ─────────────────────────────────────────────────────
 
 model Booking {
@@ -149,6 +170,14 @@ model Booking {
   estimatedPrice Float?
   status         String    @default("pending") // pending | confirmed | cancelled
   createdAt      DateTime  @default(now())
+
+  // Hotel bookings (optional — only set when serviceType = "hotel")
+  hotelName String?
+  roomType  String? // single | couple | triple | quadruple
+  checkIn   DateTime?
+  checkOut  DateTime?
+  nights    Int?
+  rooms     Int?      @default(1)
 
   @@index([email])
   @@index([status])

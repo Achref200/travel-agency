@@ -7,6 +7,7 @@ import type { Vehicle } from "@/data/vehicles";
 import type { FaqItem } from "@/data/faq";
 import type { GalleryImage } from "@/data/gallery";
 import type { Member, Milestone } from "@/data/about";
+import type { Hotel } from "@/data/hotels";
 
 /**
  * Content is read straight from the database. Public pages are statically
@@ -123,4 +124,38 @@ export async function getMilestones(): Promise<Milestone[]> {
     title: loc(r.title),
     text: loc(r.text),
   }));
+}
+
+export async function getHotels(): Promise<Hotel[]> {
+  const rows = await prisma.hotel.findMany({
+    where: { published: true },
+    orderBy: { order: "asc" },
+  });
+  return rows.map((r) => ({
+    slug: r.slug,
+    name: loc(r.name),
+    location: r.location,
+    description: loc(r.description),
+    image: r.image,
+    amenities: locArr(r.amenities),
+    priceSingle: r.priceSingle,
+    priceCouple: r.priceCouple,
+    priceTriple: r.priceTriple,
+    priceQuadruple: r.priceQuadruple,
+    stars: r.stars,
+  }));
+}
+
+export async function getHotel(slug: string): Promise<Hotel | undefined> {
+  const hotels = await getHotels();
+  return hotels.find((h) => h.slug === slug);
+}
+
+export async function getHotelSlugs(): Promise<string[]> {
+  const rows = await prisma.hotel.findMany({
+    where: { published: true },
+    select: { slug: true },
+    orderBy: { order: "asc" },
+  });
+  return rows.map((r) => r.slug);
 }

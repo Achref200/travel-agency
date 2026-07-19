@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { MapPin, CalendarClock, Users, Clock, ArrowRight, ArrowLeftRight, Repeat } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { SelectMenu } from "@/components/ui/SelectMenu";
 
 type Tab = "transfer" | "hourly" | "tours";
 
@@ -65,7 +66,7 @@ export function BookingWidget({ className }: { className?: string }) {
             aria-selected={tab === item.id}
             onClick={() => setTab(item.id)}
             className={cn(
-              "flex-1 sm:flex-none rounded-full px-5 py-2 text-sm font-medium transition-colors",
+              "flex-1 sm:flex-none whitespace-nowrap rounded-full px-3 sm:px-5 py-2 text-sm font-medium transition-colors",
               tab === item.id
                 ? "bg-ink text-canvas"
                 : "text-muted hover:text-ink hover:bg-ink/[0.05]",
@@ -123,19 +124,18 @@ export function BookingWidget({ className }: { className?: string }) {
             )}
 
             {tab === "hourly" && (
-              <Field className="md:col-span-2" label={t("hours")} icon={<Clock className="size-4" />}>
-                <select
-                  value={duration}
-                  onChange={(e) => setDuration(Number(e.target.value))}
-                  className="field-input"
-                >
-                  {Array.from({ length: 11 }, (_, i) => i + 2).map((h) => (
-                    <option key={h} value={h}>
-                      {t("hoursValue", { count: h })}
-                    </option>
-                  ))}
-                </select>
-              </Field>
+              <SelectMenu
+                className="md:col-span-2"
+                label={t("hours")}
+                icon={<Clock className="size-4" />}
+                value={String(duration)}
+                onChange={(v) => setDuration(Number(v))}
+                menuPlacement="up"
+                options={Array.from({ length: 11 }, (_, i) => i + 2).map((h) => ({
+                  value: String(h),
+                  label: t("hoursValue", { count: h }),
+                }))}
+              />
             )}
 
             {/* When */}
@@ -154,23 +154,18 @@ export function BookingWidget({ className }: { className?: string }) {
             </Field>
 
             {/* Passengers */}
-            <Field
+            <SelectMenu
               className={tab === "transfer" ? "md:col-span-2" : "md:col-span-3"}
               label={t("passengers")}
               icon={<Users className="size-4" />}
-            >
-              <select
-                value={pax}
-                onChange={(e) => setPax(Number(e.target.value))}
-                className="field-input"
-              >
-                {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
-                  <option key={n} value={n}>
-                    {t("passenger", { count: n })}
-                  </option>
-                ))}
-              </select>
-            </Field>
+              value={String(pax)}
+              onChange={(v) => setPax(Number(v))}
+              menuPlacement="up"
+              options={Array.from({ length: 12 }, (_, i) => i + 1).map((n) => ({
+                value: String(n),
+                label: t("passenger", { count: n }),
+              }))}
+            />
 
             {/* Submit row */}
             <div className="md:col-span-12 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-1">

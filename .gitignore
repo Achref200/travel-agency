@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# runtime image uploads (built-in fallback uploader)
+/public/uploads/
+
 # production
 /build
 

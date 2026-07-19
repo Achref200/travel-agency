@@ -20,6 +20,8 @@ import { formatPrice } from "@/lib/utils";
 import { estimatePrice } from "@/lib/booking";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/Button";
+import { SelectMenu } from "@/components/ui/SelectMenu";
+import { BookingVoucher } from "@/components/sections/BookingVoucher";
 
 export type BookingDefaults = {
   from?: string;
@@ -29,6 +31,10 @@ export type BookingDefaults = {
   mode?: string;
   hours?: string;
   return?: string;
+  /** Tour name + price + slug (mode=tour). */
+  title?: string;
+  price?: string;
+  slug?: string;
 };
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -38,10 +44,16 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
   const tCommon = useTranslations("Common");
   const locale = useLocale();
 
-  const serviceType = defaults.mode === "hourly" ? "hourly" : "transfer";
+  const serviceType =
+    defaults.mode === "hourly"
+      ? "hourly"
+      : defaults.mode === "tour"
+        ? "tour"
+        : "transfer";
+  const isTour = serviceType === "tour";
 
   const [form, setForm] = useState({
-    fromLocation: defaults.from ?? "",
+    fromLocation: (isTour ? defaults.title : defaults.from) ?? "",
     toLocation: defaults.to ?? "",
     pickupAt: defaults.date ?? "",
     returnAt: "",
@@ -58,16 +70,22 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
   const [status, setStatus] = useState<Status>("idle");
   const [reference, setReference] = useState<string>("");
 
-  const estimate = useMemo(
-    () =>
-      estimatePrice({
-        serviceType,
-        hours: defaults.hours ? Number(defaults.hours) : undefined,
-        passengers: form.passengers,
-        roundTrip: form.roundTrip,
-      }),
-    [serviceType, defaults.hours, form.passengers, form.roundTrip],
-  );
+  const estimate = useMemo(() => {
+    if (isTour && defaults.price) return Number(defaults.price) || 0;
+    return estimatePrice({
+      serviceType,
+      hours: defaults.hours ? Number(defaults.hours) : undefined,
+      passengers: form.passengers,
+      roundTrip: form.roundTrip,
+    });
+  }, [
+    isTour,
+    defaults.price,
+    serviceType,
+    defaults.hours,
+    form.passengers,
+    form.roundTrip,
+  ]);
 
   function update<K extends keyof typeof form>(key: K, value: (typeof form)[K]) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -83,6 +101,7 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
         body: JSON.stringify({
           ...form,
           serviceType,
+          tourSlug: isTour ? defaults.slug : undefined,
           hours: defaults.hours ? Number(defaults.hours) : undefined,
           locale,
         }),
@@ -98,7 +117,7 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
 
   if (status === "success") {
     return (
-      <div className="mx-auto max-w-xl rounded-2xl border border-line bg-surface p-8 text-center md:p-12">
+      <div className="mx-auto max-w-xl text-center">
         <span className="mx-auto inline-flex size-16 items-center justify-center rounded-full bg-gold/15 text-gold-deep">
           <PartyPopper className="size-8" />
         </span>
@@ -106,12 +125,30 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
         <p className="mt-3 text-muted">
           {t("success.body", { name: form.fullName })}
         </p>
-        {reference && (
-          <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-line px-5 py-2.5">
-            <span className="text-sm text-muted">{t("success.reference")}</span>
-            <span className="font-medium tracking-wider text-ink">{reference}</span>
-          </p>
-        )}
+
+        <div className="mt-8">
+          <BookingVoucher
+            data={{
+              reference,
+              serviceType,
+              fullName: form.fullName,
+              phone: form.phone,
+              email: form.email,
+              fromLocation: form.fromLocation,
+              toLocation: form.toLocation,
+              pickupAt: form.pickupAt,
+              returnAt: form.returnAt,
+              passengers: form.passengers,
+              luggage: form.luggage,
+              flightNumber: form.flightNumber,
+              roundTrip: form.roundTrip,
+              notes: form.notes,
+              estimatedPrice: estimate,
+              locale,
+            }}
+          />
+        </div>
+
         <div className="mt-8">
           <Button href="/" variant="secondary">
             {tCommon("backHome")}
@@ -129,14 +166,38 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
           <legend className="mb-4 text-sm font-medium uppercase tracking-wide text-gold-deep">
             {t("steps.trip")}
           </legend>
+
+          {isTour && (
+            <div className="flex items-center justify-between gap-4 rounded-xl border border-line bg-canvas/50 p-4">
+              <div className="flex min-w-0 items-center gap-3">
+                <span className="inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-gold/12 text-gold-deep">
+                  <MapPin className="size-4" />
+                </span>
+                <div className="min-w-0">
+                  <div className="text-[0.7rem] uppercase tracking-wide text-faint">
+                    {t("tourLabel")}
+                  </div>
+                  <div className="truncate font-medium text-ink">
+                    {form.fromLocation}
+                  </div>
+                </div>
+              </div>
+              <span className="shrink-0 text-lg font-medium text-ink">
+                {formatPrice(estimate, locale, siteConfig.currency)}
+              </span>
+            </div>
+          )}
+
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input
-              label={t("fields.from")}
-              icon={<MapPin className="size-4" />}
-              value={form.fromLocation}
-              onChange={(v) => update("fromLocation", v)}
-              required
-            />
+            {!isTour && (
+              <Input
+                label={t("fields.from")}
+                icon={<MapPin className="size-4" />}
+                value={form.fromLocation}
+                onChange={(v) => update("fromLocation", v)}
+                required
+              />
+            )}
             {serviceType === "transfer" && (
               <Input
                 label={t("fields.to")}
@@ -154,7 +215,7 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
               onChange={(v) => update("pickupAt", v)}
               required
             />
-            {form.roundTrip && (
+            {form.roundTrip && serviceType === "transfer" && (
               <Input
                 type="datetime-local"
                 label={t("fields.return")}
@@ -170,33 +231,39 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
               onChange={(v) => update("passengers", Number(v))}
               options={Array.from({ length: 12 }, (_, i) => i + 1)}
             />
-            <Select
-              label={t("fields.luggage")}
-              icon={<Briefcase className="size-4" />}
-              value={form.luggage}
-              onChange={(v) => update("luggage", Number(v))}
-              options={Array.from({ length: 13 }, (_, i) => i)}
-            />
-            <Input
-              label={t("fields.flight")}
-              icon={<Plane className="size-4" />}
-              value={form.flightNumber}
-              onChange={(v) => update("flightNumber", v)}
-            />
+            {!isTour && (
+              <Select
+                label={t("fields.luggage")}
+                icon={<Briefcase className="size-4" />}
+                value={form.luggage}
+                onChange={(v) => update("luggage", Number(v))}
+                options={Array.from({ length: 13 }, (_, i) => i)}
+              />
+            )}
+            {serviceType === "transfer" && (
+              <Input
+                label={t("fields.flight")}
+                icon={<Plane className="size-4" />}
+                value={form.flightNumber}
+                onChange={(v) => update("flightNumber", v)}
+              />
+            )}
           </div>
 
-          <label className="inline-flex cursor-pointer select-none items-center gap-2.5 text-sm">
-            <input
-              type="checkbox"
-              checked={form.roundTrip}
-              onChange={(e) => update("roundTrip", e.target.checked)}
-              className="peer sr-only"
-            />
-            <span className="inline-flex size-5 items-center justify-center rounded-md border border-line transition-colors peer-checked:border-gold peer-checked:bg-gold peer-checked:[&>svg]:opacity-100">
-              <Check className="size-3 text-ink opacity-0 transition-opacity" />
-            </span>
-            <span className="text-ink">{t("roundTrip")}</span>
-          </label>
+          {serviceType === "transfer" && (
+            <label className="inline-flex cursor-pointer select-none items-center gap-2.5 text-sm">
+              <input
+                type="checkbox"
+                checked={form.roundTrip}
+                onChange={(e) => update("roundTrip", e.target.checked)}
+                className="peer sr-only"
+              />
+              <span className="inline-flex size-5 items-center justify-center rounded-md border border-line transition-colors peer-checked:border-gold peer-checked:bg-gold peer-checked:[&>svg]:opacity-100">
+                <Check className="size-3 text-ink opacity-0 transition-opacity" />
+              </span>
+              <span className="text-ink">{t("roundTrip")}</span>
+            </label>
+          )}
         </fieldset>
 
         {/* Contact details */}
@@ -253,7 +320,10 @@ export function BookingForm({ defaults }: { defaults: BookingDefaults }) {
         <div className="sticky top-24 rounded-2xl border border-line bg-surface p-6">
           <h2 className="text-xl">{t("summaryTitle")}</h2>
           <dl className="mt-5 space-y-3 text-sm">
-            <SummaryRow label={t("fields.from")} value={form.fromLocation || "—"} />
+            <SummaryRow
+              label={isTour ? t("tourLabel") : t("fields.from")}
+              value={form.fromLocation || "—"}
+            />
             {serviceType === "transfer" && (
               <SummaryRow label={t("fields.to")} value={form.toLocation || "—"} />
             )}
@@ -357,20 +427,14 @@ function Select({
   onChange: (v: string) => void;
   options: number[];
 }) {
-  return fieldShell(
-    icon,
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="field-input"
-    >
-      {options.map((o) => (
-        <option key={o} value={o}>
-          {o}
-        </option>
-      ))}
-    </select>,
-    label,
+  return (
+    <SelectMenu
+      label={label}
+      icon={icon}
+      value={String(value)}
+      onChange={onChange}
+      options={options.map((o) => ({ value: String(o), label: String(o) }))}
+    />
   );
 }
 

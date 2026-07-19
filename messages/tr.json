@@ -5,6 +5,7 @@
     "about": "Hakkımızda",
     "business": "Kurumsal",
     "vehicles": "Araç Filomuz",
+    "hotels": "Oteller",
     "meetingPoints": "Buluşma Noktaları",
     "faq": "S.S.S.",
     "contact": "İletişim",
@@ -349,6 +350,7 @@
       "notes": "Özel istekler (isteğe bağlı)"
     },
     "roundTrip": "Dönüş yolculuğu ekle (%10 indirim)",
+    "tourLabel": "Seçtiğiniz tur",
     "summaryTitle": "Yolculuk özeti",
     "estTotal": "Tahmini toplam",
     "estNote": "Nihai fiyat, herhangi bir ödeme alınmadan önce e-posta ile onaylanır.",
@@ -411,5 +413,79 @@
     "title": "Bu sayfa kaybolmuş",
     "subtitle": "Aradığınız sayfa mevcut değil ya da taşınmış. Sizi tekrar yola çıkaralım.",
     "cta": "Ana sayfaya dön"
+  },
+  "Hotels": {
+    "eyebrow": "Konaklama",
+    "title": "Özenle seçilmiş oteller",
+    "subtitle": "İstanbul genelinde konforlu ve merkezî konaklamalar — oda tipinizi ve tarihlerinizi seçin, dakikalar içinde rezerve edin.",
+    "from": "başlayan",
+    "perNight": "/ gece",
+    "viewHotel": "Oteli incele",
+    "amenities": "Olanaklar",
+    "location": "Konum",
+    "book": {
+      "title": "Konaklamanızı ayırtın",
+      "roomType": "Oda tipi",
+      "checkIn": "Giriş",
+      "checkOut": "Çıkış",
+      "guests": "Misafir",
+      "rooms": "Oda",
+      "nights": "{count, plural, one {# gece} other {# gece}}",
+      "total": "Tahmini toplam",
+      "totalNote": "Nihai fiyat, herhangi bir ödemeden önce onaylanır.",
+      "name": "Ad soyad",
+      "email": "E-posta",
+      "phone": "Telefon / WhatsApp",
+      "notes": "Özel istekler (isteğe bağlı)",
+      "submit": "Rezervasyon iste",
+      "submitting": "İsteniyor…",
+      "selectDates": "Giriş ve çıkış tarihlerinizi seçin.",
+      "perNight": "/ gece"
+    },
+    "rooms": {
+      "single": "Tek kişilik",
+      "couple": "Çift kişilik",
+      "triple": "Üç kişilik",
+      "quadruple": "Dört kişilik"
+    },
+    "success": {
+      "title": "Rezervasyon isteği alındı",
+      "body": "Teşekkürler, {name}. Otel isteğinizi aldık ve kısa süre içinde onaylayacağız."
+    },
+    "error": "İsteğinizi gönderemedik. Lütfen tekrar deneyin veya WhatsApp'tan bize ulaşın.",
+    "meta": {
+      "title": "İstanbul'da Oteller ve Konaklama",
+      "description": "İstanbul genelinde konforlu ve merkezî oteller. Oda tipinizi ve tarihlerinizi seçin, dakikalar içinde rezerve edin."
+    }
+  },
+  "Voucher": {
+    "title": "Rezervasyon fişi",
+    "thanks": "Teşekkürler, {name}!",
+    "received": "İsteğiniz alındı. İşte özetiniz — el altında tutun.",
+    "reference": "Referans",
+    "service": "Hizmet",
+    "experience": "Tur",
+    "from": "Nereden",
+    "to": "Nereye",
+    "date": "Tarih ve saat",
+    "return": "Dönüş",
+    "guests": "Misafir",
+    "luggage": "Bagaj",
+    "flight": "Uçuş",
+    "hotel": "Otel",
+    "room": "Oda",
+    "checkIn": "Giriş",
+    "checkOut": "Çıkış",
+    "nights": "Gece",
+    "notes": "Notlar",
+    "total": "Tahmini toplam",
+    "totalNote": "Nihai fiyat, herhangi bir ödemeden önce onaylanır.",
+    "sendWhatsapp": "WhatsApp'a gönder",
+    "services": {
+      "transfer": "Özel transfer",
+      "hourly": "Saatlik şoför",
+      "tour": "Rehberli tur",
+      "hotel": "Otel rezervasyonu"
+    }
   }
 }

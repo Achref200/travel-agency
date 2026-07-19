@@ -12,7 +12,7 @@ import { defineRouting } from "next-intl/routing";
  * and (if RTL) list it in `RTL_LOCALES` below.
  */
 export const routing = defineRouting({
-  locales: ["en", "tr", "ar"],
+  locales: ["en", "tr", "ar", "fr"],
   defaultLocale: "en",
   localePrefix: "as-needed",
 });
@@ -25,6 +25,7 @@ export const LOCALE_LABELS: Record<string, { label: string; flag: string }> = {
   en: { label: "English", flag: "🇬🇧" },
   tr: { label: "Türkçe", flag: "🇹🇷" },
   ar: { label: "العربية", flag: "🇸🇦" },
+  fr: { label: "Français", flag: "🇫🇷" },
 };
 
 export function isRtl(locale: string): boolean {

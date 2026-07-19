@@ -6,6 +6,7 @@ import { vehicles } from "../src/data/vehicles";
 import { faqItems } from "../src/data/faq";
 import { galleryImages } from "../src/data/gallery";
 import { team, milestones } from "../src/data/about";
+import { hotels } from "../src/data/hotels";
 
 const prisma = new PrismaClient();
 
@@ -137,6 +138,27 @@ async function main() {
       })),
     });
     console.log(`✓ seeded ${milestones.length} milestones`);
+  }
+
+  // ── Hotels ──
+  if ((await prisma.hotel.count()) === 0) {
+    await prisma.hotel.createMany({
+      data: hotels.map((h, i) => ({
+        slug: h.slug,
+        name: h.name,
+        location: h.location,
+        description: h.description,
+        image: h.image,
+        amenities: h.amenities,
+        priceSingle: h.priceSingle,
+        priceCouple: h.priceCouple,
+        priceTriple: h.priceTriple,
+        priceQuadruple: h.priceQuadruple,
+        stars: h.stars,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${hotels.length} hotels`);
   }
 }
 

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const bookingSchema = z.object({
-  serviceType: z.enum(["transfer", "hourly", "tour"]).default("transfer"),
+  serviceType: z.enum(["transfer", "hourly", "tour", "hotel"]).default("transfer"),
   fromLocation: z.string().trim().min(2).max(160),
   toLocation: z.string().trim().max(160).optional().or(z.literal("")),
   pickupAt: z.string().min(1).max(40),
@@ -11,6 +11,15 @@ export const bookingSchema = z.object({
   luggage: z.coerce.number().int().min(0).max(40).default(0),
   flightNumber: z.string().trim().max(20).optional().or(z.literal("")),
   roundTrip: z.boolean().default(false),
+  // Hotel bookings (only used when serviceType = "hotel").
+  hotelSlug: z.string().trim().max(120).optional().or(z.literal("")),
+  hotelName: z.string().trim().max(160).optional().or(z.literal("")),
+  roomType: z.enum(["single", "couple", "triple", "quadruple"]).optional(),
+  checkIn: z.string().max(40).optional().or(z.literal("")),
+  checkOut: z.string().max(40).optional().or(z.literal("")),
+  rooms: z.coerce.number().int().min(1).max(10).optional(),
+  // Tour bookings (only used when serviceType = "tour").
+  tourSlug: z.string().trim().max(120).optional().or(z.literal("")),
   fullName: z.string().trim().min(2).max(120),
   email: z.string().trim().email().max(160),
   phone: z.string().trim().min(5).max(40),

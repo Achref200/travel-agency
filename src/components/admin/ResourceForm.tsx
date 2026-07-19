@@ -1,11 +1,12 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
+import { Loader2, Languages } from "lucide-react";
 import type { AdminResource, AdminField } from "@/lib/admin/resources";
 import { LOCALES } from "@/lib/admin/resources";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { cn } from "@/lib/utils";
 
 type FormState = { error?: string } | undefined;
@@ -16,6 +17,7 @@ const LOCALE_LABEL: globalThis.Record<string, string> = {
   en: "English",
   tr: "Türkçe",
   ar: "العربية",
+  fr: "Français",
 };
 
 export function ResourceForm({
@@ -95,57 +97,11 @@ function FieldInput({ field, value }: { field: AdminField; value: unknown }) {
   }
 
   if (field.type === "localized") {
-    const v = (value ?? {}) as globalThis.Record<string, string>;
-    return (
-      <div>
-        <Label>{field.label}</Label>
-        <div className="space-y-2">
-          {LOCALES.map((loc) => (
-            <div key={loc} className="flex items-center gap-2">
-              <span className="w-16 shrink-0 text-xs uppercase text-faint">
-                {LOCALE_LABEL[loc]}
-              </span>
-              <input
-                name={`${field.name}.${loc}`}
-                defaultValue={v[loc] ?? ""}
-                dir={loc === "ar" ? "rtl" : "ltr"}
-                className="input"
-              />
-            </div>
-          ))}
-        </div>
-        <Help>{field.help}</Help>
-      </div>
-    );
+    return <LocalizedField field={field} value={value} />;
   }
 
   if (field.type === "localizedList") {
-    const arr = (Array.isArray(value) ? value : []) as globalThis.Record<
-      string,
-      string
-    >[];
-    return (
-      <div>
-        <Label>{field.label}</Label>
-        <div className="grid gap-2 sm:grid-cols-3">
-          {LOCALES.map((loc) => (
-            <div key={loc}>
-              <span className="mb-1 block text-xs uppercase text-faint">
-                {LOCALE_LABEL[loc]}
-              </span>
-              <textarea
-                name={`${field.name}.${loc}`}
-                defaultValue={arr.map((x) => x[loc] ?? "").join("\n")}
-                dir={loc === "ar" ? "rtl" : "ltr"}
-                rows={4}
-                className="input min-h-24 py-2"
-              />
-            </div>
-          ))}
-        </div>
-        <Help>{field.help}</Help>
-      </div>
-    );
+    return <LocalizedListField field={field} value={value} />;
   }
 
   if (field.type === "select") {
@@ -165,6 +121,17 @@ function FieldInput({ field, value }: { field: AdminField; value: unknown }) {
         </select>
         <Help>{field.help}</Help>
       </div>
+    );
+  }
+
+  if (field.type === "image") {
+    return (
+      <ImageUploadField
+        name={field.name}
+        label={field.label}
+        value={(value as string) ?? ""}
+        help={field.help}
+      />
     );
   }
 
@@ -190,6 +157,186 @@ function FieldInput({ field, value }: { field: AdminField; value: unknown }) {
           className="input"
         />
       )}
+      <Help>{field.help}</Help>
+    </div>
+  );
+}
+
+// ── Auto-translate (MyMemory via /api/admin/translate) ──────────────────────
+
+async function requestTranslations(
+  text: string,
+  from: string,
+  to: readonly string[],
+): Promise<globalThis.Record<string, string>> {
+  const res = await fetch("/api/admin/translate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text, from, to }),
+  });
+  const data = await res.json();
+  if (!res.ok || !data.ok) throw new Error(data?.error ?? "failed");
+  return data.translations as globalThis.Record<string, string>;
+}
+
+function TranslateControl({
+  from,
+  setFrom,
+  busy,
+  onRun,
+}: {
+  from: string;
+  setFrom: (v: string) => void;
+  busy: boolean;
+  onRun: () => void;
+}) {
+  return (
+    <div className="flex items-center gap-1.5">
+      <span className="text-xs text-faint">from</span>
+      <select
+        value={from}
+        onChange={(e) => setFrom(e.target.value)}
+        className="h-7 rounded-md border border-line bg-surface px-1.5 text-xs"
+        aria-label="Source language"
+      >
+        {LOCALES.map((l) => (
+          <option key={l} value={l}>
+            {LOCALE_LABEL[l]}
+          </option>
+        ))}
+      </select>
+      <button
+        type="button"
+        onClick={onRun}
+        disabled={busy}
+        className="inline-flex h-7 items-center gap-1 rounded-full border border-line px-2.5 text-xs font-medium text-ink transition-colors hover:border-gold/60 disabled:opacity-60"
+      >
+        {busy ? (
+          <Loader2 className="size-3 animate-spin" />
+        ) : (
+          <Languages className="size-3" />
+        )}
+        Translate
+      </button>
+    </div>
+  );
+}
+
+function LocalizedField({ field, value }: { field: AdminField; value: unknown }) {
+  const initial = (value ?? {}) as globalThis.Record<string, string>;
+  const [vals, setVals] = useState<globalThis.Record<string, string>>(() =>
+    Object.fromEntries(LOCALES.map((l) => [l, initial[l] ?? ""])),
+  );
+  const [from, setFrom] = useState("en");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string>();
+
+  async function translate() {
+    setErr(undefined);
+    if (!vals[from]?.trim()) {
+      setErr("Fill the source language first.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const out = await requestTranslations(
+        vals[from],
+        from,
+        LOCALES.filter((l) => l !== from),
+      );
+      setVals((v) => ({ ...v, ...out }));
+    } catch {
+      setErr("Translation failed. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div>
+      <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+        <span className="text-sm font-medium text-ink">{field.label}</span>
+        <TranslateControl from={from} setFrom={setFrom} busy={busy} onRun={translate} />
+      </div>
+      <div className="space-y-2">
+        {LOCALES.map((loc) => (
+          <div key={loc} className="flex items-center gap-2">
+            <span className="w-16 shrink-0 text-xs uppercase text-faint">
+              {LOCALE_LABEL[loc]}
+            </span>
+            <input
+              name={`${field.name}.${loc}`}
+              value={vals[loc] ?? ""}
+              onChange={(e) => setVals((v) => ({ ...v, [loc]: e.target.value }))}
+              dir={loc === "ar" ? "rtl" : "ltr"}
+              className="input"
+            />
+          </div>
+        ))}
+      </div>
+      {err && <p className="mt-1 text-xs text-danger">{err}</p>}
+      <Help>{field.help}</Help>
+    </div>
+  );
+}
+
+function LocalizedListField({ field, value }: { field: AdminField; value: unknown }) {
+  const arr = (Array.isArray(value) ? value : []) as globalThis.Record<
+    string,
+    string
+  >[];
+  const [vals, setVals] = useState<globalThis.Record<string, string>>(() =>
+    Object.fromEntries(LOCALES.map((l) => [l, arr.map((x) => x[l] ?? "").join("\n")])),
+  );
+  const [from, setFrom] = useState("en");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string>();
+
+  async function translate() {
+    setErr(undefined);
+    if (!vals[from]?.trim()) {
+      setErr("Fill the source language first.");
+      return;
+    }
+    setBusy(true);
+    try {
+      const out = await requestTranslations(
+        vals[from],
+        from,
+        LOCALES.filter((l) => l !== from),
+      );
+      setVals((v) => ({ ...v, ...out }));
+    } catch {
+      setErr("Translation failed. Please try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div>
+      <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+        <span className="text-sm font-medium text-ink">{field.label}</span>
+        <TranslateControl from={from} setFrom={setFrom} busy={busy} onRun={translate} />
+      </div>
+      <div className="grid gap-2 sm:grid-cols-2">
+        {LOCALES.map((loc) => (
+          <div key={loc}>
+            <span className="mb-1 block text-xs uppercase text-faint">
+              {LOCALE_LABEL[loc]}
+            </span>
+            <textarea
+              name={`${field.name}.${loc}`}
+              value={vals[loc] ?? ""}
+              onChange={(e) => setVals((v) => ({ ...v, [loc]: e.target.value }))}
+              dir={loc === "ar" ? "rtl" : "ltr"}
+              rows={4}
+              className="input min-h-24 py-2"
+            />
+          </div>
+        ))}
+      </div>
+      {err && <p className="mt-1 text-xs text-danger">{err}</p>}
       <Help>{field.help}</Help>
     </div>
   );

@@ -19,7 +19,7 @@ export const SITE_NAME = "Marwen Travel";
 /** Production domain (no trailing slash). Used for canonical URLs & sitemaps. */
 export const SITE_DOMAIN = "https://www.azura-travel.com";
 
-export type Locale = "en" | "tr" | "ar";
+export type Locale = "en" | "tr" | "ar" | "fr";
 
 export const siteConfig = {
   /** Short brand name shown in the UI. */
@@ -38,9 +38,9 @@ export const siteConfig = {
 
   /** Contact details — used in header CTA, footer, contact page & JSON-LD. */
   contact: {
-    phone: "+90 542 000 00 00",
+    phone: "+21653019984",
     /** Digits only, international format — used to build wa.me links. */
-    whatsapp: "905420000000",
+    whatsapp: "21653019984",
     email: `info@azura-travel.com`,
     address: {
       line1: "Istanbul Airport (IST), Arrivals",
@@ -71,6 +71,13 @@ export const siteConfig = {
 /** Pre-built WhatsApp deep link with an optional greeting message. */
 export function whatsappLink(message?: string): string {
   const base = `https://wa.me/${siteConfig.contact.whatsapp}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+}
+
+/** WhatsApp deep link to a specific number (digits only), with optional text. */
+export function whatsappLinkTo(phone: string, message?: string): string {
+  const digits = phone.replace(/\D/g, "");
+  const base = `https://wa.me/${digits}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 

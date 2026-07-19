@@ -160,19 +160,26 @@ export default async function TourDetailPage({
 
               <div className="mt-6 flex flex-col gap-3">
                 <Button
+                  href={`/booking?mode=tour&slug=${tour.slug}&title=${encodeURIComponent(
+                    localize(tour.title, locale),
+                  )}&price=${tour.price}`}
+                  size="lg"
+                  className="w-full"
+                >
+                  {tc("bookNow")}
+                  <ArrowRight className="size-4 rtl:rotate-180" />
+                </Button>
+                <Button
                   href={whatsappLink(
                     `${tc("bookNow")}: ${localize(tour.title, locale)}`,
                   )}
                   external
+                  variant="secondary"
                   size="lg"
                   className="w-full"
                 >
                   <MessageCircle className="size-4" />
-                  {tc("bookNow")}
-                </Button>
-                <Button href="/contact" variant="secondary" size="lg" className="w-full">
-                  {tc("getQuote")}
-                  <ArrowRight className="size-4 rtl:rotate-180" />
+                  {tc("whatsapp")}
                 </Button>
               </div>
 

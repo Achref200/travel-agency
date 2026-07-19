@@ -47,3 +47,7 @@ services:
         sync: false
       - key: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
         sync: false
+      # Unsigned upload preset (Cloudinary → Settings → Upload) enabling
+      # desktop image uploads from the admin dashboard.
+      - key: NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+        sync: false
