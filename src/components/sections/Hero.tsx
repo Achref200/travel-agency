@@ -38,7 +38,6 @@ export function Hero() {
           <p className="mt-4 md:mt-6 text-lg text-canvas/85 max-w-xl leading-relaxed text-pretty">
             {t("subtitle")}
           </p>
-
           <div className="mt-6 md:mt-8 flex flex-wrap items-center gap-3">
             <Button href="/booking" size="lg" variant="onDark">
               {tc("bookNow")}
