@@ -144,24 +144,7 @@
   "Testimonials": {
     "eyebrow": "Misafir hikâyeleri",
     "title": "Dünyanın her yerinden gezginlerin tercihi",
-    "subtitle": "Binlerce beş yıldızlı yolculuk ve artmaya devam ediyor.",
-    "items": {
-      "one": {
-        "quote": "İner inmez şoförümüz bizi bekliyordu, araç tertemizdi ve fiyat tam da belirtildiği gibiydi. Baştan sona kusursuz.",
-        "author": "Sofia M.",
-        "origin": "Londra, İngiltere"
-      },
-      "two": {
-        "quote": "Tam günlük bir Boğaz turu aldık — rehberimiz sıcak, bilgili ve günü tamamen bize göre şekillendirdi. Unutulmaz.",
-        "author": "Ahmed R.",
-        "origin": "Dubai, BAE"
-      },
-      "three": {
-        "quote": "Uçuşumuz değiştiğinde 7/24 WhatsApp desteği dakikalar içinde yanıt verdi. Havalimanı transferi böyle hissettirmeli.",
-        "author": "Elif & Deniz",
-        "origin": "Berlin, Almanya"
-      }
-    }
+    "subtitle": "Binlerce beş yıldızlı yolculuk ve artmaya devam ediyor."
   },
   "Faq": {
     "eyebrow": "Bilmekte fayda var",
@@ -421,6 +404,7 @@
     "from": "başlayan",
     "perNight": "/ gece",
     "viewHotel": "Oteli incele",
+    "viewAll": "Tüm otelleri gör",
     "amenities": "Olanaklar",
     "location": "Konum",
     "book": {

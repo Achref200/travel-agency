@@ -144,24 +144,7 @@
   "Testimonials": {
     "eyebrow": "Récits de clients",
     "title": "Plébiscité par les voyageurs du monde entier",
-    "subtitle": "Des milliers de voyages cinq étoiles, et ça continue.",
-    "items": {
-      "one": {
-        "quote": "Notre chauffeur nous attendait à la seconde où nous avons atterri, la voiture était impeccable et le prix exactement celui annoncé. Parfait du début à la fin.",
-        "author": "Sofia M.",
-        "origin": "Londres, RU"
-      },
-      "two": {
-        "quote": "Nous avons réservé une excursion d'une journée sur le Bosphore — notre guide était chaleureux, cultivé et a entièrement adapté la journée à nos envies. Inoubliable.",
-        "author": "Ahmed R.",
-        "origin": "Dubaï, EAU"
-      },
-      "three": {
-        "quote": "L'assistance WhatsApp 24/7 a répondu en quelques minutes lorsque notre vol a changé. C'est ainsi que les transferts aéroport devraient être.",
-        "author": "Elif & Deniz",
-        "origin": "Berlin, DE"
-      }
-    }
+    "subtitle": "Des milliers de voyages cinq étoiles, et ça continue."
   },
   "Faq": {
     "eyebrow": "Bon à savoir",
@@ -421,6 +404,7 @@
     "from": "à partir de",
     "perNight": "/ nuit",
     "viewHotel": "Voir l'hôtel",
+    "viewAll": "Voir tous les hôtels",
     "amenities": "Équipements",
     "location": "Emplacement",
     "book": {

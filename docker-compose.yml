@@ -1,0 +1,59 @@
+# Contabo VPS deployment — Next.js app behind Caddy (automatic HTTPS).
+#
+#   1.  cp .env.production.example .env   # then edit the values
+#   2.  point your domain's DNS A record at the server's IP
+#   3.  docker compose up -d --build
+#
+# The SQLite database and uploaded images live in named volumes, so they
+# survive redeploys and restarts.
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        # NEXT_PUBLIC_* are inlined at build time — read from .env.
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://yourdomain.com}
+        NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:-}
+    image: marwen-travel:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: "file:/data/prod.db"
+    volumes:
+      - db-data:/data
+      - uploads:/app/public/uploads
+    expose:
+      - "3000"
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:-yourdomain.com}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  db-data:
+  uploads:
+  caddy-data:
+  caddy-config:

@@ -3,13 +3,16 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { pageMetadata } from "@/lib/seo";
 import {
   getTours,
+  getHotels,
   getRoutes,
   getFaqItems,
   getGalleryImages,
+  getTestimonials,
 } from "@/lib/content";
 import { Hero } from "@/components/sections/Hero";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { ToursSection } from "@/components/sections/ToursSection";
+import { HotelsSection } from "@/components/sections/HotelsSection";
 import { PopularLocations } from "@/components/sections/PopularLocations";
 import { VipServices } from "@/components/sections/VipServices";
 import { Testimonials } from "@/components/sections/Testimonials";
@@ -41,21 +44,25 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [tours, routes, faqItems, gallery] = await Promise.all([
-    getTours(),
-    getRoutes(),
-    getFaqItems(),
-    getGalleryImages(),
-  ]);
+  const [tours, hotels, routes, faqItems, gallery, testimonials] =
+    await Promise.all([
+      getTours(),
+      getHotels(),
+      getRoutes(),
+      getFaqItems(),
+      getGalleryImages(),
+      getTestimonials(),
+    ]);
 
   return (
     <>
       <Hero />
       <TrustBar />
       <ToursSection tours={tours} limit={6} />
+      <HotelsSection hotels={hotels} limit={3} />
       <PopularLocations routes={routes} />
       <VipServices />
-      <Testimonials />
+      <Testimonials testimonials={testimonials} />
       <GallerySection images={gallery} />
       <FaqSection items={faqItems} />
       <CtaBand />

@@ -144,24 +144,7 @@
   "Testimonials": {
     "eyebrow": "Guest stories",
     "title": "Loved by travellers worldwide",
-    "subtitle": "Thousands of five-star journeys and counting.",
-    "items": {
-      "one": {
-        "quote": "Our driver was waiting the second we landed, the car was spotless and the price was exactly as quoted. Flawless from start to finish.",
-        "author": "Sofia M.",
-        "origin": "London, UK"
-      },
-      "two": {
-        "quote": "Booked a full-day Bosphorus tour — our guide was warm, knowledgeable and completely tailored the day to us. Unforgettable.",
-        "author": "Ahmed R.",
-        "origin": "Dubai, UAE"
-      },
-      "three": {
-        "quote": "24/7 WhatsApp support answered in minutes when our flight changed. This is how airport transfers should feel.",
-        "author": "Elif & Deniz",
-        "origin": "Berlin, DE"
-      }
-    }
+    "subtitle": "Thousands of five-star journeys and counting."
   },
   "Faq": {
     "eyebrow": "Good to know",
@@ -421,6 +404,7 @@
     "from": "from",
     "perNight": "/ night",
     "viewHotel": "View hotel",
+    "viewAll": "View all hotels",
     "amenities": "Amenities",
     "location": "Location",
     "book": {

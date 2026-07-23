@@ -47,8 +47,8 @@ export default async function ResourceListPage({
         </Link>
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-line bg-surface">
-        <table className="w-full text-sm">
+      <div className="mt-6 overflow-x-auto rounded-xl border border-line bg-surface">
+        <table className="w-full min-w-[36rem] text-sm">
           <thead className="border-b border-line bg-canvas/50 text-start">
             <tr>
               {resource.columns.map((c) => (

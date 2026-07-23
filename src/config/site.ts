@@ -16,8 +16,16 @@
 /** The one variable to change when the brand name is decided. */
 export const SITE_NAME = "Marwen Travel";
 
-/** Production domain (no trailing slash). Used for canonical URLs & sitemaps. */
-export const SITE_DOMAIN = "https://www.azura-travel.com";
+/**
+ * Production domain (no trailing slash). Used for canonical URLs & sitemaps.
+ *
+ * Reads `NEXT_PUBLIC_SITE_URL` (inlined at build time) so the same codebase can
+ * be deployed to any domain without editing source. Falls back to a placeholder
+ * — set NEXT_PUBLIC_SITE_URL in your environment / Docker build args.
+ */
+export const SITE_DOMAIN = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://yourdomain.com"
+).replace(/\/+$/, "");
 
 export type Locale = "en" | "tr" | "ar" | "fr";
 
@@ -41,7 +49,7 @@ export const siteConfig = {
     phone: "+21653019984",
     /** Digits only, international format — used to build wa.me links. */
     whatsapp: "21653019984",
-    email: `info@azura-travel.com`,
+    email: "info@yourdomain.com",
     address: {
       line1: "Istanbul Airport (IST), Arrivals",
       district: "Tayakadın, Arnavutköy",

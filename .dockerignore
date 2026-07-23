@@ -1,0 +1,39 @@
+# Build context excludes — keep secrets and local artifacts out of the image.
+
+# Dependencies & build output (rebuilt inside the image)
+node_modules
+.next
+out
+build
+
+# Secrets / local env (provided at runtime via env_file)
+.env
+.env.*
+
+# Local SQLite databases
+*.db
+*.db-journal
+prisma/*.db
+prisma/*.db-journal
+
+# Local uploads (served from a mounted volume in production)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# VCS, editor & CI
+.git
+.gitignore
+.vscode
+.idea
+.github
+
+# Docs & compose (not needed inside the image)
+README.md
+DEPLOY.md
+render.yaml
+docker-compose.yml
+
+# Misc
+*.tsbuildinfo
+npm-debug.log*
+.DS_Store

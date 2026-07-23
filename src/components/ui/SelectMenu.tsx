@@ -47,6 +47,7 @@ export function SelectMenu({
   const current = options.find((o) => o.value === value);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client-mount guard for the portalled menu
     setMounted(true);
   }, []);
 

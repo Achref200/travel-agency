@@ -7,6 +7,7 @@ import { faqItems } from "../src/data/faq";
 import { galleryImages } from "../src/data/gallery";
 import { team, milestones } from "../src/data/about";
 import { hotels } from "../src/data/hotels";
+import { testimonials } from "../src/data/testimonials";
 
 const prisma = new PrismaClient();
 
@@ -17,6 +18,16 @@ function hashPassword(password: string): string {
 }
 
 async function main() {
+  // Enable SQLite WAL (write-ahead logging) for better read/write concurrency
+  // under load — readers no longer block on a writer. Persists on the DB file;
+  // runs on every boot (harmless to repeat).
+  try {
+    await prisma.$queryRawUnsafe("PRAGMA journal_mode=WAL;");
+    await prisma.$executeRawUnsafe("PRAGMA busy_timeout=5000;");
+  } catch {
+    // Non-fatal (e.g. a non-SQLite datasource) — ignore.
+  }
+
   // ── Admin user ──
   const email = (process.env.ADMIN_EMAIL ?? "admin@example.com")
     .trim()
@@ -159,6 +170,20 @@ async function main() {
       })),
     });
     console.log(`✓ seeded ${hotels.length} hotels`);
+  }
+
+  // ── Testimonials ──
+  if ((await prisma.testimonial.count()) === 0) {
+    await prisma.testimonial.createMany({
+      data: testimonials.map((tm, i) => ({
+        quote: tm.quote,
+        author: tm.author,
+        origin: tm.origin,
+        rating: tm.rating,
+        order: i,
+      })),
+    });
+    console.log(`✓ seeded ${testimonials.length} testimonials`);
   }
 }
 

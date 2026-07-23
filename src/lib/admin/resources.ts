@@ -216,6 +216,27 @@ export const resources: AdminResource[] = [
       order,
     ],
   },
+  {
+    key: "testimonials",
+    model: "testimonial",
+    label: "Testimonials",
+    singular: "Testimonial",
+    tag: "content:testimonials",
+    columns: [
+      { name: "author", label: "Author" },
+      { name: "origin", label: "Origin" },
+      { name: "rating", label: "Rating" },
+      { name: "published", label: "Published" },
+    ],
+    fields: [
+      { name: "quote", label: "Quote / review", type: "localized", required: true },
+      { name: "author", label: "Author name", type: "text", required: true, help: "e.g. Sofia M." },
+      { name: "origin", label: "Origin", type: "text", help: "e.g. London, UK" },
+      { name: "rating", label: "Rating (1–5)", type: "number", help: "Number of stars to display." },
+      published,
+      order,
+    ],
+  },
 ];
 
 export function getResource(key: string): AdminResource | undefined {

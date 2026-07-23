@@ -80,6 +80,7 @@ export default async function AdminDashboard({
       prisma.teamMember.count(),
       prisma.milestone.count(),
       prisma.hotel.count(),
+      prisma.testimonial.count(),
     ]),
     prisma.booking.count(),
     prisma.booking.count({ where: { status: "pending" } }),
@@ -116,6 +117,7 @@ export default async function AdminDashboard({
     team: counts[5],
     milestones: counts[6],
     hotels: counts[7],
+    testimonials: counts[8],
   };
 
   return (

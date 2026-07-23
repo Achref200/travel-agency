@@ -1,0 +1,17 @@
+# Caddy automatically obtains and renews a Let's Encrypt certificate for $DOMAIN.
+# Set DOMAIN in your .env (e.g. DOMAIN=example.com).
+#
+# To also serve the www subdomain, replace the first line with:
+#   {$DOMAIN}, www.{$DOMAIN} {
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	# Forward everything to the Next.js container. Caddy adds the
+	# X-Forwarded-For / X-Forwarded-Proto headers the app relies on.
+	reverse_proxy app:3000
+
+	# Long-lived immutable Next.js assets.
+	@static path /_next/static/* /favicon.ico /icon /manifest.webmanifest
+	header @static Cache-Control "public, max-age=31536000, immutable"
+}

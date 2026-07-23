@@ -13,9 +13,9 @@ export default async function ProtectedAdminLayout({
   if (!session) redirect("/admin/login");
 
   return (
-    <div className="flex min-h-dvh">
+    <div className="min-h-dvh md:flex">
       <AdminNav email={session.email} />
-      <main className="min-w-0 flex-1 p-6 md:p-10">{children}</main>
+      <main className="min-w-0 flex-1 p-4 sm:p-6 md:p-10">{children}</main>
     </div>
   );
 }

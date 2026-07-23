@@ -8,7 +8,19 @@ import {
 } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 
-const SECRET = process.env.ADMIN_SESSION_SECRET ?? "insecure-dev-secret";
+const RAW_SECRET = process.env.ADMIN_SESSION_SECRET;
+if (
+  process.env.NODE_ENV === "production" &&
+  (!RAW_SECRET || RAW_SECRET.length < 16)
+) {
+  // Sessions are HMAC-signed with this value — a missing/weak secret makes
+  // admin session cookies forgeable. Generate one with `openssl rand -base64 48`.
+  console.error(
+    "[auth] ADMIN_SESSION_SECRET is missing or too short in production. " +
+      "Set a long, random value or admin sessions are insecure.",
+  );
+}
+const SECRET = RAW_SECRET ?? "insecure-dev-secret";
 export const SESSION_COOKIE = "admin_session";
 export const SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours (seconds)
 

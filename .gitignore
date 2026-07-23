@@ -17,9 +17,6 @@
 /.next/
 /out/
 
-# runtime image uploads (built-in fallback uploader)
-/public/uploads/
-
 # production
 /build
 
@@ -35,6 +32,8 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+!.env.production.example
 
 # local prisma sqlite db
 prisma/*.db

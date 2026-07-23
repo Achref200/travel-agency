@@ -6,6 +6,7 @@ import {
   SESSION_COOKIE,
   SESSION_MAX_AGE,
 } from "@/lib/auth";
+import { rateLimit, clientIp } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,6 +17,15 @@ const schema = z.object({
 });
 
 export async function POST(req: Request) {
+  // Throttle brute-force attempts: max 10 tries per IP per 5 minutes.
+  const limited = rateLimit(`login:${clientIp(req)}`, 10, 5 * 60 * 1000);
+  if (!limited.ok) {
+    return NextResponse.json(
+      { ok: false, error: "rate_limited" },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfter) } },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();

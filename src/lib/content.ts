@@ -8,6 +8,7 @@ import type { FaqItem } from "@/data/faq";
 import type { GalleryImage } from "@/data/gallery";
 import type { Member, Milestone } from "@/data/about";
 import type { Hotel } from "@/data/hotels";
+import type { Testimonial } from "@/data/testimonials";
 
 /**
  * Content is read straight from the database. Public pages are statically
@@ -158,4 +159,17 @@ export async function getHotelSlugs(): Promise<string[]> {
     orderBy: { order: "asc" },
   });
   return rows.map((r) => r.slug);
+}
+
+export async function getTestimonials(): Promise<Testimonial[]> {
+  const rows = await prisma.testimonial.findMany({
+    where: { published: true },
+    orderBy: { order: "asc" },
+  });
+  return rows.map((r) => ({
+    quote: loc(r.quote),
+    author: r.author,
+    origin: r.origin,
+    rating: r.rating,
+  }));
 }
