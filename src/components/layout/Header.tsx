@@ -103,6 +103,11 @@ export function Header() {
         )}
       >
         <div className="shell flex flex-col h-full py-8">
+          <LanguageSwitcher
+            variant="inline"
+            className="mb-6 border-b border-line/70 pb-6"
+            onSelect={() => setMenuOpen(false)}
+          />
           <nav className="flex flex-col gap-1" aria-label="Mobile">
             {mainNav.map((item, i) => (
               <Link
@@ -121,7 +126,6 @@ export function Header() {
           </nav>
 
           <div className="mt-auto flex flex-col gap-4 pt-8">
-            <LanguageSwitcher />
             <Button href="/booking" size="lg" onClick={() => setMenuOpen(false)}>
               {t("bookNow")}
             </Button>

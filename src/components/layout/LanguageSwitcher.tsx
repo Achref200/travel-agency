@@ -1,14 +1,23 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState, useRef, useEffect, useTransition } from "react";
 import { Globe, Check, ChevronDown } from "lucide-react";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { routing, LOCALE_LABELS } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
-export function LanguageSwitcher({ className }: { className?: string }) {
+export function LanguageSwitcher({
+  className,
+  variant = "dropdown",
+  onSelect,
+}: {
+  className?: string;
+  variant?: "dropdown" | "inline";
+  onSelect?: () => void;
+}) {
   const locale = useLocale();
+  const t = useTranslations("Nav");
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -32,10 +41,51 @@ export function LanguageSwitcher({ className }: { className?: string }) {
 
   function switchTo(next: string) {
     setOpen(false);
+    onSelect?.();
     if (next === locale) return;
     startTransition(() => {
       router.replace(pathname, { locale: next });
     });
+  }
+
+  // Mobile: render clear, tappable language pills instead of a dropdown that
+  // would overflow the viewport and collide with the floating WhatsApp button.
+  if (variant === "inline") {
+    return (
+      <div className={className}>
+        <div className="mb-3 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-faint">
+          <Globe className="size-3.5" aria-hidden />
+          {t("language")}
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {routing.locales.map((code) => {
+            const meta = LOCALE_LABELS[code];
+            const active = code === locale;
+            return (
+              <button
+                key={code}
+                type="button"
+                onClick={() => switchTo(code)}
+                aria-pressed={active}
+                disabled={isPending}
+                className={cn(
+                  "inline-flex h-11 items-center gap-2 rounded-xl border px-3 text-sm transition-colors",
+                  active
+                    ? "border-gold bg-gold/10 font-medium text-ink"
+                    : "border-line text-muted hover:border-ink/30 hover:text-ink",
+                )}
+              >
+                <span className="text-base leading-none" aria-hidden>
+                  {meta.flag}
+                </span>
+                <span className="flex-1 text-start">{meta.label}</span>
+                {active && <Check className="size-4 text-gold" aria-hidden />}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
   }
 
   return (
