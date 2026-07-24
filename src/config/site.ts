@@ -24,7 +24,7 @@ export const SITE_NAME = "Marwen Travel";
  * — set NEXT_PUBLIC_SITE_URL in your environment / Docker build args.
  */
 export const SITE_DOMAIN = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://yourdomain.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.marwentravel.com"
 ).replace(/\/+$/, "");
 
 export type Locale = "en" | "tr" | "ar" | "fr";
@@ -49,7 +49,7 @@ export const siteConfig = {
     phone: "+21653019984",
     /** Digits only, international format — used to build wa.me links. */
     whatsapp: "21653019984",
-    email: "info@yourdomain.com",
+    email: "info@marwentravel.com",
     address: {
       line1: "Istanbul Airport (IST), Arrivals",
       district: "Tayakadın, Arnavutköy",

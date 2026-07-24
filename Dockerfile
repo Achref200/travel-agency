@@ -23,7 +23,7 @@ RUN npm ci
 FROM base AS builder
 # NEXT_PUBLIC_* values are inlined into the client bundle at BUILD time,
 # so they must be passed as build args (see docker-compose.yml).
-ARG NEXT_PUBLIC_SITE_URL="https://yourdomain.com"
+ARG NEXT_PUBLIC_SITE_URL="https://www.marwentravel.com"
 ARG NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=""
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME \
