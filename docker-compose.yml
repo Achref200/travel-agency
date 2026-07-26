@@ -20,9 +20,7 @@ services:
     env_file: .env
     environment:
       NODE_ENV: production
-      DATABASE_URL: "file:/data/prod.db"
     volumes:
-      - db-data:/data
       - uploads:/app/public/uploads
     expose:
       - "3000"
@@ -53,7 +51,6 @@ services:
       - caddy-config:/config
 
 volumes:
-  db-data:
   uploads:
   caddy-data:
   caddy-config:

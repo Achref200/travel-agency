@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -179,7 +179,7 @@ model Booking {
   fullName       String
   email          String
   phone          String
-  notes          String?
+  notes          String?   @db.Text
   locale         String    @default("en")
   estimatedPrice Float?
   status         String    @default("pending") // pending | confirmed | cancelled
@@ -204,7 +204,7 @@ model ContactMessage {
   email     String
   phone     String?
   subject   String?
-  message   String
+  message   String   @db.Text
   locale    String   @default("en")
   handled   Boolean  @default(false)
   createdAt DateTime @default(now())

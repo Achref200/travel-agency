@@ -22,9 +22,7 @@ services:
     buildCommand: >-
       npm install &&
       npx prisma generate &&
-      DATABASE_URL="file:/tmp/build.db" npx prisma db push --skip-generate &&
-      DATABASE_URL="file:/tmp/build.db" npx tsx prisma/seed.ts &&
-      DATABASE_URL="file:/tmp/build.db" npm run build
+      npm run build
     startCommand: >-
       npx prisma db push --skip-generate &&
       npx tsx prisma/seed.ts &&
@@ -33,8 +31,6 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22.20.0"
-      - key: DATABASE_URL
-        value: file:/tmp/dev.db
       # Set these in the Render dashboard (marked sync:false so they aren't
       # stored in the repo). ADMIN_SESSION_SECRET must be a long random string.
       - key: ADMIN_SESSION_SECRET

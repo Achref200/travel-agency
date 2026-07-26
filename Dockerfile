@@ -25,17 +25,18 @@ FROM base AS builder
 # so they must be passed as build args (see docker-compose.yml).
 ARG NEXT_PUBLIC_SITE_URL="https://www.marwentravel.com"
 ARG NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=""
+ARG DATABASE_URL
+
 ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL \
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=$NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME \
+    DATABASE_URL=$DATABASE_URL \
     NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-# Static pages are generated from a throwaway SQLite DB seeded with the same
-# baseline content the runtime container seeds, so SSG output stays consistent.
+# We only generate Prisma client and run build. The user must provide a valid
+# DATABASE_URL build argument if Next.js statically generates pages that need it.
 RUN npx prisma generate \
- && DATABASE_URL="file:/tmp/build.db" npx prisma db push --skip-generate \
- && DATABASE_URL="file:/tmp/build.db" npx tsx prisma/seed.ts \
- && DATABASE_URL="file:/tmp/build.db" npm run build
+ && npm run build
 
 ############################################################
 #  Runner — migrate + seed + `next start`
@@ -44,19 +45,17 @@ FROM base AS runner
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \
-    HOSTNAME=0.0.0.0 \
-    DATABASE_URL="file:/data/prod.db"
+    HOSTNAME=0.0.0.0
 
 # Bring the fully built app. node_modules is kept intact so the Prisma CLI and
 # tsx are available to run migrations + seeding on boot (see entrypoint).
 COPY --from=builder /app ./
 
 # Writable dirs for the unprivileged `node` user:
-#  - /data              persistent SQLite database (mounted volume)
 #  - /app/public/uploads local image uploads (mounted volume)
 #  - /app/.next          Next.js ISR / fetch cache written at runtime
-RUN mkdir -p /data /app/public/uploads \
- && chown -R node:node /data /app/public/uploads /app/.next
+RUN mkdir -p /app/public/uploads \
+ && chown -R node:node /app/public/uploads /app/.next
 
 COPY --chmod=0755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
