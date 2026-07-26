@@ -21,6 +21,9 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { JsonLd, faqSchema } from "@/components/seo/JsonLd";
 
+// Always render at request time — requires live DB access.
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

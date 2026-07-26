@@ -19,7 +19,18 @@ const staticPaths = [
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
-  const [slugs, hotelSlugs] = await Promise.all([getTourSlugs(), getHotelSlugs()]);
+
+  // DB may not be reachable at build time (no DATABASE_URL in the build
+  // environment). Fall back to static paths only — dynamic slug pages are
+  // rendered on-request so they are still crawlable via their canonical URLs.
+  let slugs: string[] = [];
+  let hotelSlugs: string[] = [];
+  try {
+    [slugs, hotelSlugs] = await Promise.all([getTourSlugs(), getHotelSlugs()]);
+  } catch {
+    // silently skip — sitemap will include static paths only during build
+  }
+
   const paths = [
     ...staticPaths,
     ...slugs.map((s) => `/tours/${s}`),

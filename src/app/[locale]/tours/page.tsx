@@ -8,6 +8,8 @@ import { TourCard } from "@/components/sections/TourCard";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { getTours } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

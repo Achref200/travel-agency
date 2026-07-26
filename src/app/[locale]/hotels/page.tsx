@@ -8,6 +8,8 @@ import { HotelCard } from "@/components/sections/HotelCard";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { getHotels } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

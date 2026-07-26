@@ -12,14 +12,10 @@ import { Reveal } from "@/components/motion/Reveal";
 import { Parallax } from "@/components/motion/Parallax";
 import { HotelBookingForm } from "@/components/sections/HotelBookingForm";
 import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
-import { getHotel, getHotelSlugs } from "@/lib/content";
+import { getHotel } from "@/lib/content";
 
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  const slugs = await getHotelSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+// Render on every request — no DB access needed at build time.
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,

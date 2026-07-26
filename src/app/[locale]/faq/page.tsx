@@ -6,6 +6,8 @@ import { FaqSection } from "@/components/sections/FaqSection";
 import { JsonLd, faqSchema } from "@/components/seo/JsonLd";
 import { getFaqItems } from "@/lib/content";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

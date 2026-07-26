@@ -12,6 +12,8 @@ import { getVehicles } from "@/lib/content";
 import { localize } from "@/lib/utils";
 import { BLUR_DATA_URL } from "@/lib/images";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

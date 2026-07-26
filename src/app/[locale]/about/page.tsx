@@ -15,6 +15,8 @@ import { stockImage, BLUR_DATA_URL } from "@/lib/images";
 import { getTeam, getMilestones } from "@/lib/content";
 import { partners } from "@/data/about";
 
+export const dynamic = "force-dynamic";
+
 const values = [
   { key: "care", Icon: HeartHandshake },
   { key: "trust", Icon: BadgeEuro },
