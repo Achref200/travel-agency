@@ -46,9 +46,9 @@ export const siteConfig = {
 
   /** Contact details — used in header CTA, footer, contact page & JSON-LD. */
   contact: {
-    phone: "+21653019984",
+    phone: "+90 501 347 64 09",
     /** Digits only, international format — used to build wa.me links. */
-    whatsapp: "21653019984",
+    whatsapp: "+90 501 347 64 09",
     email: "info@marwentravel.com",
     address: {
       line1: "Istanbul Airport (IST), Arrivals",
@@ -66,7 +66,7 @@ export const siteConfig = {
   /** Public social profiles. Empty string = hidden. */
   social: {
     instagram: "https://www.instagram.com/marwen_travel_officiel",
-    facebook: "https://www.facebook.com/",
+    facebook: "https://www.facebook.com/profile.php?id=61556251930946",
     tripadvisor: "https://www.tripadvisor.com/",
     x: "",
     youtube: "",
