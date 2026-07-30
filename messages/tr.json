@@ -407,6 +407,9 @@
     "viewHotel": "Oteli incele",
     "viewAll": "Tüm otelleri gör",
     "amenities": "Olanaklar",
+    "gallery": "Fotoğraflar",
+    "address": "Adres",
+    "viewOnMap": "Haritada görüntüle",
     "location": "Konum",
     "book": {
       "title": "Konaklamanızı ayırtın",
@@ -472,5 +475,10 @@
       "tour": "Rehberli tur",
       "hotel": "Otel rezervasyonu"
     }
+  },
+  "Error": {
+    "title": "Bir sorun oluştu",
+    "body": "Bu sayfa şu anda yüklenemedi. Lütfen tekrar deneyin — sorun devam ederse bize ulaşın, hemen yardımcı olalım.",
+    "retry": "Tekrar dene"
   }
 }

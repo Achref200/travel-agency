@@ -8,7 +8,7 @@ import type { Vehicle } from "@/data/vehicles";
 import type { FaqItem } from "@/data/faq";
 import type { GalleryImage } from "@/data/gallery";
 import type { Member, Milestone } from "@/data/about";
-import type { Hotel } from "@/data/hotels";
+import type { Hotel, HotelAddress } from "@/data/hotels";
 import type { Testimonial } from "@/data/testimonials";
 
 /**
@@ -19,9 +19,28 @@ import type { Testimonial } from "@/data/testimonials";
  */
 export const CONTENT_TAG = "content";
 
+/**
+ * Hard ceiling on a single content query. A saturated MySQL pool otherwise
+ * leaves the request hanging until the proxy gives up at 504; failing fast lets
+ * the page render its error boundary in a predictable time instead.
+ */
+const QUERY_TIMEOUT_MS = 8_000;
+
+function withTimeout<T>(key: string, read: () => Promise<T>): Promise<T> {
+  return Promise.race([
+    read(),
+    new Promise<never>((_, reject) =>
+      setTimeout(
+        () => reject(new Error(`content_query_timeout: ${key}`)),
+        QUERY_TIMEOUT_MS,
+      ).unref?.(),
+    ),
+  ]);
+}
+
 /** Wrap a DB read so repeat requests are served from the data cache. */
 function cached<T>(key: string, read: () => Promise<T>): () => Promise<T> {
-  return unstable_cache(read, ["content", key], {
+  return unstable_cache(() => withTimeout(key, read), ["content", key], {
     tags: [CONTENT_TAG],
     revalidate: 300,
   });
@@ -29,6 +48,16 @@ function cached<T>(key: string, read: () => Promise<T>): () => Promise<T> {
 
 const loc = (v: unknown) => v as Localized;
 const locArr = (v: unknown) => v as Localized[];
+
+/** Gallery JSON is admin-authored, so tolerate null/legacy shapes. */
+function imageList(v: unknown): string[] {
+  if (!Array.isArray(v)) return [];
+  return v.filter((item): item is string => typeof item === "string" && item.trim() !== "");
+}
+
+function hotelAddress(v: unknown): HotelAddress | null {
+  return v && typeof v === "object" && !Array.isArray(v) ? (v as HotelAddress) : null;
+}
 
 export const getTours = cached("tours", async (): Promise<Tour[]> => {
   const rows = await prisma.tour.findMany({
@@ -149,6 +178,8 @@ export const getHotels = cached("hotels", async (): Promise<Hotel[]> => {
     location: r.location,
     description: loc(r.description),
     image: r.image,
+    images: imageList(r.images),
+    address: hotelAddress(r.address),
     amenities: locArr(r.amenities),
     priceSingle: r.priceSingle,
     priceCouple: r.priceCouple,
@@ -161,6 +192,19 @@ export const getHotels = cached("hotels", async (): Promise<Hotel[]> => {
 export async function getHotel(slug: string): Promise<Hotel | undefined> {
   const hotels = await getHotels();
   return hotels.find((h) => h.slug === slug);
+}
+
+/**
+ * Resolve a hotel by database id or slug. Both are unique, and detail links in
+ * the wild use either, so accept whichever the caller has.
+ */
+export async function getHotelByIdOrSlug(key: string): Promise<Hotel | undefined> {
+  const hotels = await getHotels();
+  const bySlug = hotels.find((h) => h.slug === key);
+  if (bySlug) return bySlug;
+
+  const row = await prisma.hotel.findUnique({ where: { id: key }, select: { slug: true } });
+  return row ? hotels.find((h) => h.slug === row.slug) : undefined;
 }
 
 export const getHotelSlugs = cached("hotel-slugs", async (): Promise<string[]> => {

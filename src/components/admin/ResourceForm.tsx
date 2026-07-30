@@ -7,6 +7,7 @@ import { Loader2, Languages } from "lucide-react";
 import type { AdminResource, AdminField } from "@/lib/admin/resources";
 import { LOCALES } from "@/lib/admin/resources";
 import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { ImageListField } from "@/components/admin/ImageListField";
 import { cn } from "@/lib/utils";
 
 type FormState = { error?: string } | undefined;
@@ -133,6 +134,21 @@ function FieldInput({ field, value }: { field: AdminField; value: unknown }) {
         help={field.help}
       />
     );
+  }
+
+  if (field.type === "imageList") {
+    return (
+      <ImageListField
+        name={field.name}
+        label={field.label}
+        value={Array.isArray(value) ? (value as string[]) : []}
+        help={field.help}
+      />
+    );
+  }
+
+  if (field.type === "address") {
+    return <AddressField field={field} value={value} />;
   }
 
   const isNumber = field.type === "number";
@@ -337,6 +353,60 @@ function LocalizedListField({ field, value }: { field: AdminField; value: unknow
         ))}
       </div>
       {err && <p className="mt-1 text-xs text-danger">{err}</p>}
+      <Help>{field.help}</Help>
+    </div>
+  );
+}
+
+// ── Structured address ──────────────────────────────────────────────────────
+
+const ADDRESS_PARTS = [
+  { key: "street", label: "Street", placeholder: "Mesrutiyet Cd. No:12" },
+  { key: "city", label: "City", placeholder: "Istanbul" },
+  { key: "state", label: "District / State", placeholder: "Beyoglu" },
+  { key: "zip", label: "Postal code", placeholder: "34430" },
+  { key: "country", label: "Country", placeholder: "Türkiye" },
+  { key: "lat", label: "Latitude", placeholder: "41.0331" },
+  { key: "lng", label: "Longitude", placeholder: "28.9770" },
+] as const;
+
+/**
+ * Address editor. Submits one JSON object under `field.name` so the generic
+ * save action stores it in the existing `address` JSON column untouched.
+ * Latitude/longitude are optional; when present the site links a precise map
+ * pin instead of a text search.
+ */
+function AddressField({ field, value }: { field: AdminField; value: unknown }) {
+  const initial = (
+    value && typeof value === "object" && !Array.isArray(value)
+      ? value
+      : {}
+  ) as globalThis.Record<string, string>;
+
+  const [parts, setParts] = useState<globalThis.Record<string, string>>(() =>
+    Object.fromEntries(ADDRESS_PARTS.map((p) => [p.key, initial[p.key] ?? ""])),
+  );
+
+  return (
+    <div>
+      <Label>{field.label}</Label>
+      <input type="hidden" name={field.name} value={JSON.stringify(parts)} />
+      <div className="grid gap-3 sm:grid-cols-2">
+        {ADDRESS_PARTS.map((part) => (
+          <label key={part.key} className="block">
+            <span className="mb-1 block text-xs text-muted">{part.label}</span>
+            <input
+              type="text"
+              value={parts[part.key] ?? ""}
+              placeholder={part.placeholder}
+              onChange={(e) =>
+                setParts((prev) => ({ ...prev, [part.key]: e.target.value }))
+              }
+              className="input"
+            />
+          </label>
+        ))}
+      </div>
       <Help>{field.help}</Help>
     </div>
   );

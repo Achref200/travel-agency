@@ -16,8 +16,8 @@ awaited, `next/og` provides `ImageResponse`, and middleware lives in
 
 The site is live at `marwentravel.com` on **Hostinger**, deployed by pushing to
 `main`. There is no staging environment — a bad push breaks the live site.
-`Dockerfile` / `docker-compose.yml` / `Caddyfile` are leftovers from an
-abandoned VPS plan and are **not** what runs. See `DEPLOY.md`.
+See `DEPLOY.md` for the constraints this imposes (no persistent disk, no
+`DATABASE_URL` at build time, low MySQL connection cap).
 
 ## Rules
 

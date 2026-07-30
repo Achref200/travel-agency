@@ -275,7 +275,11 @@ export async function POST(req: Request) {
       await prisma.milestone.createMany({ data: milestones.map((m, i) => ({ ...m, order: i })) });
     }
     if ((await prisma.hotel.count()) === 0) {
-      await prisma.hotel.createMany({ data: hotels.map((h, i) => ({ ...h, order: i })) });
+      // `address` is omitted rather than passed as null — Prisma requires
+      // DbNull for nullable Json, and leaving it out yields the same NULL.
+      await prisma.hotel.createMany({
+        data: hotels.map(({ address: _address, ...h }, i) => ({ ...h, order: i })),
+      });
     }
     if ((await prisma.testimonial.count()) === 0) {
       await prisma.testimonial.createMany({ data: testimonials.map((tm, i) => ({ ...tm, order: i })) });

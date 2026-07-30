@@ -132,7 +132,9 @@ model Hotel {
   name           Json // Localized
   location       String // city / district (plain text)
   description    Json // Localized
-  image          String
+  image          String // cover photo
+  images         Json? // string[] — gallery (rooms, reception, pool…)
+  address        Json? // { street, city, state, zip, country, lat, lng }
   amenities      Json // Localized[]
   priceSingle    Float    @default(0)
   priceCouple    Float    @default(0)

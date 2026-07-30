@@ -31,7 +31,36 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
+    /**
+     * Public pages are identical for every visitor, so let the CDN serve them
+     * and only fall through to Node once a minute. Without this Hostinger marks
+     * every request DYNAMIC and each visitor costs a render plus a DB trip —
+     * the reason traffic spikes turned into 504s. `stale-while-revalidate`
+     * means the edge keeps serving instantly while it refreshes in the
+     * background, so visitors never wait on a cold render.
+     *
+     * Trade-off: admin edits can take up to `s-maxage` to appear publicly.
+     */
+    const publicPageCache = {
+      key: "Cache-Control",
+      value: "public, s-maxage=60, stale-while-revalidate=600",
+    };
+    /** Anything user-specific or mutating must never be stored anywhere. */
+    const noStore = {
+      key: "Cache-Control",
+      value: "private, no-store, max-age=0, must-revalidate",
+    };
+
     return [
+      // Order matters: the first matching source wins per header key.
+      // Only authenticated and liveness endpoints are forced no-store; public
+      // read-only routes set their own policy. Everything else here is POST,
+      // which is never cached anyway.
+      { source: "/api/admin/:path*", headers: [noStore] },
+      { source: "/api/health", headers: [noStore] },
+      { source: "/admin/:path*", headers: [noStore] },
+      { source: "/:locale(en|tr|ar|fr)", headers: [publicPageCache] },
+      { source: "/:locale(en|tr|ar|fr)/:path*", headers: [publicPageCache] },
       {
         source: "/(.*)",
         headers: [

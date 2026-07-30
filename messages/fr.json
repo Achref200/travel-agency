@@ -407,6 +407,9 @@
     "viewHotel": "Voir l'hôtel",
     "viewAll": "Voir tous les hôtels",
     "amenities": "Équipements",
+    "gallery": "Photos",
+    "address": "Adresse",
+    "viewOnMap": "Voir sur la carte",
     "location": "Emplacement",
     "book": {
       "title": "Réservez votre séjour",
@@ -472,5 +475,10 @@
       "tour": "Excursion guidée",
       "hotel": "Réservation d'hôtel"
     }
+  },
+  "Error": {
+    "title": "Une erreur est survenue",
+    "body": "Nous n'avons pas pu charger cette page. Réessayez — si le problème persiste, contactez-nous et nous vous aiderons immédiatement.",
+    "retry": "Réessayer"
   }
 }

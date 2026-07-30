@@ -4,9 +4,9 @@ Production runs on **Hostinger web hosting** with the Node.js/Next.js preset.
 Pushing to `main` on GitHub deploys straight to `marwentravel.com` — there is no
 staging step, so a broken push is a broken live site.
 
-> The repo also contains `Dockerfile`, `docker-compose.yml` and `Caddyfile` from
-> an earlier VPS plan. **They are not what runs in production.** Keep them only
-> if you intend to move off Hostinger; otherwise ignore them.
+> An earlier VPS plan (Docker + Caddy) was removed — it was never what ran in
+> production and repeatedly misled people. Recover it from git history if you
+> ever move off Hostinger.
 
 ---
 

@@ -13,6 +13,8 @@ import { Parallax } from "@/components/motion/Parallax";
 import { HotelBookingForm } from "@/components/sections/HotelBookingForm";
 import { JsonLd, breadcrumbSchema } from "@/components/seo/JsonLd";
 import { getHotel } from "@/lib/content";
+import { formatAddress, mapsUrl } from "@/data/hotels";
+import { HotelGallery } from "@/components/sections/HotelGallery";
 
 // Render on every request — no DB access needed at build time.
 export const dynamic = "force-dynamic";
@@ -47,6 +49,7 @@ export default async function HotelDetailPage({
 
   const t = await getTranslations("Hotels");
   const tNav = await getTranslations("Nav");
+  const mapLink = mapsUrl(hotel.address, hotel.location);
 
   return (
     <article>
@@ -95,8 +98,18 @@ export default async function HotelDetailPage({
           </h1>
           <p className="mt-4 inline-flex items-center gap-2 text-canvas/85">
             <MapPin className="size-[1.125rem] text-gold" />
-            {hotel.location}
+            {formatAddress(hotel.address) || hotel.location}
           </p>
+          {mapLink && (
+            <a
+              href={mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-flex items-center gap-1.5 text-sm text-gold-soft underline-offset-4 hover:underline"
+            >
+              {t("viewOnMap")}
+            </a>
+          )}
         </div>
       </section>
 
@@ -122,6 +135,32 @@ export default async function HotelDetailPage({
                       </li>
                     ))}
                   </ul>
+                </>
+              )}
+
+              <HotelGallery
+                images={hotel.images}
+                title={t("gallery")}
+                alt={localize(hotel.name, locale)}
+              />
+
+              {formatAddress(hotel.address) && (
+                <>
+                  <h2 className="mt-12 text-2xl">{t("address")}</h2>
+                  <address className="mt-3 not-italic leading-relaxed text-ink">
+                    {formatAddress(hotel.address)}
+                  </address>
+                  {mapLink && (
+                    <a
+                      href={mapLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-gold-deep underline-offset-4 hover:underline"
+                    >
+                      <MapPin className="size-4" />
+                      {t("viewOnMap")}
+                    </a>
+                  )}
                 </>
               )}
             </Reveal>

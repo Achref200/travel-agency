@@ -407,6 +407,9 @@
     "viewHotel": "View hotel",
     "viewAll": "View all hotels",
     "amenities": "Amenities",
+    "gallery": "Photos",
+    "address": "Address",
+    "viewOnMap": "View on map",
     "location": "Location",
     "book": {
       "title": "Book your stay",
@@ -472,5 +475,10 @@
       "tour": "Guided tour",
       "hotel": "Hotel reservation"
     }
+  },
+  "Error": {
+    "title": "Something went wrong",
+    "body": "We could not load this page just now. Please try again — if it keeps happening, contact us and we will help straight away.",
+    "retry": "Try again"
   }
 }

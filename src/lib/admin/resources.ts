@@ -11,6 +11,8 @@ export type FieldType =
   | "boolean"
   | "select"
   | "image"
+  | "imageList"
+  | "address"
   | "localized"
   | "localizedList";
 
@@ -203,9 +205,11 @@ export const resources: AdminResource[] = [
     fields: [
       { name: "slug", label: "Slug", type: "text", required: true, help: "URL id, e.g. bosphorus-palace-hotel" },
       { name: "name", label: "Name", type: "localized", required: true },
-      { name: "location", label: "Location", type: "text", required: true, help: "City / district, e.g. Sultanahmet, Istanbul" },
+      { name: "location", label: "Location", type: "text", required: true, help: "Short label shown on cards, e.g. Sultanahmet, Istanbul" },
+      { name: "address", label: "Full address", type: "address", help: "Shown on the hotel page. Latitude/longitude are optional — add them for an exact map pin." },
       { name: "description", label: "Description", type: "localized" },
-      { name: "image", label: "Image", type: "image" },
+      { name: "image", label: "Cover image", type: "image" },
+      { name: "images", label: "Gallery (rooms, reception, pool…)", type: "imageList", help: "Shown as a photo grid on the hotel page. Drag order with the arrows." },
       { name: "amenities", label: "Amenities (one per line)", type: "localizedList" },
       { name: "priceSingle", label: "Single room / night", type: "number" },
       { name: "priceCouple", label: "Couple room / night", type: "number" },
@@ -263,7 +267,11 @@ export function defaultsFor(resource: AdminResource): Record<string, unknown> {
         rec[f.name] = Object.fromEntries(LOCALES.map((l) => [l, ""]));
         break;
       case "localizedList":
+      case "imageList":
         rec[f.name] = [];
+        break;
+      case "address":
+        rec[f.name] = null;
         break;
       default:
         rec[f.name] = "";
