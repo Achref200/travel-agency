@@ -15,6 +15,7 @@ services:
         # NEXT_PUBLIC_* are inlined at build time — read from .env.
         NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://www.marwentravel.com}
         NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:-}
+        NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET:-}
     image: marwen-travel:latest
     restart: unless-stopped
     env_file: .env

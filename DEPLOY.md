@@ -91,7 +91,8 @@ docker run --rm -v marwen-travel_uploads:/u -v "$PWD":/b alpine \
 - [ ] `http://marwentravel.com` redirects (301) to `https://www.marwentravel.com`.
 - [ ] `https://www.marwentravel.com/sitemap.xml` and `/robots.txt` show the correct domain.
 - [ ] `/admin` login works with the configured credentials.
-- [ ] (Optional) Cloudinary vars set if you want CDN image optimisation.
+- [ ] Both Cloudinary variables are set before rebuilding. New uploads are stored on the CDN; the admin upload endpoint rejects an unsafe local fallback.
+- [ ] Run `docker compose exec app npm run images:verify`. It checks every gallery, hotel, tour, vehicle, and team image against the mounted uploads directory or its remote URL, and reports missing records.
 
 ## Notes
 

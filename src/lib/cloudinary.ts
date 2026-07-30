@@ -1,13 +1,14 @@
+import "server-only";
+
 /**
- * Client-safe Cloudinary helpers for unsigned uploads from the admin UI.
+ * Cloudinary helpers used by the authenticated admin upload endpoint.
  *
- * Requires two public env vars (inlined at build time):
+ * Requires two environment variables:
  *   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME   — your Cloudinary cloud name
  *   NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET — an *unsigned* upload preset
  *
  * Uploaded assets are delivered from Cloudinary's CDN; we store the secure URL
- * (with f_auto,q_auto) so images stay optimised and survive the ephemeral
- * server filesystem on the free hosting tier.
+ * (with f_auto,q_auto) so images remain available after redeploys.
  */
 
 export const CLOUDINARY_CLOUD_NAME =

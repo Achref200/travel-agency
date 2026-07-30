@@ -2,12 +2,11 @@
 
 import { useRef, useState } from "react";
 import { Upload, Loader2, ImageOff, Link2 } from "lucide-react";
-import { cloudinaryConfigured, uploadToCloudinary } from "@/lib/cloudinary";
 import { cn } from "@/lib/utils";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
 
-/** Upload via the built-in server endpoint (fallback when Cloudinary is off). */
+/** Upload through the authenticated server endpoint. */
 async function uploadViaServer(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
@@ -18,7 +17,7 @@ async function uploadViaServer(file: File): Promise<string> {
 }
 
 /**
- * Admin image field: upload from desktop (Cloudinary) or paste a URL.
+ * Admin image field: upload from desktop or paste a URL.
  * The current value is held in a text input named `name`, so it submits with
  * the surrounding form exactly like the previous plain URL field did.
  */
@@ -37,8 +36,6 @@ export function ImageUploadField({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string>();
   const fileRef = useRef<HTMLInputElement>(null);
-  const configured = cloudinaryConfigured();
-
   async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -55,12 +52,14 @@ export function ImageUploadField({
 
     setUploading(true);
     try {
-      const url = configured
-        ? (await uploadToCloudinary(file)).url
-        : await uploadViaServer(file);
+      const url = await uploadViaServer(file);
       setValue(url);
-    } catch {
-      setError("Upload failed. Please try again or paste an image URL below.");
+    } catch (error) {
+      setError(
+        error instanceof Error && error.message === "cloudinary_not_configured"
+          ? "Cloudinary is not configured for durable uploads."
+          : "Upload failed. Please try again or paste an image URL below.",
+      );
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = "";
@@ -138,13 +137,9 @@ export function ImageUploadField({
             />
           </label>
 
-          {!configured && (
-            <p className="text-xs text-faint">
-              Uploads are saved on the server. For CDN delivery that survives
-              redeploys, set <code>NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME</code> and{" "}
-              <code>NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET</code>.
-            </p>
-          )}
+          <p className="text-xs text-faint">
+            New uploads are stored in Cloudinary and remain available after redeploys.
+          </p>
           {error && <p className="text-xs text-danger">{error}</p>}
           {help && <span className={cn("block text-xs text-faint")}>{help}</span>}
         </div>
