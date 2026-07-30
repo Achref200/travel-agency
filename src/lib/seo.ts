@@ -17,7 +17,8 @@ const OG_LOCALE: Record<string, string> = {
  */
 export function localizedPath(locale: string, path = "/"): string {
   const clean = path === "/" ? "" : path.startsWith("/") ? path : `/${path}`;
-  if (locale === routing.defaultLocale) return clean || "/";
+  // Every locale is prefixed (see routing.ts), so canonicals, hreflang and the
+  // sitemap must all emit /<locale>/… — including the default locale.
   return `/${locale}${clean}`;
 }
 

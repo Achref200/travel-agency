@@ -30,6 +30,25 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["lucide-react", "motion"],
   },
 
+  async redirects() {
+    /**
+     * English used to live at bare paths (/tours) before locales were always
+     * prefixed. Redirect the old URLs permanently so existing links and search
+     * rankings follow to /en/…. Only content routes are listed — /admin, /api
+     * and the metadata routes must never be rewritten.
+     */
+    const contentRoutes = [
+      "tours", "hotels", "vehicles", "about", "business",
+      "meeting-points", "faq", "contact", "booking", "legal",
+    ];
+
+    return contentRoutes.map((route) => ({
+      source: `/${route}/:path*`,
+      destination: `/en/${route}/:path*`,
+      permanent: true,
+    }));
+  },
+
   async headers() {
     /**
      * Public pages are identical for every visitor, so let the CDN serve them

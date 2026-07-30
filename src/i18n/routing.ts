@@ -14,7 +14,12 @@ import { defineRouting } from "next-intl/routing";
 export const routing = defineRouting({
   locales: ["en", "tr", "ar", "fr"],
   defaultLocale: "en",
-  localePrefix: "as-needed",
+  // Every locale carries its prefix, English included. With "as-needed" the
+  // English pages lived at bare paths that the middleware redirected based on
+  // Accept-Language, so they varied per visitor and no CDN could cache them.
+  // Explicit prefixes make every content URL deterministic and edge-cacheable;
+  // only the bare "/" still detects a language and redirects.
+  localePrefix: "always",
   // No NEXT_LOCALE cookie: a Set-Cookie header makes every response
   // uncacheable at the CDN (it could leak one visitor's cookie to another), so
   // the cookie alone was forcing all traffic to the origin. The locale already
