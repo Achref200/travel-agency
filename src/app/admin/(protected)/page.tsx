@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { resources } from "@/lib/admin/resources";
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappLink } from "@/config/site";
 import { cn, formatPrice } from "@/lib/utils";
-import { CalendarCheck, Mail, ArrowRight, CalendarRange } from "lucide-react";
+import { CalendarCheck, Mail, ArrowRight, CalendarRange, MessageCircle } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -124,6 +124,21 @@ export default async function AdminDashboard({
     <div className="mx-auto max-w-6xl">
       <h1 className="text-3xl font-semibold">Dashboard</h1>
       <p className="mt-1 text-muted">Manage your content and review new leads.</p>
+      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted">
+        <a
+          href={whatsappLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 hover:text-ink"
+        >
+          <MessageCircle className="size-4 text-success" />
+          {siteConfig.contact.phone}
+        </a>
+        <a href={`mailto:${siteConfig.contact.email}`} className="inline-flex items-center gap-1.5 hover:text-ink">
+          <Mail className="size-4 text-gold-deep" />
+          {siteConfig.contact.email}
+        </a>
+      </div>
 
       {/* Performance — date-filtered stats */}
       <section className="mt-8 rounded-xl border border-line bg-surface p-5">

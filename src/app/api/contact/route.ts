@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { contactSchema } from "@/lib/validation";
+import { whatsappLink } from "@/config/site";
+import {
+  buildContactLeadText,
+  notifyContactLead,
+} from "@/lib/lead-notifications";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -44,5 +49,30 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "server" }, { status: 500 });
   }
 
-  return NextResponse.json({ ok: true }, { status: 201 });
+  const contactLead = {
+    name: data.name,
+    email: data.email,
+    phone: data.phone || null,
+    subject: data.subject || null,
+    message: data.message,
+  };
+  const notifications = await notifyContactLead(contactLead);
+  if (!notifications.ok) {
+    console.error("contact_notification_incomplete", {
+      whatsapp: notifications.whatsapp,
+      email: notifications.email,
+    });
+  }
+
+  return NextResponse.json(
+    {
+      ok: true,
+      whatsappUrl: whatsappLink(buildContactLeadText(contactLead)),
+      notifications: {
+        whatsapp: notifications.whatsapp.status,
+        email: notifications.email.status,
+      },
+    },
+    { status: 201 },
+  );
 }

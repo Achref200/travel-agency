@@ -1,9 +1,17 @@
 import { prisma } from "@/lib/prisma";
-import { siteConfig, whatsappLinkTo } from "@/config/site";
+import { siteConfig, whatsappLink } from "@/config/site";
 import { formatPrice, cn } from "@/lib/utils";
-import { buildVoucherText } from "@/lib/voucher";
-import { setBookingStatus, deleteBooking } from "./actions";
-import { Check, X, RotateCcw, Trash2, MessageCircle } from "lucide-react";
+import {
+  buildBookingLeadText,
+  getLeadNotificationSetup,
+} from "@/lib/lead-notifications";
+import {
+  resendAllBookings,
+  resendBooking,
+  setBookingStatus,
+  deleteBooking,
+} from "./actions";
+import { Check, X, RotateCcw, Trash2, MessageCircle, Send } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
@@ -13,15 +21,54 @@ const STATUS_STYLES: Record<string, string> = {
   cancelled: "bg-danger/10 text-danger",
 };
 
-export default async function BookingsPage() {
+export default async function BookingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    resend?: string;
+    sent?: string;
+    failed?: string;
+  }>;
+}) {
+  const params = await searchParams;
   const bookings = await prisma.booking.findMany({
     orderBy: { createdAt: "desc" },
   });
+  const setup = getLeadNotificationSetup();
+  const hasResendResult = Boolean(params.resend);
 
   return (
     <div className="mx-auto max-w-6xl">
       <h1 className="text-3xl font-semibold">Bookings</h1>
       <p className="mt-1 text-sm text-muted">{bookings.length} total</p>
+
+      <section className="mt-6 rounded-xl border border-line bg-surface p-5">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h2 className="font-semibold">Lead delivery</h2>
+            <p className="mt-1 text-sm text-muted">
+              New bookings are sent automatically to {siteConfig.contact.phone} and {siteConfig.contact.email}.
+            </p>
+            <p className="mt-2 text-xs text-faint">
+              WhatsApp: {setup.whatsapp ? "configured" : "needs API credentials"} · Email: {setup.email ? "configured" : "needs RESEND_API_KEY"}
+            </p>
+          </div>
+          <form action={resendAllBookings}>
+            <button
+              type="submit"
+              className="inline-flex h-10 items-center gap-2 rounded-full bg-ink px-4 text-sm font-medium text-canvas transition-colors hover:bg-gold hover:text-ink"
+            >
+              <Send className="size-4" />
+              Send all historical bookings
+            </button>
+          </form>
+        </div>
+        {hasResendResult && (
+          <p className="mt-4 rounded-lg bg-canvas px-3 py-2 text-sm text-muted">
+            Delivery run finished: {params.sent ?? "0"} sent, {params.failed ?? "0"} failed. A record is counted as sent only when both WhatsApp and email succeed.
+          </p>
+        )}
+      </section>
 
       <div className="mt-6 space-y-3">
         {bookings.length === 0 && (
@@ -88,9 +135,8 @@ export default async function BookingsPage() {
                 )}
                 <div className="mt-3 flex items-center justify-end gap-1">
                   <a
-                    href={whatsappLinkTo(
-                      b.phone,
-                      buildVoucherText({
+                    href={whatsappLink(
+                      buildBookingLeadText({
                         reference: b.reference,
                         serviceType: b.serviceType,
                         fullName: b.fullName,
@@ -117,12 +163,17 @@ export default async function BookingsPage() {
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title="Send voucher on WhatsApp"
-                    aria-label="Send voucher on WhatsApp"
+                    title="Open business WhatsApp"
+                    aria-label="Open business WhatsApp"
                     className="inline-flex size-8 items-center justify-center rounded-lg text-muted transition-colors hover:bg-success/10 hover:text-success"
                   >
                     <MessageCircle className="size-4" />
                   </a>
+                  <form action={resendBooking.bind(null, b.id)}>
+                    <IconBtn label="Resend booking notification">
+                      <Send className="size-4" />
+                    </IconBtn>
+                  </form>
                   <form action={setBookingStatus.bind(null, b.id, "confirmed")}>
                     <IconBtn label="Confirm" tone="success">
                       <Check className="size-4" />

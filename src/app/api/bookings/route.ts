@@ -5,6 +5,11 @@ import { estimatePrice, generateReference } from "@/lib/booking";
 import { getHotel, getTour } from "@/lib/content";
 import { roomPrice, type RoomType } from "@/data/hotels";
 import { localize } from "@/lib/utils";
+import { whatsappLink } from "@/config/site";
+import {
+  buildBookingLeadText,
+  notifyBookingLead,
+} from "@/lib/lead-notifications";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -124,9 +129,50 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "server" }, { status: 500 });
   }
 
-  // Integration point: trigger a confirmation email / CRM webhook here.
+  const bookingLead = {
+    reference,
+    serviceType: data.serviceType,
+    fullName: data.fullName,
+    phone: data.phone,
+    email: data.email,
+    fromLocation,
+    toLocation,
+    pickupAt,
+    returnAt,
+    passengers: data.passengers,
+    luggage: data.luggage,
+    flightNumber: data.flightNumber || null,
+    roundTrip: data.roundTrip,
+    notes: data.notes || null,
+    estimatedPrice,
+    hotelName,
+    roomType,
+    checkIn,
+    checkOut,
+    nights,
+    rooms,
+  };
+  const notifications = await notifyBookingLead(bookingLead);
+  if (!notifications.ok) {
+    console.error("booking_notification_incomplete", {
+      reference,
+      whatsapp: notifications.whatsapp,
+      email: notifications.email,
+    });
+  }
+
   return NextResponse.json(
-    { ok: true, reference, estimatedPrice, nights },
+    {
+      ok: true,
+      reference,
+      estimatedPrice,
+      nights,
+      whatsappUrl: whatsappLink(buildBookingLeadText(bookingLead)),
+      notifications: {
+        whatsapp: notifications.whatsapp.status,
+        email: notifications.email.status,
+      },
+    },
     { status: 201 },
   );
 }

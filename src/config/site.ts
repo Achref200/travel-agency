@@ -46,10 +46,10 @@ export const siteConfig = {
 
   /** Contact details — used in header CTA, footer, contact page & JSON-LD. */
   contact: {
-    phone: "+21653019984",
+    phone: "+905013476409",
     /** Digits only, international format — used to build wa.me links. */
-    whatsapp: "21653019984",
-    email: "info@marwentravel.com",
+    whatsapp: "+905013476409",
+    email: "contact@marwentravel.com",
     address: {
       line1: "Istanbul Airport (IST), Arrivals",
       district: "Tayakadın, Arnavutköy",

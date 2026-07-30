@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Loader2, Send, CheckCircle2 } from "lucide-react";
+import { Loader2, Send, CheckCircle2, MessageCircle } from "lucide-react";
 
 export function ContactForm({ presetSubject }: { presetSubject?: string }) {
   const t = useTranslations("Contact.form");
+  const tCommon = useTranslations("Common");
   const locale = useLocale();
   const [form, setForm] = useState({
     name: "",
@@ -18,6 +19,7 @@ export function ContactForm({ presetSubject }: { presetSubject?: string }) {
   const [status, setStatus] = useState<
     "idle" | "submitting" | "success" | "error"
   >("idle");
+  const [whatsappUrl, setWhatsappUrl] = useState<string>();
 
   function update<K extends keyof typeof form>(key: K, value: string) {
     setForm((f) => ({ ...f, [key]: value }));
@@ -34,6 +36,7 @@ export function ContactForm({ presetSubject }: { presetSubject?: string }) {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error("failed");
+      setWhatsappUrl(data.whatsappUrl);
       setStatus("success");
       setForm({
         name: "",
@@ -53,6 +56,17 @@ export function ContactForm({ presetSubject }: { presetSubject?: string }) {
       <div className="flex flex-col items-center rounded-2xl border border-line bg-surface p-8 text-center">
         <CheckCircle2 className="size-12 text-success" />
         <p className="mt-4 text-lg text-ink">{t("success")}</p>
+        {whatsappUrl && (
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-[#25D366] px-5 text-sm font-medium text-white transition-colors hover:bg-[#1fae56]"
+          >
+            <MessageCircle className="size-4" />
+            {tCommon("whatsapp")}
+          </a>
+        )}
       </div>
     );
   }
