@@ -15,6 +15,11 @@ export const routing = defineRouting({
   locales: ["en", "tr", "ar", "fr"],
   defaultLocale: "en",
   localePrefix: "as-needed",
+  // No NEXT_LOCALE cookie: a Set-Cookie header makes every response
+  // uncacheable at the CDN (it could leak one visitor's cookie to another), so
+  // the cookie alone was forcing all traffic to the origin. The locale already
+  // lives in the URL, so nothing is lost.
+  localeCookie: false,
 });
 
 /** Locales that render right-to-left. */
