@@ -1,4 +1,5 @@
 import "server-only";
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import type { Localized } from "@/lib/utils";
 import type { Tour, PriceType } from "@/data/tours";
@@ -11,15 +12,25 @@ import type { Hotel } from "@/data/hotels";
 import type { Testimonial } from "@/data/testimonials";
 
 /**
- * Content is read straight from the database. Public pages are statically
- * generated; the admin calls `revalidatePath("/[locale]", "layout")` after any
- * change so edits appear on the live site immediately.
+ * Content reads are cached under a single tag. Public pages render dynamically
+ * (the build has no DATABASE_URL), so without this every visit would re-query
+ * MySQL — the cause of the connection exhaustion behind the 504s. Admin writes
+ * call `revalidateTag(CONTENT_TAG)` so edits still appear immediately.
  */
+export const CONTENT_TAG = "content";
+
+/** Wrap a DB read so repeat requests are served from the data cache. */
+function cached<T>(key: string, read: () => Promise<T>): () => Promise<T> {
+  return unstable_cache(read, ["content", key], {
+    tags: [CONTENT_TAG],
+    revalidate: 300,
+  });
+}
 
 const loc = (v: unknown) => v as Localized;
 const locArr = (v: unknown) => v as Localized[];
 
-export async function getTours(): Promise<Tour[]> {
+export const getTours = cached("tours", async (): Promise<Tour[]> => {
   const rows = await prisma.tour.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -37,23 +48,23 @@ export async function getTours(): Promise<Tour[]> {
     image: r.image,
     bestSeller: r.bestSeller,
   }));
-}
+});
 
 export async function getTour(slug: string): Promise<Tour | undefined> {
   const tours = await getTours();
   return tours.find((t) => t.slug === slug);
 }
 
-export async function getTourSlugs(): Promise<string[]> {
+export const getTourSlugs = cached("tour-slugs", async (): Promise<string[]> => {
   const rows = await prisma.tour.findMany({
     where: { published: true },
     select: { slug: true },
     orderBy: { order: "asc" },
   });
   return rows.map((r) => r.slug);
-}
+});
 
-export async function getRoutes(): Promise<Route[]> {
+export const getRoutes = cached("routes", async (): Promise<Route[]> => {
   const rows = await prisma.route.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -64,9 +75,9 @@ export async function getRoutes(): Promise<Route[]> {
     price: r.price,
     category: r.category as RouteCategory,
   }));
-}
+});
 
-export async function getVehicles(): Promise<Vehicle[]> {
+export const getVehicles = cached("vehicles", async (): Promise<Vehicle[]> => {
   const rows = await prisma.vehicle.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -80,9 +91,9 @@ export async function getVehicles(): Promise<Vehicle[]> {
     image: r.image,
     features: locArr(r.features),
   }));
-}
+});
 
-export async function getFaqItems(): Promise<FaqItem[]> {
+export const getFaqItems = cached("faq", async (): Promise<FaqItem[]> => {
   const rows = await prisma.faqItem.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -91,9 +102,9 @@ export async function getFaqItems(): Promise<FaqItem[]> {
     question: loc(r.question),
     answer: loc(r.answer),
   }));
-}
+});
 
-export async function getGalleryImages(): Promise<GalleryImage[]> {
+export const getGalleryImages = cached("gallery", async (): Promise<GalleryImage[]> => {
   const rows = await prisma.galleryImage.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -104,9 +115,9 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
     wide: r.wide,
     tall: r.tall,
   }));
-}
+});
 
-export async function getTeam(): Promise<Member[]> {
+export const getTeam = cached("team", async (): Promise<Member[]> => {
   const rows = await prisma.teamMember.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -116,18 +127,18 @@ export async function getTeam(): Promise<Member[]> {
     role: loc(r.role),
     image: r.image,
   }));
-}
+});
 
-export async function getMilestones(): Promise<Milestone[]> {
+export const getMilestones = cached("milestones", async (): Promise<Milestone[]> => {
   const rows = await prisma.milestone.findMany({ orderBy: { order: "asc" } });
   return rows.map((r) => ({
     year: r.year,
     title: loc(r.title),
     text: loc(r.text),
   }));
-}
+});
 
-export async function getHotels(): Promise<Hotel[]> {
+export const getHotels = cached("hotels", async (): Promise<Hotel[]> => {
   const rows = await prisma.hotel.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -145,23 +156,23 @@ export async function getHotels(): Promise<Hotel[]> {
     priceQuadruple: r.priceQuadruple,
     stars: r.stars,
   }));
-}
+});
 
 export async function getHotel(slug: string): Promise<Hotel | undefined> {
   const hotels = await getHotels();
   return hotels.find((h) => h.slug === slug);
 }
 
-export async function getHotelSlugs(): Promise<string[]> {
+export const getHotelSlugs = cached("hotel-slugs", async (): Promise<string[]> => {
   const rows = await prisma.hotel.findMany({
     where: { published: true },
     select: { slug: true },
     orderBy: { order: "asc" },
   });
   return rows.map((r) => r.slug);
-}
+});
 
-export async function getTestimonials(): Promise<Testimonial[]> {
+export const getTestimonials = cached("testimonials", async (): Promise<Testimonial[]> => {
   const rows = await prisma.testimonial.findMany({
     where: { published: true },
     orderBy: { order: "asc" },
@@ -172,4 +183,4 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     origin: r.origin,
     rating: r.rating,
   }));
-}
+});

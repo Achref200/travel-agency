@@ -76,9 +76,12 @@ export const siteConfig = {
   hours: "24/7",
 } as const;
 
+/** Business WhatsApp number as digits only — the form wa.me and the Cloud API expect. */
+export const whatsappDigits = siteConfig.contact.whatsapp.replace(/\D/g, "");
+
 /** Pre-built WhatsApp deep link with an optional greeting message. */
 export function whatsappLink(message?: string): string {
-  const base = `https://wa.me/${siteConfig.contact.whatsapp}`;
+  const base = `https://wa.me/${whatsappDigits}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 

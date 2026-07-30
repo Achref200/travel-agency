@@ -12,7 +12,8 @@
     "db:seed": "prisma db seed",
     "db:admin": "tsx prisma/create-admin.ts",
     "db:studio": "prisma studio",
-    "images:verify": "tsx scripts/verify-images.ts"
+    "images:verify": "tsx --env-file-if-exists=.env scripts/verify-images.ts",
+    "images:migrate": "tsx --env-file-if-exists=.env scripts/migrate-images.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

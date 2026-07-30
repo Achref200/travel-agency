@@ -1,6 +1,6 @@
 import "server-only";
 
-import { siteConfig } from "@/config/site";
+import { siteConfig, whatsappDigits } from "@/config/site";
 import type { VoucherData } from "@/lib/voucher";
 
 export type ContactLead = {
@@ -131,7 +131,7 @@ async function sendWhatsAppText(text: string): Promise<NotificationChannelResult
         },
         body: JSON.stringify({
           messaging_product: "whatsapp",
-          to: siteConfig.contact.whatsapp,
+          to: whatsappDigits,
           type: "text",
           text: { preview_url: false, body: text },
         }),

@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
-import { randomBytes, scryptSync } from "node:crypto";
+import { revalidateTag } from "next/cache";
+import { timingSafeEqual } from "node:crypto";
+import { prisma } from "@/lib/prisma";
+import { getSession, hashPassword } from "@/lib/auth";
+import { CONTENT_TAG } from "@/lib/content";
 import { tours } from "@/data/tours";
 import { routes } from "@/data/locations";
 import { vehicles } from "@/data/vehicles";
@@ -10,15 +13,26 @@ import { team, milestones } from "@/data/about";
 import { hotels } from "@/data/hotels";
 import { testimonials } from "@/data/testimonials";
 
-const prisma = new PrismaClient();
-
-function hashPassword(password: string): string {
-  const salt = randomBytes(16).toString("hex");
-  const hash = scryptSync(password, salt, 64).toString("hex");
-  return `${salt}:${hash}`;
-}
-
+export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+/**
+ * Bootstrap endpoint. Runs before an admin account exists, so it cannot rely on
+ * a session alone — it accepts either a logged-in admin or the SEED_SECRET
+ * bearer token. Without SEED_SECRET set it is closed to anonymous callers
+ * entirely, so a misconfigured deploy fails shut rather than open.
+ */
+async function authorize(req: Request): Promise<boolean> {
+  if (await getSession()) return true;
+
+  const secret = process.env.SEED_SECRET;
+  if (!secret) return false;
+
+  const offered = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ?? "";
+  const a = Buffer.from(offered);
+  const b = Buffer.from(secret);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
 
 const CREATE_TABLES_SQL = [
   `CREATE TABLE IF NOT EXISTS \`AdminUser\` (
@@ -211,19 +225,31 @@ const CREATE_TABLES_SQL = [
   ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
 ];
 
-export async function GET() {
+export async function POST(req: Request) {
+  if (!(await authorize(req))) {
+    return NextResponse.json({ success: false, error: "unauthorized" }, { status: 401 });
+  }
+
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const password = process.env.ADMIN_PASSWORD;
+  if (!email || !password) {
+    return NextResponse.json(
+      { success: false, error: "ADMIN_EMAIL and ADMIN_PASSWORD must be set" },
+      { status: 500 },
+    );
+  }
+
   try {
     // 1. Auto-create all database tables if they do not exist yet
     for (const sql of CREATE_TABLES_SQL) {
       await prisma.$executeRawUnsafe(sql);
     }
 
-    const email = (process.env.ADMIN_EMAIL ?? "admin@example.com").trim().toLowerCase();
-    const password = process.env.ADMIN_PASSWORD ?? "achref-me";
-
+    // Only create the admin account — never silently reset an existing
+    // password, so re-running this endpoint cannot lock the owner out.
     await prisma.adminUser.upsert({
       where: { email },
-      update: { name: "Administrator", passwordHash: hashPassword(password) },
+      update: {},
       create: { email, name: "Administrator", passwordHash: hashPassword(password) },
     });
 
@@ -255,8 +281,11 @@ export async function GET() {
       await prisma.testimonial.createMany({ data: testimonials.map((tm, i) => ({ ...tm, order: i })) });
     }
 
+    // expire: 0 purges immediately; updateTag is Server-Action-only.
+    revalidateTag(CONTENT_TAG, { expire: 0 });
     return NextResponse.json({ success: true, message: "Database seeded successfully!" });
-  } catch (error: any) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  } catch (error) {
+    console.error("seed_failed", error);
+    return NextResponse.json({ success: false, error: "seed_failed" }, { status: 500 });
   }
 }

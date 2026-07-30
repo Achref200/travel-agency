@@ -40,6 +40,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, url: uploaded.url });
   } catch (error) {
     console.error("cloudinary_upload_failed", error);
-    return NextResponse.json({ ok: false, error: "cloudinary_upload_failed" }, { status: 502 });
+    return NextResponse.json(
+      { ok: false, error: "cloudinary_upload_failed" },
+      { status: 502 },
+    );
   }
 }

@@ -1,9 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, updateTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
+import { CONTENT_TAG } from "@/lib/content";
 import { slugify } from "@/lib/utils";
 import { getResource, LOCALES, type AdminResource } from "@/lib/admin/resources";
 
@@ -97,6 +98,7 @@ export async function saveResource(
     return { error: "Could not save. A unique field (e.g. slug) may already exist." };
   }
 
+  updateTag(CONTENT_TAG);
   revalidatePath("/[locale]", "layout");
   redirect(`/admin/${resourceKey}`);
 }
@@ -113,6 +115,7 @@ export async function deleteResource(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const model = (prisma as any)[resource.model];
   await model.delete({ where: { id } });
+  updateTag(CONTENT_TAG);
   revalidatePath("/[locale]", "layout");
   redirect(`/admin/${resourceKey}`);
 }

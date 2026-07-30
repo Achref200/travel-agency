@@ -11,6 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: `Admin · ${siteConfig.name}`,
   robots: { index: false, follow: false },
 };

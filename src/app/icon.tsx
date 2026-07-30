@@ -1,30 +1,27 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { siteConfig } from "@/config/site";
 
 export const size = { width: 512, height: 512 };
 export const contentType = "image/png";
 
-/** Brand favicon/app icon, generated from the configurable SITE_NAME initial. */
+// Inlined as a data URI: satori cannot read from the filesystem, and a relative
+// URL would need the server to fetch itself while rendering this very route.
+const logo = `data:image/jpeg;base64,${readFileSync(
+  join(process.cwd(), "public", "logo.jpg"),
+).toString("base64")}`;
+
+/** Browser-tab icon — the real brand mark, rasterised to PNG. */
 export default function Icon() {
-  const initial = siteConfig.name.trim().charAt(0).toUpperCase() || "T";
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#0b1d3a",
-          color: "#c8a24c",
-          fontSize: 320,
-          fontWeight: 600,
-          fontFamily: "serif",
-        }}
-      >
-        {initial}
-      </div>
+      // eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text
+      <img
+        src={logo}
+        width={size.width}
+        height={size.height}
+        style={{ objectFit: "cover" }}
+      />
     ),
     { ...size },
   );

@@ -1,103 +1,76 @@
-# Deployment (Contabo VPS)
+# Deployment (Hostinger)
 
-Production runs as two containers via Docker Compose:
+Production runs on **Hostinger web hosting** with the Node.js/Next.js preset.
+Pushing to `main` on GitHub deploys straight to `marwentravel.com` — there is no
+staging step, so a broken push is a broken live site.
 
-- **app** — the Next.js server (`next start`) with a persistent SQLite database
-- **caddy** — reverse proxy that terminates TLS with automatic Let's Encrypt certs
-
-Data (SQLite DB + uploaded images) lives in Docker named volumes, so it survives
-restarts and redeploys.
-
----
-
-## 1. Prerequisites (once per server)
-
-```bash
-# On the Contabo VPS (Ubuntu/Debian)
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker $USER      # log out / back in afterwards
-```
-
-Point your domain's DNS **A record** at the server IP for both the apex
-(`marwentravel.com`) and `www` (the canonical host):
-
-| Type | Name  | Value            |
-| ---- | ----- | ---------------- |
-| A    | `@`   | `<server IP>`    |
-| A    | `www` | `<server IP>`    |
-
-Caddy redirects the apex to `https://www.marwentravel.com` automatically.
-
-## 2. Configure
-
-```bash
-git clone <your-repo> marwen-travel && cd marwen-travel
-cp .env.production.example .env
-nano .env
-```
-
-Set at minimum:
-
-| Variable                | Example                        | Notes                                   |
-| ----------------------- | ------------------------------ | --------------------------------------- |
-| `DOMAIN`                | `marwentravel.com`             | Apex, no protocol. Caddy TLS + redirect.|
-| `NEXT_PUBLIC_SITE_URL`  | `https://www.marwentravel.com` | Canonical www. **Inlined at build.**    |
-| `ADMIN_EMAIL`           | `info@marwentravel.com`        | Admin login.                            |
-| `ADMIN_PASSWORD`        | `MarwenTravel@2026`            | Admin login.                            |
-| `ADMIN_SESSION_SECRET`  | `openssl rand -base64 48`      | **Generate a fresh value.**             |
-
-> `NEXT_PUBLIC_*` values are compiled into the browser bundle, so if you change
-> `NEXT_PUBLIC_SITE_URL` you must rebuild (`docker compose up -d --build`).
-
-## 3. Launch
-
-```bash
-docker compose up -d --build
-docker compose logs -f app        # watch startup (schema + seed + server)
-```
-
-Caddy fetches a certificate automatically on first request. Then visit:
-
-- Site: `https://www.marwentravel.com`
-- Admin: `https://www.marwentravel.com/admin`  (log in with `ADMIN_EMAIL` / `ADMIN_PASSWORD`)
-
-## 4. Updating
-
-```bash
-git pull
-docker compose up -d --build
-```
-
-The database and uploads volumes are untouched by rebuilds.
-
-## 5. Backups
-
-```bash
-# SQLite database
-docker compose cp app:/data/prod.db ./backup-$(date +%F).db
-# Uploaded images
-docker run --rm -v marwen-travel_uploads:/u -v "$PWD":/b alpine \
-  tar czf /b/uploads-$(date +%F).tgz -C /u .
-```
+> The repo also contains `Dockerfile`, `docker-compose.yml` and `Caddyfile` from
+> an earlier VPS plan. **They are not what runs in production.** Keep them only
+> if you intend to move off Hostinger; otherwise ignore them.
 
 ---
 
-## Environment & verification checklist
+## Hostinger constraints that shape this app
 
-- [ ] DNS A records (`@` and `www`) resolve to the server (`dig +short www.marwentravel.com`).
-- [ ] `.env` filled in; `ADMIN_SESSION_SECRET` is a fresh 48-byte random string.
-- [ ] `docker compose ps` shows both services `healthy`/`running`.
-- [ ] `https://www.marwentravel.com` loads with a valid padlock (TLS OK).
-- [ ] `http://marwentravel.com` redirects (301) to `https://www.marwentravel.com`.
-- [ ] `https://www.marwentravel.com/sitemap.xml` and `/robots.txt` show the correct domain.
-- [ ] `/admin` login works with the configured credentials.
-- [ ] Both Cloudinary variables are set before rebuilding. New uploads are stored on the CDN; the admin upload endpoint rejects an unsafe local fallback.
-- [ ] Run `docker compose exec app npm run images:verify`. It checks every gallery, hotel, tour, vehicle, and team image against the mounted uploads directory or its remote URL, and reports missing records.
+| Constraint | Consequence |
+| --- | --- |
+| **No persistent disk** — every deploy is a fresh checkout | Anything written to `public/uploads` is lost on the next deploy. All images must live in Cloudinary. |
+| **No `DATABASE_URL` during build** | Pages cannot be statically generated from the DB. They render dynamically and cache their reads instead (see below). |
+| **Low MySQL connection cap** | `src/lib/prisma.ts` pins `connection_limit=5`. Do not create extra `PrismaClient` instances in server code — import the shared one from `@/lib/prisma`. |
+| **Proxy request timeout** | Slow DB work surfaces to visitors as a 504. Content reads are cached; keep new DB work off the render path. |
 
-## Notes
+## Environment variables
 
-- **SQLite** is single-writer; perfect for this workload (content + leads). To
-  scale writes later, switch `datasource db { provider }` in
-  `prisma/schema.prisma` to `postgresql` and add a Postgres service.
-- Rate limiting on `/api/admin/login` and the security headers are in-app; Caddy
-  adds TLS + HTTP/2 on top.
+Set these in **hPanel → your site → Advanced → Environment variables**, then
+redeploy. `NEXT_PUBLIC_*` values are inlined at build time, so changing one
+requires a rebuild, not just a restart.
+
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `DATABASE_URL` | yes | `mysql://user:pass@host:3306/db`. Connection limits are applied in code. |
+| `NEXT_PUBLIC_SITE_URL` | yes | `https://marwentravel.com` — canonical URLs, sitemap, OG tags. |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | yes | Admin login. The seed endpoint refuses to run without them. |
+| `ADMIN_SESSION_SECRET` | yes | Signs session cookies. `openssl rand -base64 48`. Changing it logs everyone out. |
+| `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | yes | Cloud name (`lwakcrdc`). Needed in the browser bundle for the image loader. |
+| `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET` | yes | Signed uploads. Server-side only — never prefix these with `NEXT_PUBLIC_`. |
+| `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET` | no | Only for accounts using an unsigned preset instead of signed keys. |
+| `SEED_SECRET` | no | Bearer token for `/api/seed`. Without it the endpoint is closed to anonymous callers. |
+| `WHATSAPP_PHONE_NUMBER_ID` / `WHATSAPP_ACCESS_TOKEN` | no | Booking + contact alerts to `+905013476409`. **Unset = leads are saved but nobody is notified.** |
+| `RESEND_API_KEY` / `NOTIFICATION_EMAIL_FROM` | no | Email alerts to `contact@marwentravel.com`. Same caveat. |
+
+## First-time database setup
+
+Tables are created by `POST /api/seed`, which is authenticated. With
+`SEED_SECRET` set in hPanel:
+
+```bash
+curl -X POST https://marwentravel.com/api/seed \
+  -H "Authorization: Bearer $SEED_SECRET"
+```
+
+It is idempotent: tables use `CREATE TABLE IF NOT EXISTS`, baseline content is
+only inserted into empty tables, and an existing admin password is never reset.
+
+## Images
+
+Every content image must be a Cloudinary URL. To pull in anything still hosted
+elsewhere:
+
+```bash
+npm run images:migrate -- --dry-run   # list what would move
+npm run images:migrate                # fetch into Cloudinary, repoint the DB
+npm run images:verify                 # confirm every reference resolves
+```
+
+Run these locally against the production `DATABASE_URL` — Hostinger's shell
+does not reliably expose the app's environment.
+
+## Verification checklist after a deploy
+
+- [ ] `https://marwentravel.com` returns 200 and the tab shows the Marwen logo.
+- [ ] `/admin` login works.
+- [ ] Admin → upload an image: it returns a `res.cloudinary.com` URL.
+- [ ] `npm run images:verify` reports 0 missing / unreachable.
+- [ ] Submit a test booking; confirm it appears in Admin → Bookings **and** that
+      WhatsApp/email alerts arrive (if those credentials are set).
+- [ ] `/sitemap.xml` and `/robots.txt` show the correct domain.
