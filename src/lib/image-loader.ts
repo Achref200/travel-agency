@@ -18,7 +18,10 @@ type LoaderArgs = {
   quality?: number;
 };
 
-const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "";
+// Lowercased to match the upload side — see src/lib/cloudinary.ts.
+const CLOUD_NAME = (process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ?? "")
+  .trim()
+  .toLowerCase();
 
 export default function cloudinaryLoader({
   src,

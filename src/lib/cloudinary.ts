@@ -15,10 +15,19 @@ import { createHash } from "node:crypto";
  * can upload against an unsigned preset, so prefer signed credentials.
  */
 
-export const CLOUD_NAME =
+/**
+ * Cloud names are always lowercase. Delivery URLs tolerate any case, so a
+ * mis-cased value still renders images — but the upload API rejects it with
+ * "Invalid cloud_name", which looks like broken uploads rather than a typo.
+ * Normalise so the two can never disagree.
+ */
+export const CLOUD_NAME = (
   process.env.CLOUDINARY_CLOUD_NAME ||
   process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
-  "";
+  ""
+)
+  .trim()
+  .toLowerCase();
 
 const API_KEY = process.env.CLOUDINARY_API_KEY ?? "";
 const API_SECRET = process.env.CLOUDINARY_API_SECRET ?? "";

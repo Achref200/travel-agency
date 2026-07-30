@@ -13,7 +13,11 @@ async function uploadViaServer(file: File): Promise<string> {
   form.append("file", file);
   const res = await fetch("/api/admin/upload", { method: "POST", body: form });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok || !data.ok) throw new Error(data?.error ?? `http_${res.status}`);
+  if (!res.ok || !data.ok) {
+    const err = new Error(data?.error ?? `http_${res.status}`);
+    if (data?.detail) err.cause = data.detail;
+    throw err;
+  }
   return data.url as string;
 }
 
@@ -63,8 +67,11 @@ export function ImageUploadField({
       // Surface the server's actual reason — a blanket "upload failed" gave
       // admins nothing to act on and hid misconfiguration entirely.
       const code = error instanceof Error ? error.message : "";
+      const detail = error instanceof Error ? error.cause : undefined;
       setError(
-        `Upload failed: ${UPLOAD_ERRORS[code] ?? code ?? "unknown error"}. You can paste an image URL below instead.`,
+        `Upload failed: ${UPLOAD_ERRORS[code] ?? code ?? "unknown error"}` +
+          (detail ? ` — ${String(detail)}` : "") +
+          ". You can paste an image URL below instead.",
       );
     } finally {
       setUploading(false);

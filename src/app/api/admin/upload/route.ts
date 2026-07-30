@@ -40,8 +40,15 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, url: uploaded.url });
   } catch (error) {
     console.error("cloudinary_upload_failed", error);
+    // This endpoint is admin-only, so pass Cloudinary's own reason back rather
+    // than a generic code — otherwise the real cause (bad credentials, format,
+    // account limit) is only visible in server logs the admin cannot see.
     return NextResponse.json(
-      { ok: false, error: "cloudinary_upload_failed" },
+      {
+        ok: false,
+        error: "cloudinary_upload_failed",
+        detail: error instanceof Error ? error.message : String(error),
+      },
       { status: 502 },
     );
   }

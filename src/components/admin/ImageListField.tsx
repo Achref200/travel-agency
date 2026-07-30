@@ -22,7 +22,11 @@ async function uploadViaServer(file: File): Promise<string> {
   form.append("file", file);
   const res = await fetch("/api/admin/upload", { method: "POST", body: form });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok || !data.ok) throw new Error(data?.error ?? `http_${res.status}`);
+  if (!res.ok || !data.ok) {
+    const err = new Error(data?.error ?? `http_${res.status}`);
+    if (data?.detail) err.cause = data.detail;
+    throw err;
+  }
   return data.url as string;
 }
 
@@ -32,7 +36,10 @@ function reasonFor(file: File, error?: unknown): string {
   if (file.size > MAX_BYTES) {
     return `${(file.size / 1024 / 1024).toFixed(1)} MB — the limit is ${MAX_BYTES / 1024 / 1024} MB`;
   }
-  return UPLOAD_ERRORS[String((error as Error)?.message)] ?? "upload failed, please retry";
+  const code = String((error as Error)?.message ?? "");
+  const detail = (error as Error)?.cause;
+  const base = UPLOAD_ERRORS[code] ?? "upload failed, please retry";
+  return detail ? `${base} (${String(detail)})` : base;
 }
 
 /**
