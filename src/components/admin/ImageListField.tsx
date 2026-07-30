@@ -5,13 +5,34 @@ import { Upload, Loader2, Link2, X, ArrowLeft, ArrowRight } from "lucide-react";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
 
+/** Server error codes mapped to something an admin can act on. */
+export const UPLOAD_ERRORS: Record<string, string> = {
+  cloudinary_not_configured:
+    "image storage is not configured on this server — set the Cloudinary keys and restart",
+  cloudinary_upload_failed: "image storage rejected the file",
+  unsupported_type: "that file type is not supported",
+  too_large: "the server rejected it as too large",
+  unauthorized: "your session expired — sign in again",
+  invalid_form: "the upload was malformed, please retry",
+  no_file: "no file was received",
+};
+
 async function uploadViaServer(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
   const res = await fetch("/api/admin/upload", { method: "POST", body: form });
-  const data = await res.json();
-  if (!res.ok || !data.ok) throw new Error(data?.error ?? "failed");
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.ok) throw new Error(data?.error ?? `http_${res.status}`);
   return data.url as string;
+}
+
+/** Human-readable reason for a rejected file, so failures are actionable. */
+function reasonFor(file: File, error?: unknown): string {
+  if (!file.type.startsWith("image/")) return "not an image file";
+  if (file.size > MAX_BYTES) {
+    return `${(file.size / 1024 / 1024).toFixed(1)} MB — the limit is ${MAX_BYTES / 1024 / 1024} MB`;
+  }
+  return UPLOAD_ERRORS[String((error as Error)?.message)] ?? "upload failed, please retry";
 }
 
 /**
@@ -55,22 +76,20 @@ export function ImageListField({
     const failed: string[] = [];
     for (const file of files) {
       if (!file.type.startsWith("image/") || file.size > MAX_BYTES) {
-        failed.push(file.name);
+        failed.push(`${file.name} — ${reasonFor(file)}`);
         continue;
       }
       try {
         uploaded.push(await uploadViaServer(file));
-      } catch {
-        failed.push(file.name);
+      } catch (err) {
+        failed.push(`${file.name} — ${reasonFor(file, err)}`);
       }
     }
 
     if (uploaded.length) setItems((prev) => [...prev, ...uploaded]);
-    if (failed.length) {
-      setError(
-        `Could not add ${failed.length} file(s): ${failed.join(", ")}. Images must be under 8 MB.`,
-      );
-    }
+    // Report the actual reason per file — a single generic message sent admins
+    // hunting for a size problem when the real cause was something else.
+    if (failed.length) setError(failed.join(" · "));
     setUploading(false);
     if (fileRef.current) fileRef.current.value = "";
   }

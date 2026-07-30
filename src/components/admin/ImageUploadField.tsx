@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Upload, Loader2, ImageOff, Link2 } from "lucide-react";
+import { UPLOAD_ERRORS } from "@/components/admin/ImageListField";
 import { cn } from "@/lib/utils";
 
 const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
@@ -11,8 +12,8 @@ async function uploadViaServer(file: File): Promise<string> {
   const form = new FormData();
   form.append("file", file);
   const res = await fetch("/api/admin/upload", { method: "POST", body: form });
-  const data = await res.json();
-  if (!res.ok || !data.ok) throw new Error(data?.error ?? "failed");
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.ok) throw new Error(data?.error ?? `http_${res.status}`);
   return data.url as string;
 }
 
@@ -42,11 +43,15 @@ export function ImageUploadField({
     setError(undefined);
 
     if (!file.type.startsWith("image/")) {
-      setError("Please choose an image file.");
+      setError("That is not an image file.");
       return;
     }
     if (file.size > MAX_BYTES) {
-      setError("Image must be under 8 MB.");
+      setError(
+        `That image is ${(file.size / 1024 / 1024).toFixed(1)} MB — the limit is ${
+          MAX_BYTES / 1024 / 1024
+        } MB. Resize it, or paste a URL below and it will be copied to Cloudinary on save.`,
+      );
       return;
     }
 
@@ -55,10 +60,11 @@ export function ImageUploadField({
       const url = await uploadViaServer(file);
       setValue(url);
     } catch (error) {
+      // Surface the server's actual reason — a blanket "upload failed" gave
+      // admins nothing to act on and hid misconfiguration entirely.
+      const code = error instanceof Error ? error.message : "";
       setError(
-        error instanceof Error && error.message === "cloudinary_not_configured"
-          ? "Cloudinary is not configured for durable uploads."
-          : "Upload failed. Please try again or paste an image URL below.",
+        `Upload failed: ${UPLOAD_ERRORS[code] ?? code ?? "unknown error"}. You can paste an image URL below instead.`,
       );
     } finally {
       setUploading(false);
